@@ -1,185 +1,267 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Button } from '../components/Button';
 import { 
   ArrowRight, 
-  Smartphone, 
+  Wifi, 
   ShieldCheck, 
   Cpu, 
-  Zap, 
-  Wifi, 
-  Activity, 
-  Globe, 
-  Server, 
   CheckCircle2, 
-  Radio, 
-  Network, 
-  Layers, 
-  Lock, 
-  Gauge 
+  Network,
+  Wrench,
+  Layers,
+  PhoneCall,
+  Clock,
+  Check,
+  Building,
+  Server,
+  Code2,
+  Laptop,
+  Play,
+  Pause
 } from 'lucide-react';
 import { PageRoute } from '../types';
 import { Reveal } from '../components/Reveal';
 import { ConnectiveWeb } from '../components/ConnectiveWeb';
 
 export const Home: React.FC = () => {
-  const [activeTier, setActiveTier] = useState<'dia' | 'metro' | 'cloud'>('dia');
+  // Interactive Solution Selector state
+  const [selectedService, setSelectedService] = useState<'office' | 'internet' | 'cabling' | 'wifi' | 'hardware' | 'software'>('office');
+  
+  // Background Video State & Ref
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const [isVideoPlaying, setIsVideoPlaying] = useState(true);
 
-  const tickerItems = [
-    "FTTX GIGABIT BROADBAND",
-    "AERIAL & OPTICAL FIBER STRINGING",
-    "ENTERPRISE MANAGED ICT",
-    "CLOUD VIRTUALIZATION",
-    "STRUCTURED LAN DEPLOYMENT",
-    "HIGH-SPEED FAILOVER GATEWAYS",
-    "CLOUD PBX SOLUTIONS",
-    "CYBERSECURITY INTEGRATION"
-  ];
+  useEffect(() => {
+    if (videoRef.current) {
+      videoRef.current.play().catch(() => {
+        setIsVideoPlaying(false);
+      });
+    }
+  }, []);
 
-  const tierDetails = {
-    dia: {
-      name: "Dedicated Internet Access (DIA)",
-      speed: "Up to 10 Gbps Symmetrical",
-      contention: "1:1 Guaranteed Uncontended",
-      sla: "99.999% Carrier Uptime",
-      latency: "<3.5ms Metro Ring Latency",
-      features: [
-        "Symmetric upload & download ceilings",
-        "Direct multi-homed Tier-1 BGP transit",
-        "Proactive 24/7 NOC monitoring with SLA penalty guarantee",
-        "Static IPv4/IPv6 block allocations included"
-      ]
-    },
-    metro: {
-      name: "Metro-Ethernet LAN Interconnect",
-      speed: "1 Gbps – 40 Gbps Optical Trunk",
-      contention: "100% Private Dark & Lit Fiber",
-      sla: "99.995% Private Ring SLA",
-      latency: "<2.1ms Point-to-Point Inter-site",
-      features: [
-        "Layer-2 transparent optical trunking between branches",
-        "Zero exposure to public Internet transit",
-        "Sub-50ms self-healing fiber ring failover",
-        "Hardware-level jumbo frame support (9000 MTU)"
-      ]
-    },
-    cloud: {
-      name: "Enterprise Cloud & PBX Virtualization",
-      speed: "Direct Cloud Connect 10 Gbps",
-      contention: "Dedicated Virtual Private Tunnels",
-      sla: "99.99% Cloud Gateway Availability",
-      latency: "<8.5ms Direct Cloud Peering",
-      features: [
-        "Direct cross-connect to AWS, Azure, & GCP regions",
-        "High-definition SIP trunking & Hosted Cloud PBX",
-        "Zero-trust perimeter firewall & IPS/IDS defense",
-        "Automated continuous cloud failover replication"
-      ]
+  const toggleVideoPlayback = () => {
+    if (!videoRef.current) return;
+    if (isVideoPlaying) {
+      videoRef.current.pause();
+      setIsVideoPlaying(false);
+    } else {
+      videoRef.current.play().then(() => setIsVideoPlaying(true)).catch(() => {});
     }
   };
 
-  return (
-    <div className="flex flex-col bg-[#0f172a] text-slate-100 min-h-screen selection:bg-brand-500 selection:text-white relative overflow-hidden">
-      {/* Background Cyber Grid Accent */}
-      <div 
-        className="fixed inset-0 pointer-events-none opacity-40 z-0" 
-        style={{
-          backgroundImage: 'radial-gradient(rgba(255, 255, 255, 0.12) 1px, transparent 1px)',
-          backgroundSize: '36px 36px'
-        }} 
-      />
+  const tickerItems = [
+    "Business Internet & Dedicated Connectivity",
+    "Structured Office Cabling (Cat6 / Cat6A)",
+    "Commercial Wi-Fi & Mesh Distribution",
+    "IT Hardware Procurement & Workstations",
+    "Server Rack & Patch Panel Organization",
+    "Custom Business Software & ERP Solutions",
+    "Router, Managed Switch & Firewall Setup",
+    "Network Troubleshooting & Maintenance",
+    "On-Site Support Across Africa"
+  ];
 
-      {/* Cinematic Hero Section */}
-      <section className="relative bg-[#0f172a] text-white overflow-hidden min-h-screen flex items-center justify-start py-20 md:py-28">
-        {/* Background Video from osiffatelecoms.com */}
+  const serviceProfiles = {
+    office: {
+      title: "Complete Office Network Setup",
+      desc: "End-to-end IT & connectivity setup for new or relocating offices. We handle your internet connection, structured cabling, Wi-Fi coverage, and server rack from day one.",
+      deliverables: [
+        "Structured data cabling to every desk and workstation",
+        "Neat wall plates and patch panel termination",
+        "Commercial-grade Wi-Fi access points for full coverage",
+        "Secure router and firewall configuration",
+        "Clean server rack or network cabinet installation"
+      ],
+      idealFor: "Startups, law firms, corporate offices, and clinics setting up a new space."
+    },
+    internet: {
+      title: "Reliable Business Internet",
+      desc: "Fast, dependable internet connectivity engineered for day-to-day office productivity, cloud collaboration, VoIP calls, and video conferencing without annoying drops.",
+      deliverables: [
+        "Stable broadband or dedicated business connection",
+        "Backup link / dual-WAN failover configuration",
+        "Bandwidth management to prioritize critical business apps",
+        "Static IP setup for remote access and local servers",
+        "Direct local technician support when you need help"
+      ],
+      idealFor: "Offices needing dependable connectivity with prompt local assistance."
+    },
+    cabling: {
+      title: "Structured Cabling & Rack Cleanup",
+      desc: "Say goodbye to tangled 'spaghetti' cables. We install certified Cat6/Cat6A data lines and reorganize messy network cabinets so your IT is clean and easy to maintain.",
+      deliverables: [
+        "Certified Cat6/Cat6A cabling with neat trunking",
+        "Professional patch panel labeling and color coding",
+        "Server rack cable reorganization and management",
+        "Cable continuity testing and certification",
+        "Reduced downtime caused by faulty or unorganized lines"
+      ],
+      idealFor: "Businesses with unorganized network closets or expanding office layouts."
+    },
+    wifi: {
+      title: "Enterprise Wi-Fi & Wireless Mesh",
+      desc: "Seamless, high-speed Wi-Fi coverage across every room, floor, or open space. Eliminate dead zones and ensure smooth roaming for staff and visitors.",
+      deliverables: [
+        "Strategic access point placement for zero dead zones",
+        "Separate, secure networks for staff and guests",
+        "High-density capacity supporting dozens of simultaneous devices",
+        "Smooth handover between access points as you walk around",
+        "Centralized dashboard for easy network monitoring"
+      ],
+      idealFor: "Multi-room offices, co-working spaces, restaurants, and warehouses."
+    },
+    hardware: {
+      title: "IT Hardware Procurement & Setup",
+      desc: "Sourcing and deploying enterprise workstations, business servers, UPS power backups, and biometric security systems tailored to your company's scale.",
+      deliverables: [
+        "Enterprise laptops, desktops, and dual-monitor workstations",
+        "On-premise servers and Network Attached Storage (NAS)",
+        "UPS power backup systems to protect against power surges",
+        "Biometric attendance and magnetic door access systems",
+        "Genuine hardware warranty and on-site hardware support"
+      ],
+      idealFor: "Offices needing dependable computer systems, secure storage, and hardware supply."
+    },
+    software: {
+      title: "Custom Software & Business ERP",
+      desc: "Custom web applications, business management systems, and automated workflows designed to streamline operations, inventory, and sales.",
+      deliverables: [
+        "Custom business management and ERP software",
+        "Inventory tracking and multi-location Point of Sale (POS)",
+        "Automated invoicing, customer records, and financial reports",
+        "Secure staff portals and role-based access control",
+        "Ongoing software updates, database maintenance, and training"
+      ],
+      idealFor: "Growing enterprises looking to automate manual tasks and modernize operations."
+    }
+  };
+
+  const workingSteps = [
+    {
+      step: "01",
+      title: "Initial Consultation",
+      desc: "We discuss your office layout, current pain points, number of users, and business requirements to understand exactly what you need."
+    },
+    {
+      step: "02",
+      title: "On-Site Assessment",
+      desc: "Our technicians inspect your premises to evaluate cable pathways, wall structures, and optimal hardware positions."
+    },
+    {
+      step: "03",
+      title: "Clean Installation",
+      desc: "We run quality cabling, mount access points, organize the rack, and configure network equipment neatly with minimal disruption."
+    },
+    {
+      step: "04",
+      title: "Testing & Ongoing Support",
+      desc: "We test every port and wireless zone, hand over full documentation, and remain available for fast on-demand maintenance and troubleshooting."
+    }
+  ];
+
+  return (
+    <div className="flex flex-col bg-[#FAF7F2] text-[#18181B] min-h-screen selection:bg-[#C026D3] selection:text-white relative overflow-hidden">
+      {/* Background Subtle Grid Accent */}
+      <div className="fixed inset-0 pointer-events-none opacity-30 z-0 cyber-grid" />
+
+      {/* Hero Section */}
+      <section className="relative bg-[#FAF7F2] text-[#18181B] overflow-hidden min-h-[90vh] flex items-center justify-start py-20 md:py-28">
+        {/* Background High-Definition Network Video */}
         <video
+          ref={videoRef}
           autoPlay
           loop
           muted
           playsInline
           preload="auto"
-          className="absolute inset-0 w-full h-full object-cover z-0 select-none pointer-events-none opacity-80"
-          src="https://osiffatelecoms.com/wp-content/uploads/2025/08/short-video.mp4"
-        />
+          poster="/images/server-room.jpg"
+          className="absolute inset-0 w-full h-full object-cover z-0 select-none pointer-events-none opacity-75 transition-opacity duration-700"
+        >
+          <source src="/videos/107991-678971274_medium.mp4" type="video/mp4" />
+          <source src="/videos/hero-background.mp4" type="video/mp4" />
+        </video>
+        
+        {/* Subtle Ambient Brand Glows */}
+        <div className="absolute top-1/4 left-1/6 w-96 h-96 bg-[#C026D3]/10 rounded-full blur-[140px] pointer-events-none z-0" />
+        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-[#FAF7F2] rounded-full blur-[140px] pointer-events-none z-0" />
         
         {/* Interactive Optical Particle Canvas */}
-        <div className="absolute inset-0 z-0 opacity-60">
-           <ConnectiveWeb theme="dark" />
+        <div className="absolute inset-0 z-0 opacity-40 pointer-events-none">
+          <ConnectiveWeb theme="light" />
         </div>
         
-        {/* Lighter, Softer Gradient Overlays for High-Contrast Readability */}
-        <div className="absolute inset-0 bg-gradient-to-r from-[#0f172a]/90 via-[#0f172a]/65 to-transparent z-10 pointer-events-none"></div>
-        <div className="absolute inset-0 bg-gradient-to-t from-[#0f172a] via-transparent to-[#0f172a]/40 z-10 pointer-events-none"></div>
-        
-        {/* Ambient Luminous Violet and Cyan Energy Blooms */}
-        <div className="absolute top-1/3 left-1/4 -translate-y-1/2 w-[750px] h-[750px] bg-brand-500/20 rounded-full blur-[150px] pointer-events-none z-0"></div>
-        <div className="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] bg-sky-400/20 rounded-full blur-[130px] pointer-events-none z-0"></div>
+        {/* Refined Directional Overlays for Text Legibility while Maximizing Video Visibility */}
+        <div className="absolute inset-0 bg-gradient-to-r from-[#FAF7F2] via-[#FAF7F2]/70 via-40% to-transparent z-10 pointer-events-none"></div>
+        <div className="absolute inset-0 bg-gradient-to-t from-[#FAF7F2] via-transparent to-[#FAF7F2]/30 z-10 pointer-events-none"></div>
 
-        <div className="relative z-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full text-left pt-12">
+        <div className="relative z-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full text-left pt-8">
           <Reveal>
-            <div className="inline-flex items-center px-4 py-2 rounded-full border border-white/20 bg-white/[0.08] backdrop-blur-xl text-brand-300 text-[11px] font-bold tracking-[0.25em] uppercase mb-8 shadow-2xl hover:bg-white/[0.12] hover:border-brand-400/50 transition-all cursor-default group">
-              <span className="relative flex h-2 w-2 mr-2.5">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
-              </span>
-              <span>CARRIER-GRADE OPTICAL & CLOUD TRANSIT</span>
-              <span className="hidden sm:inline text-white/30 mx-2">|</span>
-              <span className="hidden sm:inline text-slate-200 font-mono text-[10px]">ABUJA METRO RING: ONLINE</span>
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-[#E8E2D5] bg-white text-[#18181B] text-xs font-semibold mb-8 shadow-sm cursor-default">
+              <span className="h-2 w-2 rounded-full bg-[#C026D3]"></span>
+              <span>Osiffa Telecoms (Nig.) Ltd</span>
+              <span className="text-[#18181B]/30">·</span>
+              <span>Networking & IT Solutions</span>
+              <span className="text-[#18181B]/30">·</span>
+              <span className="text-[#C026D3] font-semibold text-[11px]">Africa</span>
             </div>
           </Reveal>
           
           <Reveal delay={100}>
-            <div className="text-sm md:text-base font-bold tracking-[0.4em] text-brand-400 mb-4 uppercase text-left flex items-center gap-3">
-              <span className="h-px w-8 bg-brand-500"></span>
-              Osiffa Telecoms
+            <div className="text-xs sm:text-sm font-bold tracking-wider text-[#C026D3] mb-3 uppercase text-left flex items-center gap-2 font-mono">
+              <span className="h-0.5 w-6 bg-[#C026D3]"></span>
+              <span>Practical, Dependable Networking</span>
             </div>
           </Reveal>
 
           {/* Headline strictly following the two-words-per-line user mandate */}
           <Reveal delay={200}>
-            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight mb-8 leading-[1.1] text-white uppercase text-left">
+            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight mb-8 leading-[1.12] text-[#18181B] text-left">
               Let’s Build <br />
               Your Network <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-brand-200 to-brand-400 text-glow">
-                for the <br /> Future
+              <span className="font-extrabold">
+                for the <br />
+                <span className="text-[#C026D3]">
+                  Future
+                </span>
               </span>
             </h1>
           </Reveal>
 
           <Reveal delay={400}>
-            <p className="text-base md:text-lg text-slate-300 mb-10 leading-relaxed max-w-2xl font-normal text-left">
-              Providing metropolitan FTTX deployments, synchronous corporate broadband, private cloud virtualization, and managed enterprise ICT frameworks tailored for high-availability performance.
+            <p className="text-base md:text-lg text-[#18181B]/75 mb-10 leading-relaxed max-w-2xl font-normal text-left">
+              Providing reliable business internet, structured office cabling, commercial Wi-Fi solutions, and hands-on IT network support for growing companies across Africa.
             </p>
           </Reveal>
 
           <Reveal delay={600}>
-            <div className="flex flex-col sm:flex-row gap-4 justify-start mb-16">
-              <Link to={PageRoute.SERVICES}>
-                <Button size="lg" className="w-full sm:w-auto px-10 py-5 text-sm font-semibold rounded-full bg-gradient-to-r from-brand-600 via-purple-600 to-brand-500 hover:from-brand-500 hover:to-purple-400 text-white transition-all shadow-xl shadow-brand-500/30 ring-1 ring-white/20 active:scale-98">
-                  Review Infrastructure
-                </Button>
-              </Link>
+            <div className="flex flex-col sm:flex-row gap-4 justify-start mb-14">
               <Link to={PageRoute.CONTACT}>
-                <Button size="lg" variant="outline" className="w-full sm:w-auto px-10 py-5 text-sm font-semibold rounded-full border-white/20 text-white bg-white/5 backdrop-blur-md hover:bg-white/15 hover:border-brand-400/60 shadow-lg shadow-black/40 active:scale-98">
-                  Enterprise Consult
-                </Button>
+                <button className="group relative w-full sm:w-auto px-8 py-3.5 text-xs font-semibold rounded-lg bg-[#18181B] hover:bg-[#C026D3] text-white shadow-sm hover:shadow-[0_4px_20px_rgba(192,38,211,0.3)] transition-all duration-300 flex items-center justify-center gap-2 overflow-hidden">
+                  <span>Request a Free Quote</span>
+                  <ArrowRight size={14} className="transition-transform group-hover:translate-x-1" />
+                </button>
+              </Link>
+              <Link to={PageRoute.SERVICES}>
+                <button className="w-full sm:w-auto px-8 py-3.5 text-xs font-semibold rounded-lg border border-[#E8E2D5] hover:border-[#C026D3] text-[#18181B] hover:text-[#C026D3] bg-white shadow-sm transition-colors flex items-center justify-center">
+                  <span>Explore Our Services</span>
+                </button>
               </Link>
             </div>
           </Reveal>
 
-          {/* Quick Telemetry Strip in Hero */}
+          {/* Authentic Value Strip in Hero */}
           <Reveal delay={700}>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 max-w-4xl pt-6 border-t border-white/15">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 max-w-4xl pt-6 border-t border-[#E8E2D5]">
               {[
-                { label: "Core Availability", val: "99.999%", sub: "Guaranteed SLA" },
-                { label: "Metro Ring Latency", val: "<4.2 ms", sub: "Abuja Core CBD" },
-                { label: "FTTX Backbone", val: "10+ Gbps", sub: "Symmetric Uplink" },
-                { label: "NOC Surveillance", val: "24/7/365", sub: "Active Threat Defense" },
+                { label: "Response Time", val: "Prompt & Local", sub: "On-Site Support" },
+                { label: "Cabling Standards", val: "Cat6 & Cat6A", sub: "Neat, Labeled Trunking" },
+                { label: "Business Internet", val: "Stable & Sized", sub: "For Your Team's Scale" },
+                { label: "Support Model", val: "Hands-On", sub: "Experienced Technicians" },
               ].map((m, i) => (
-                <div key={i} className="p-3.5 rounded-xl bg-slate-800/60 border border-slate-700/70 backdrop-blur-md hover:bg-slate-800/80 transition-colors">
-                  <div className="text-[10px] uppercase font-bold tracking-widest text-slate-300 mb-1">{m.label}</div>
-                  <div className="text-lg md:text-xl font-mono font-bold text-white tracking-tight">{m.val}</div>
-                  <div className="text-[10px] text-brand-300 font-mono">{m.sub}</div>
+                <div key={i} className="p-4 rounded-xl bg-white border border-[#E8E2D5] shadow-sm">
+                  <div className="text-xs text-[#18181B]/60 mb-1">{m.label}</div>
+                  <div className="text-base sm:text-lg font-bold text-[#18181B] tracking-tight">{m.val}</div>
+                  <div className="text-xs text-[#C026D3] font-semibold">{m.sub}</div>
                 </div>
               ))}
             </div>
@@ -187,242 +269,69 @@ export const Home: React.FC = () => {
         </div>
         
         {/* Scroll Indicator */}
-        <div className="absolute bottom-6 left-1/2 -translate-x-1/2 animate-bounce z-20 text-slate-400 flex flex-col items-center gap-1">
-           <span className="text-[10px] font-mono tracking-widest uppercase text-slate-400">SCROLL</span>
-           <ArrowRight className="rotate-90 text-brand-400" size={16} />
+        <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-20 text-[#18181B]/40 flex flex-col items-center gap-1">
+          <span className="text-[10px] tracking-widest uppercase font-semibold">Scroll</span>
+          <ArrowRight className="rotate-90 text-[#18181B]/40" size={14} />
+        </div>
+
+        {/* Video Play/Pause Control Pill */}
+        <div className="absolute bottom-6 right-6 sm:right-10 z-20 flex items-center">
+          <button
+            type="button"
+            onClick={toggleVideoPlayback}
+            className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/80 hover:bg-white text-[#18181B] text-[11px] font-medium backdrop-blur-md border border-[#E8E2D5] shadow-sm hover:shadow transition-all duration-200 cursor-pointer"
+            title={isVideoPlaying ? "Pause background animation" : "Play background animation"}
+            aria-label={isVideoPlaying ? "Pause background video" : "Play background video"}
+          >
+            <span className={`h-2 w-2 rounded-full ${isVideoPlaying ? 'bg-emerald-500 animate-pulse' : 'bg-zinc-400'}`}></span>
+            <span className="text-[11px] font-semibold text-[#18181B]/80">{isVideoPlaying ? 'Motion On' : 'Paused'}</span>
+            {isVideoPlaying ? <Pause size={12} className="text-zinc-600" /> : <Play size={12} className="text-zinc-600" />}
+          </button>
         </div>
       </section>
 
-      {/* Infinite Partner Marquee */}
-      <section className="bg-[#1e293b] border-y border-slate-700/80 py-5 relative overflow-hidden z-20 shadow-md">
-         <div className="absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-[#1e293b] to-transparent z-10 pointer-events-none"></div>
-         <div className="absolute inset-y-0 right-0 w-32 bg-gradient-to-l from-[#1e293b] to-transparent z-10 pointer-events-none"></div>
-         
-         <div className="flex w-max animate-scroll hover:[animation-play-state:paused]">
-           {/* First Set */}
-           <div className="flex items-center gap-16 px-8">
-              {tickerItems.map((item, i) => (
-                <div key={`a-${i}`} className="flex items-center gap-16">
-                   <span className="text-xs md:text-sm text-slate-200 font-semibold tracking-[0.25em] uppercase hover:text-brand-300 transition-colors duration-300 cursor-default whitespace-nowrap">
-                      {item}
-                   </span>
-                   <span className="text-brand-400 font-mono text-xs drop-shadow-[0_0_8px_rgba(217,70,239,0.5)]">///</span>
-                </div>
-              ))}
-           </div>
-           {/* Duplicate Set for smooth infinite scroll */}
-           <div className="flex items-center gap-16 px-8">
-              {tickerItems.map((item, i) => (
-                <div key={`b-${i}`} className="flex items-center gap-16">
-                   <span className="text-xs md:text-sm text-slate-200 font-semibold tracking-[0.25em] uppercase hover:text-brand-300 transition-colors duration-300 cursor-default whitespace-nowrap">
-                      {item}
-                   </span>
-                   <span className="text-brand-400 font-mono text-xs drop-shadow-[0_0_8px_rgba(217,70,239,0.5)]">///</span>
-                </div>
-              ))}
-           </div>
-           {/* Triplicate Set for ultra-wide screens */}
-           <div className="flex items-center gap-16 px-8">
-              {tickerItems.map((item, i) => (
-                <div key={`c-${i}`} className="flex items-center gap-16">
-                   <span className="text-xs md:text-sm text-slate-200 font-semibold tracking-[0.25em] uppercase hover:text-brand-300 transition-colors duration-300 cursor-default whitespace-nowrap">
-                      {item}
-                   </span>
-                   <span className="text-brand-400 font-mono text-xs drop-shadow-[0_0_8px_rgba(217,70,239,0.5)]">///</span>
-                </div>
-              ))}
-           </div>
-         </div>
-      </section>
-
-      {/* Impact By Numbers - High Tech Dark Glass Metrics */}
-      <section className="py-24 bg-[#0f172a] relative border-b border-slate-800">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
-            {[
-              { number: "99.99%", label: "SLA-Backed Uptime", detail: "Carrier-Grade Fiber Assurance" },
-              { number: "<4.2ms", label: "Abuja Ring Latency", detail: "Direct CBD Exchange Peering" },
-              { number: "10 Gbps", label: "Backbone Core Capacity", detail: "Dense Wavelength Division" },
-              { number: "24/7/365", label: "Active Threat Defense", detail: "Real-Time SOC & NOC Monitoring" },
-            ].map((stat, idx) => (
-               <Reveal key={idx} delay={idx * 100}>
-                  <div className="group p-8 rounded-2xl bg-slate-800/70 border border-slate-700/80 hover:border-brand-400/60 hover:bg-slate-800 transition-all duration-300 shadow-xl backdrop-blur-md h-full flex flex-col justify-center">
-                    <div className="text-4xl md:text-5xl font-mono font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-white via-slate-100 to-brand-300 tracking-tight mb-2 group-hover:scale-105 transition-transform duration-300 text-glow">{stat.number}</div>
-                    <div className="text-xs text-brand-300 uppercase tracking-[0.2em] font-bold mb-1">{stat.label}</div>
-                    <div className="text-[11px] text-slate-300 font-normal">{stat.detail}</div>
-                  </div>
-               </Reveal>
+      {/* Services Marquee */}
+      <section className="bg-white border-y border-[#E8E2D5] py-3.5 relative overflow-hidden z-20 shadow-sm">
+        <div className="absolute inset-y-0 left-0 w-24 bg-gradient-to-r from-white to-transparent z-10 pointer-events-none"></div>
+        <div className="absolute inset-y-0 right-0 w-24 bg-gradient-to-l from-white to-transparent z-10 pointer-events-none"></div>
+        
+        <div className="flex w-max animate-scroll hover:[animation-play-state:paused]">
+          <div className="flex items-center gap-10 px-6">
+            {tickerItems.map((item, i) => (
+              <div key={`a-${i}`} className="flex items-center gap-10">
+                <span className="text-xs text-[#18181B]/80 font-semibold hover:text-[#C026D3] transition-colors duration-200 cursor-default whitespace-nowrap">
+                  {item}
+                </span>
+                <span className="text-[#C026D3] text-xs">·</span>
+              </div>
+            ))}
+          </div>
+          <div className="flex items-center gap-10 px-6">
+            {tickerItems.map((item, i) => (
+              <div key={`b-${i}`} className="flex items-center gap-10">
+                <span className="text-xs text-[#18181B]/80 font-semibold hover:text-[#C026D3] transition-colors duration-200 cursor-default whitespace-nowrap">
+                  {item}
+                </span>
+                <span className="text-[#C026D3] text-xs">·</span>
+              </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Interactive Enterprise Telemetry & Bandwidth Console (WOW Factor) */}
-      <section className="py-28 bg-[#111827] relative overflow-hidden border-b border-slate-800">
-        {/* Subtle background glow */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[850px] h-[550px] bg-brand-500/15 rounded-full blur-[150px] pointer-events-none"></div>
-
+      {/* Core Services Overview (What We Do) */}
+      <section className="py-24 bg-[#FAF7F2] relative border-b border-[#E8E2D5]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <Reveal>
             <div className="text-center max-w-3xl mx-auto mb-16">
-              <span className="text-xs font-bold tracking-[0.3em] text-brand-400 uppercase block mb-3">Live Enterprise Telemetry</span>
-              <h2 className="text-3xl md:text-5xl font-bold text-white tracking-tight leading-none mb-6">
-                Metropolitan Optical <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-400 via-purple-300 to-cyan-300 text-glow">Exchange Engine</span>
+              <span className="text-xs font-bold tracking-wider text-[#C026D3] uppercase block mb-3 font-mono">
+                Practical Services
+              </span>
+              <h2 className="text-3xl md:text-5xl font-bold text-[#18181B] tracking-tight leading-tight mb-4">
+                What We Do for <span className="text-[#C026D3]">Your Business</span>
               </h2>
-              <p className="text-base text-slate-300 font-normal">
-                Inspect real-time routing specs, latency benchmarks, and carrier configuration models engineered for high-concurrency enterprise workloads.
-              </p>
-            </div>
-          </Reveal>
-
-          {/* Interactive Tier Switcher */}
-          <div className="max-w-5xl mx-auto">
-            <div className="flex flex-wrap justify-center gap-3 mb-8 p-1.5 rounded-2xl bg-white/[0.08] border border-white/15 backdrop-blur-xl">
-              <button
-                onClick={() => setActiveTier('dia')}
-                className={`px-6 py-3 rounded-xl text-xs sm:text-sm font-semibold tracking-wider uppercase transition-all duration-300 flex items-center gap-2 ${
-                  activeTier === 'dia'
-                    ? 'bg-gradient-to-r from-brand-600 to-purple-600 text-white shadow-lg shadow-brand-500/30'
-                    : 'text-slate-300 hover:text-white hover:bg-white/10'
-                }`}
-              >
-                <Zap size={16} />
-                <span>Dedicated Internet (DIA)</span>
-              </button>
-              <button
-                onClick={() => setActiveTier('metro')}
-                className={`px-6 py-3 rounded-xl text-xs sm:text-sm font-semibold tracking-wider uppercase transition-all duration-300 flex items-center gap-2 ${
-                  activeTier === 'metro'
-                    ? 'bg-gradient-to-r from-brand-600 to-purple-600 text-white shadow-lg shadow-brand-500/30'
-                    : 'text-slate-300 hover:text-white hover:bg-white/10'
-                }`}
-              >
-                <Network size={16} />
-                <span>Metro-Ethernet LAN</span>
-              </button>
-              <button
-                onClick={() => setActiveTier('cloud')}
-                className={`px-6 py-3 rounded-xl text-xs sm:text-sm font-semibold tracking-wider uppercase transition-all duration-300 flex items-center gap-2 ${
-                  activeTier === 'cloud'
-                    ? 'bg-gradient-to-r from-brand-600 to-purple-600 text-white shadow-lg shadow-brand-500/30'
-                    : 'text-slate-300 hover:text-white hover:bg-white/10'
-                }`}
-              >
-                <Server size={16} />
-                <span>Cloud & PBX Transit</span>
-              </button>
-            </div>
-
-            {/* Telemetry Console Card */}
-            <div className="rounded-3xl bg-[#152340]/90 border border-white/20 p-6 sm:p-10 shadow-2xl backdrop-blur-2xl">
-              <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-                {/* Left Specs Column */}
-                <div className="lg:col-span-7 space-y-6">
-                  <div className="flex items-center gap-3">
-                    <span className="px-3 py-1 rounded-full text-[10px] font-mono font-bold uppercase tracking-widest bg-brand-500/25 text-brand-300 border border-brand-400/40">
-                      Active Architecture
-                    </span>
-                    <span className="text-slate-300 font-mono text-xs flex items-center gap-1.5">
-                      <span className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse"></span>
-                      100% Optical Health
-                    </span>
-                  </div>
-
-                  <h3 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">
-                    {tierDetails[activeTier].name}
-                  </h3>
-
-                  <div className="grid grid-cols-2 gap-4 py-2">
-                    <div className="p-4 rounded-xl bg-white/[0.06] border border-white/15">
-                      <div className="text-[10px] uppercase font-bold text-slate-300 font-mono mb-1">Guaranteed Throughput</div>
-                      <div className="text-base sm:text-lg font-bold text-white font-mono">{tierDetails[activeTier].speed}</div>
-                    </div>
-                    <div className="p-4 rounded-xl bg-white/[0.06] border border-white/15">
-                      <div className="text-[10px] uppercase font-bold text-slate-300 font-mono mb-1">Latency SLA</div>
-                      <div className="text-base sm:text-lg font-bold text-brand-300 font-mono">{tierDetails[activeTier].latency}</div>
-                    </div>
-                    <div className="p-4 rounded-xl bg-white/[0.06] border border-white/15">
-                      <div className="text-[10px] uppercase font-bold text-slate-300 font-mono mb-1">Contention Ratio</div>
-                      <div className="text-base sm:text-lg font-bold text-white font-mono">{tierDetails[activeTier].contention}</div>
-                    </div>
-                    <div className="p-4 rounded-xl bg-white/[0.06] border border-white/15">
-                      <div className="text-[10px] uppercase font-bold text-slate-300 font-mono mb-1">Contractual SLA</div>
-                      <div className="text-base sm:text-lg font-bold text-emerald-400 font-mono">{tierDetails[activeTier].sla}</div>
-                    </div>
-                  </div>
-
-                  <div className="space-y-2.5 pt-2">
-                    {tierDetails[activeTier].features.map((feat, fIdx) => (
-                      <div key={fIdx} className="flex items-start gap-3 text-xs sm:text-sm text-slate-200">
-                        <CheckCircle2 size={16} className="text-brand-400 shrink-0 mt-0.5" />
-                        <span>{feat}</span>
-                      </div>
-                    ))}
-                  </div>
-
-                  <div className="pt-4">
-                    <Link to={PageRoute.CONTACT}>
-                      <Button size="lg" className="px-8 py-4 rounded-full bg-brand-600 hover:bg-brand-700 text-white font-semibold text-xs tracking-wider uppercase shadow-lg shadow-brand-500/25 flex items-center gap-2">
-                        <span>Provision This Architecture</span>
-                        <ArrowRight size={14} />
-                      </Button>
-                    </Link>
-                  </div>
-                </div>
-
-                {/* Right Interactive Node Topology Graph */}
-                <div className="lg:col-span-5 p-6 rounded-2xl bg-[#0e172e] border border-white/15 space-y-4">
-                  <div className="flex items-center justify-between pb-3 border-b border-white/15">
-                    <div className="text-xs font-mono font-bold text-slate-200 uppercase tracking-wider flex items-center gap-2">
-                      <Radio size={14} className="text-brand-400 animate-pulse" />
-                      Abuja Metro Node Pings
-                    </div>
-                    <span className="text-[10px] font-mono text-emerald-400">0.00% Packet Loss</span>
-                  </div>
-
-                  <div className="space-y-3 font-mono text-xs">
-                    {[
-                      { node: "Central Business District (CBD)", ping: "2.4 ms", status: "Optimal", color: "text-emerald-400" },
-                      { node: "Maitama Core Ring", ping: "3.1 ms", status: "Active 1:1", color: "text-emerald-400" },
-                      { node: "Wuse II Exchange", ping: "2.8 ms", status: "Low Jitter", color: "text-emerald-400" },
-                      { node: "Jabi & Airport Corridor", ping: "4.3 ms", status: "Dense WDM", color: "text-brand-300" },
-                      { node: "Global Transit Cross-Connect", ping: "11.2 ms", status: "Multi-BGP", color: "text-cyan-300" }
-                    ].map((n, i) => (
-                      <div key={i} className="flex items-center justify-between p-2.5 rounded-lg bg-white/[0.05] border border-white/10 hover:border-brand-400/40 transition-colors">
-                        <div className="flex items-center gap-2 truncate pr-2">
-                          <span className="h-1.5 w-1.5 rounded-full bg-brand-400"></span>
-                          <span className="text-slate-200 truncate">{n.node}</span>
-                        </div>
-                        <div className="flex items-center gap-3 shrink-0">
-                          <span className={n.color}>{n.ping}</span>
-                          <span className="text-[9px] px-2 py-0.5 rounded bg-white/10 text-slate-300 border border-white/15 uppercase">{n.status}</span>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-
-                  <div className="p-3 rounded-xl bg-brand-500/15 border border-brand-400/30 text-[11px] text-slate-200 flex items-center gap-2">
-                    <ShieldCheck size={16} className="text-brand-400 shrink-0" />
-                    <span>Real-time link failover ensures automatic switchover in &lt;50ms upon physical strand disruption.</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Spotlight Features Grid - Sleek Refined Slate */}
-      <section className="py-32 bg-[#0f172a] relative overflow-hidden">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <Reveal>
-            <div className="mb-20">
-              <span className="text-xs font-bold tracking-[0.3em] text-brand-400 uppercase block mb-3">Core Infrastructure Standards</span>
-              <h2 className="text-3xl md:text-5xl font-bold text-white tracking-tight leading-none mb-6">
-                Engineered for <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-300 via-purple-300 to-cyan-300 text-glow">Reliability</span>
-              </h2>
-              <p className="text-base text-slate-200 max-w-2xl font-normal">
-                High-capacity core backbones and bespoke network solutions designed to support critical public and corporate operations across Abuja.
+              <p className="text-sm sm:text-base text-[#18181B]/70 font-normal">
+                From laying neat office cables to setting up fast Wi-Fi and managing your connection, we make business networking straightforward and reliable.
               </p>
             </div>
           </Reveal>
@@ -430,65 +339,71 @@ export const Home: React.FC = () => {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {[
               {
-                icon: Smartphone,
-                tag: "Carrier Hardware",
-                title: "Carrier-Grade Equipment",
-                desc: "Direct local deployment of enterprise-class customer premises equipment (CPE) fitted with proactive link monitoring modules."
+                icon: Wifi,
+                title: "Business Internet Setup",
+                tag: "Connectivity",
+                desc: "Connecting your office with dependable, properly configured internet. We configure backup links and bandwidth shaping so your team stays online without slowdowns."
               },
               {
-                icon: Globe,
-                tag: "Dedicated Pathways",
-                title: "Dedicated Fiber Loops",
-                desc: "Private physical optical pathways routing traffic directly through core metropolitan exchange points for absolute data isolation."
+                icon: Network,
+                title: "Structured Office Cabling",
+                tag: "Infrastructure",
+                desc: "Clean, professional Cat6/Cat6A cable runs for desktop workstations, printers, and phones. All lines are neatly trunked, terminated, and labeled for easy maintenance."
               },
               {
                 icon: Cpu,
-                tag: "SDN Traffic Flow",
-                title: "Proactive Flow Optimization",
-                desc: "Advanced traffic-shaping and software-defined routing loops continuously stabilize load balances, preventing packet jitter."
+                title: "Commercial Wi-Fi & Mesh",
+                tag: "Wireless",
+                desc: "Full-coverage Wi-Fi designed for business spaces. Eliminate dead zones, support multiple laptops and phones smoothly, and keep guest traffic safely separated."
+              },
+              {
+                icon: Layers,
+                title: "Server Rack Organization",
+                tag: "Neat & Clean",
+                desc: "Transform messy, tangled network closets into clean, organized server racks. We install patch panels, cable organizers, and labeled cords so maintenance is effortless."
               },
               {
                 icon: ShieldCheck,
-                tag: "Active Defense",
-                title: "Layer-3 Active Security",
-                desc: "Comprehensive encryption integration, strict firewall architectures, and active perimeter defense shielding critical databases."
+                title: "Routers, Switches & Firewalls",
+                tag: "Hardware Config",
+                desc: "Installation and configuration of managed switches, business routers, and hardware firewalls. We ensure your local network is secure and properly segmented."
               },
               {
-                icon: Zap,
-                tag: "Synchronous 1:1",
-                title: "Symmetrical Bandwidth",
-                desc: "High-capacity synchronous transport baselines offering equal upload and download ceilings for seamless site-to-site backups."
-              },
-              {
-                icon: Server,
-                tag: "Localized Rings",
-                title: "Regional Exchange Nodes",
-                desc: "Extensive localized core switching arrays positioned close to corporate rings to minimize public internet routing hops."
+                icon: Wrench,
+                title: "On-Site Support & Maintenance",
+                tag: "Local Assistance",
+                desc: "Responsive on-demand IT and networking support when you need assistance. When a port fails, an access point disconnects, or internet drops, our technicians are ready to assist."
               }
-            ].map((feature, idx) => (
+            ].map((card, idx) => (
               <Reveal key={idx} delay={idx * 100}>
-                {/* Spotlight Card */}
-                <div className="group relative h-full bg-slate-800/80 hover:bg-slate-800 rounded-2xl p-8 overflow-hidden hover:-translate-y-1.5 transition-all duration-300 border border-slate-700/80 hover:border-brand-400/60 shadow-xl shadow-black/20">
-                  
-                  {/* Subtle Top Accent Line */}
-                  <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-brand-400/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-
-                  <div className="relative z-10">
+                <div className="h-full bg-white rounded-2xl p-8 border border-[#E8E2D5] hover:border-[#C026D3]/50 transition-all shadow-sm flex flex-col justify-between group">
+                  <div>
                     <div className="flex items-center justify-between mb-6">
-                      <div className="h-12 w-12 bg-brand-500/15 border border-brand-500/30 rounded-xl flex items-center justify-center text-brand-300 group-hover:bg-brand-600 group-hover:text-white transition-all duration-300 shadow-md group-hover:shadow-brand-500/40">
-                        <feature.icon size={22} />
+                      <div className="h-12 w-12 rounded-xl bg-[#FAF7F2] border border-[#E8E2D5] flex items-center justify-center text-[#C026D3] group-hover:bg-[#18181B] group-hover:text-white transition-colors shadow-sm">
+                        <card.icon size={22} />
                       </div>
-                      <span className="text-[10px] font-mono tracking-widest uppercase px-2.5 py-1 rounded-md bg-slate-700/60 text-slate-200 border border-slate-600/60 group-hover:text-brand-200 group-hover:border-brand-400/40 transition-colors">
-                        {feature.tag}
+                      <span className="text-[10px] font-mono font-bold tracking-wider uppercase px-2.5 py-0.5 rounded bg-[#FAF7F2] text-[#18181B]/70 border border-[#E8E2D5]">
+                        {card.tag}
                       </span>
                     </div>
 
-                    <h3 className="text-lg font-bold text-white mb-3 tracking-tight group-hover:text-brand-200 transition-colors">
-                      {feature.title}
+                    <h3 className="text-lg font-bold text-[#18181B] mb-2.5 tracking-tight">
+                      {card.title}
                     </h3>
-                    <p className="text-slate-200 leading-relaxed text-xs sm:text-sm font-normal">
-                      {feature.desc}
+
+                    <p className="text-[#18181B]/70 text-sm leading-relaxed mb-6 font-normal">
+                      {card.desc}
                     </p>
+                  </div>
+
+                  <div className="pt-4 border-t border-[#E8E2D5]">
+                    <Link 
+                      to={PageRoute.SERVICES} 
+                      className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#18181B] group-hover:text-[#C026D3] transition-colors"
+                    >
+                      <span>Learn more</span>
+                      <ArrowRight size={13} className="transition-transform group-hover:translate-x-1" />
+                    </Link>
                   </div>
                 </div>
               </Reveal>
@@ -497,39 +412,377 @@ export const Home: React.FC = () => {
         </div>
       </section>
 
-      {/* Elegant, Mature CTA in Dark Theme */}
-      <section className="py-32 bg-gradient-to-b from-[#131d33] via-[#1e293b] to-[#0f172a] relative overflow-hidden flex items-center justify-center text-center px-4 border-t border-slate-700/60">
-        {/* Subtle Ambient Radial Glows */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[900px] h-[400px] bg-brand-500/20 rounded-full blur-[150px] pointer-events-none"></div>
-
-        <div className="relative z-10 max-w-3xl mx-auto">
+      {/* Beyond Networking: Hardware & Software Solutions */}
+      <section className="py-24 bg-white relative border-b border-[#E8E2D5]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <Reveal>
-            <span className="text-xs font-bold tracking-[0.3em] text-brand-400 uppercase block mb-4">Enterprise Architectures</span>
-            <h2 className="text-3xl md:text-5xl font-bold text-white mb-6 tracking-tight uppercase text-glow">CONTACT US</h2>
-            <p className="text-slate-200 text-base md:text-lg mb-10 font-normal max-w-xl mx-auto leading-relaxed">
-              Upgrade your commercial workspaces, high-capacity residential points, or cloud connectivity tunnels with our expert configuration team.
+            <div className="text-center max-w-3xl mx-auto mb-16">
+              <span className="text-xs font-bold tracking-wider text-[#C026D3] uppercase block mb-3 font-mono">
+                Integrated IT Services
+              </span>
+              <h2 className="text-3xl md:text-5xl font-bold text-[#18181B] tracking-tight leading-tight mb-4">
+                Hardware & Software <span className="text-[#C026D3]">Solutions</span>
+              </h2>
+              <p className="text-sm sm:text-base text-[#18181B]/70 font-normal">
+                Beyond cables and connectivity, we provide genuine business computer equipment and custom software systems—giving your organization a single, accountable technology partner.
+              </p>
+            </div>
+          </Reveal>
+
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-5xl mx-auto">
+            {/* Hardware Card */}
+            <Reveal delay={100}>
+              <div className="p-8 sm:p-10 rounded-2xl bg-[#FAF7F2] border border-[#E8E2D5] hover:border-[#C026D3]/50 transition-all shadow-sm flex flex-col justify-between h-full">
+                <div>
+                  <div className="flex items-center justify-between mb-6">
+                    <div className="h-12 w-12 rounded-xl bg-white border border-[#E8E2D5] flex items-center justify-center text-[#C026D3] shadow-sm">
+                      <Server size={22} />
+                    </div>
+                    <span className="text-[10px] font-mono font-bold tracking-wider uppercase px-2.5 py-0.5 rounded bg-white text-[#18181B]/70 border border-[#E8E2D5]">
+                      Hardware Supply
+                    </span>
+                  </div>
+
+                  <h3 className="text-xl font-bold text-[#18181B] mb-3 tracking-tight">
+                    IT Hardware Procurement & Setup
+                  </h3>
+                  <p className="text-[#18181B]/70 text-sm leading-relaxed mb-6">
+                    We source, configure, and deploy genuine brand-name business hardware. From desktop workstations and business laptops to power protection and server racks.
+                  </p>
+
+                  <div className="space-y-3 mb-8">
+                    {[
+                      "Business laptops, desktop PCs & dual-monitor setups",
+                      "On-premise servers & Network Attached Storage (NAS)",
+                      "Pure sine-wave UPS units & voltage surge protection",
+                      "Biometric time & attendance and door access control",
+                      "Hardware diagnostics, RAM/SSD upgrades & repairs"
+                    ].map((item, idx) => (
+                      <div key={idx} className="flex items-start gap-2.5 text-xs sm:text-sm text-[#18181B]/80">
+                        <CheckCircle2 size={16} className="text-[#C026D3] shrink-0 mt-0.5" />
+                        <span>{item}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="pt-5 border-t border-[#E8E2D5] flex items-center justify-between">
+                  <span className="text-xs font-mono text-[#18181B]/60">Genuine Warranty Included</span>
+                  <Link to={PageRoute.SERVICES} className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#18181B] hover:text-[#C026D3] transition-colors">
+                    <span>View Hardware</span>
+                    <ArrowRight size={13} />
+                  </Link>
+                </div>
+              </div>
+            </Reveal>
+
+            {/* Software Card */}
+            <Reveal delay={200}>
+              <div className="p-8 sm:p-10 rounded-2xl bg-[#FAF7F2] border border-[#E8E2D5] hover:border-[#C026D3]/50 transition-all shadow-sm flex flex-col justify-between h-full">
+                <div>
+                  <div className="flex items-center justify-between mb-6">
+                    <div className="h-12 w-12 rounded-xl bg-white border border-[#E8E2D5] flex items-center justify-center text-[#C026D3] shadow-sm">
+                      <Code2 size={22} />
+                    </div>
+                    <span className="text-[10px] font-mono font-bold tracking-wider uppercase px-2.5 py-0.5 rounded bg-white text-[#18181B]/70 border border-[#E8E2D5]">
+                      Software Engineering
+                    </span>
+                  </div>
+
+                  <h3 className="text-xl font-bold text-[#18181B] mb-3 tracking-tight">
+                    Custom Software & Business ERP
+                  </h3>
+                  <p className="text-[#18181B]/70 text-sm leading-relaxed mb-6">
+                    Tailor-made software applications and automated management tools that eliminate repetitive manual spreadsheets, streamline inventory, and track sales.
+                  </p>
+
+                  <div className="space-y-3 mb-8">
+                    {[
+                      "Custom web applications & secure staff portals",
+                      "Inventory management & multi-location Point of Sale (POS)",
+                      "Automated invoicing, payment receipts & CRM records",
+                      "Payment gateway & automated WhatsApp/SMS integration",
+                      "Continuous software updates, database backups & support"
+                    ].map((item, idx) => (
+                      <div key={idx} className="flex items-start gap-2.5 text-xs sm:text-sm text-[#18181B]/80">
+                        <CheckCircle2 size={16} className="text-[#C026D3] shrink-0 mt-0.5" />
+                        <span>{item}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="pt-5 border-t border-[#E8E2D5] flex items-center justify-between">
+                  <span className="text-xs font-mono text-[#18181B]/60">Built for Your Workflow</span>
+                  <Link to={PageRoute.SERVICES} className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#18181B] hover:text-[#C026D3] transition-colors">
+                    <span>View Software</span>
+                    <ArrowRight size={13} />
+                  </Link>
+                </div>
+              </div>
+            </Reveal>
+          </div>
+        </div>
+      </section>
+
+      {/* Interactive Solution Explorer */}
+      <section className="py-24 bg-[#FAF7F2] relative overflow-hidden border-b border-[#E8E2D5]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <Reveal>
+            <div className="text-center max-w-3xl mx-auto mb-14">
+              <span className="text-xs font-bold tracking-wider text-[#C026D3] uppercase block mb-3 font-mono">
+                Explore Solutions
+              </span>
+              <h2 className="text-3xl md:text-5xl font-bold text-[#18181B] tracking-tight leading-tight mb-4">
+                Find the Right Setup for <span className="text-[#C026D3]">Your Office</span>
+              </h2>
+              <p className="text-sm sm:text-base text-[#18181B]/70 font-normal">
+                Select your primary need below to see what our team delivers and how we can help.
+              </p>
+            </div>
+          </Reveal>
+
+          <div className="max-w-5xl mx-auto">
+            {/* Tab buttons */}
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2 mb-8 p-1.5 rounded-xl bg-white border border-[#E8E2D5] shadow-sm">
+              {[
+                { id: 'office', label: 'Office Setup', icon: Building },
+                { id: 'internet', label: 'Internet', icon: Wifi },
+                { id: 'cabling', label: 'Cabling', icon: Network },
+                { id: 'wifi', label: 'Wi-Fi', icon: Cpu },
+                { id: 'hardware', label: 'Hardware', icon: Server },
+                { id: 'software', label: 'Software/ERP', icon: Code2 }
+              ].map((tab) => (
+                <button
+                  key={tab.id}
+                  onClick={() => setSelectedService(tab.id as any)}
+                  className={`px-3 py-2.5 rounded-lg text-xs font-semibold transition-all flex items-center justify-center gap-1.5 ${
+                    selectedService === tab.id
+                      ? 'bg-[#18181B] text-white shadow-sm'
+                      : 'text-[#18181B]/70 hover:text-[#C026D3] hover:bg-[#FAF7F2]'
+                  }`}
+                >
+                  <tab.icon size={14} />
+                  <span>{tab.label}</span>
+                </button>
+              ))}
+            </div>
+
+            {/* Profile Card */}
+            <div className="rounded-2xl bg-white border border-[#E8E2D5] p-6 sm:p-10 shadow-sm">
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+                <div className="lg:col-span-7 space-y-6">
+                  <div>
+                    <span className="text-[10px] font-mono font-bold uppercase tracking-wider px-2.5 py-1 rounded bg-white text-[#C026D3] border border-[#E8E2D5] inline-block mb-3">
+                      Recommended Package
+                    </span>
+                    <h3 className="text-2xl sm:text-3xl font-bold text-[#18181B] tracking-tight">
+                      {serviceProfiles[selectedService].title}
+                    </h3>
+                  </div>
+
+                  <p className="text-sm sm:text-base text-[#18181B]/75 leading-relaxed font-normal">
+                    {serviceProfiles[selectedService].desc}
+                  </p>
+
+                  <div className="space-y-3 pt-2">
+                    <div className="text-xs font-bold uppercase text-[#18181B] tracking-wider font-mono">
+                      What's Included:
+                    </div>
+                    {serviceProfiles[selectedService].deliverables.map((item, idx) => (
+                      <div key={idx} className="flex items-start gap-3 text-xs sm:text-sm text-[#18181B]/80">
+                        <CheckCircle2 size={16} className="text-[#C026D3] shrink-0 mt-0.5" />
+                        <span>{item}</span>
+                      </div>
+                    ))}
+                  </div>
+
+                  <div className="pt-4 flex flex-col sm:flex-row items-center gap-3">
+                    <Link to={PageRoute.CONTACT} className="w-full sm:w-auto">
+                      <button className="w-full sm:w-auto px-6 py-3 rounded-lg bg-[#18181B] hover:bg-[#C026D3] text-white font-semibold text-xs tracking-wide shadow-sm flex items-center justify-center gap-2 transition-all">
+                        <span>Get a Quote for This Setup</span>
+                        <ArrowRight size={14} />
+                      </button>
+                    </Link>
+                  </div>
+                </div>
+
+                <div className="lg:col-span-5 p-6 rounded-xl bg-white border border-[#E8E2D5] space-y-5 shadow-sm">
+                  <div className="pb-3 border-b border-[#E8E2D5]">
+                    <div className="text-xs font-mono font-bold text-[#18181B] uppercase tracking-wider flex items-center gap-2">
+                      <ShieldCheck size={16} className="text-[#C026D3]" />
+                      Who This Is For
+                    </div>
+                  </div>
+
+                  <p className="text-xs sm:text-sm text-[#18181B]/75 leading-relaxed">
+                    {serviceProfiles[selectedService].idealFor}
+                  </p>
+
+                  <div className="space-y-3 pt-2 border-t border-[#E8E2D5]">
+                    <div className="text-[11px] font-mono font-bold text-[#18181B] uppercase">
+                      Why Choose Osiffa:
+                    </div>
+                    <div className="space-y-2 text-xs text-[#18181B]/70">
+                      <div className="flex items-center gap-2">
+                        <Check size={14} className="text-[#C026D3]" />
+                        <span>Neat, labeled, and certified workmanship</span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <Check size={14} className="text-[#C026D3]" />
+                        <span>Direct contact with experienced local technicians</span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <Check size={14} className="text-[#C026D3]" />
+                        <span>Fast on-site visits and deployments</span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <Check size={14} className="text-[#C026D3]" />
+                        <span>Transparent pricing with no hidden surprises</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="p-3.5 rounded-lg bg-[#FAF7F2] border border-[#E8E2D5] text-xs text-[#18181B]/80 flex items-center gap-2.5">
+                    <PhoneCall size={16} className="text-[#C026D3] shrink-0" />
+                    <span>Need immediate advice? Reach us directly at <span className="font-semibold text-[#18181B]">info@osiffatelecoms.com</span></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Our 4-Step Working Process */}
+      <section className="py-24 bg-[#FAF7F2] relative border-b border-[#E8E2D5]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <Reveal>
+            <div className="text-center max-w-3xl mx-auto mb-16">
+              <span className="text-xs font-bold tracking-wider text-[#C026D3] uppercase block mb-3 font-mono">
+                Simple & Transparent
+              </span>
+              <h2 className="text-3xl md:text-5xl font-bold text-[#18181B] tracking-tight leading-tight mb-4">
+                How We <span className="text-[#C026D3]">Work With You</span>
+              </h2>
+              <p className="text-sm sm:text-base text-[#18181B]/70 font-normal">
+                No complicated jargon or bureaucratic delays. We follow a clear, practical process to get your office connected cleanly.
+              </p>
+            </div>
+          </Reveal>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {workingSteps.map((step, idx) => (
+              <Reveal key={idx} delay={idx * 100}>
+                <div className="p-7 rounded-2xl bg-white border border-[#E8E2D5] shadow-sm hover:border-[#C026D3]/50 transition-all h-full flex flex-col justify-between">
+                  <div>
+                    <div className="text-3xl font-mono font-extrabold text-[#C026D3] mb-3">
+                      {step.step}
+                    </div>
+                    <h3 className="text-base font-bold text-[#18181B] mb-2 tracking-tight">
+                      {step.title}
+                    </h3>
+                    <p className="text-xs sm:text-sm text-[#18181B]/70 leading-relaxed font-normal">
+                      {step.desc}
+                    </p>
+                  </div>
+                  <div className="mt-6 pt-4 border-t border-[#E8E2D5] text-[10px] font-mono font-bold text-[#18181B]/60 uppercase">
+                    Step {step.step} of 04
+                  </div>
+                </div>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Why Businesses Choose Osiffa */}
+      <section className="py-24 bg-white relative overflow-hidden border-b border-[#E8E2D5]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <Reveal>
+            <div className="max-w-3xl mb-16">
+              <span className="text-xs font-bold tracking-wider text-[#C026D3] uppercase block mb-3 font-mono">
+                The Osiffa Difference
+              </span>
+              <h2 className="text-3xl md:text-5xl font-bold text-[#18181B] tracking-tight leading-none mb-4">
+                Agile, Dedicated, and <span className="text-[#C026D3]">Hands-On</span>
+              </h2>
+              <p className="text-sm sm:text-base text-[#18181B]/70 font-normal">
+                Unlike giant telecom conglomerates where your office is just a ticket number, we provide direct, personalized attention to every project we undertake.
+              </p>
+            </div>
+          </Reveal>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {[
+              {
+                icon: PhoneCall,
+                title: "Direct Access to Engineers",
+                desc: "Speak directly with the technicians and network specialists working on your installation, avoiding long call center wait times."
+              },
+              {
+                icon: Layers,
+                title: "Clean Workmanship",
+                desc: "We take pride in neat cable trunking, clean rack dressing, and labeled ports that keep your office looking tidy and professional."
+              },
+              {
+                icon: Clock,
+                title: "Fast Local Mobilization",
+                desc: "Our experienced team mobilizes quickly for on-site inspections, setups, and urgent troubleshooting across Africa."
+              }
+            ].map((item, idx) => (
+              <Reveal key={idx} delay={idx * 100}>
+                <div className="p-7 rounded-2xl bg-[#FAF7F2] border border-[#E8E2D5] hover:bg-white hover:border-[#C026D3]/50 transition-all shadow-sm h-full">
+                  <div className="h-11 w-11 rounded-xl bg-white border border-[#E8E2D5] flex items-center justify-center text-[#C026D3] mb-5 shadow-sm">
+                    <item.icon size={20} />
+                  </div>
+                  <h3 className="text-base font-bold text-[#18181B] mb-2 tracking-tight">
+                    {item.title}
+                  </h3>
+                  <p className="text-[#18181B]/70 text-xs sm:text-sm leading-relaxed">
+                    {item.desc}
+                  </p>
+                </div>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Final CTA */}
+      <section className="py-24 bg-[#FAF7F2] relative overflow-hidden text-center px-4">
+        <div className="relative z-10 max-w-2xl mx-auto">
+          <Reveal>
+            <span className="text-xs font-bold tracking-wider text-[#C026D3] uppercase block mb-3 font-mono">
+              Get Started
+            </span>
+            <h2 className="text-3xl md:text-4xl font-bold text-[#18181B] mb-4 tracking-tight">
+              Ready to Upgrade Your Office Network?
+            </h2>
+            <p className="text-[#18181B]/70 text-sm md:text-base mb-8 font-normal leading-relaxed">
+              Tell us about your space, your team size, or your current networking challenge. We’ll provide a straightforward recommendation and quote.
             </p>
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4 max-w-lg mx-auto">
-               <Link to={PageRoute.CONTACT} className="w-full sm:w-auto">
-                 <Button size="lg" className="w-full sm:w-auto h-auto rounded-full px-8 py-4 sm:px-10 sm:py-5 bg-gradient-to-r from-brand-600 via-purple-600 to-brand-500 text-white hover:from-brand-500 hover:to-purple-400 active:scale-98 shadow-xl shadow-brand-500/30 ring-1 ring-white/20 border-none font-semibold text-xs sm:text-sm tracking-widest uppercase whitespace-nowrap flex items-center justify-center gap-2 sm:gap-3 transition-all duration-300">
-                    <span>Schedule Technical Consultation</span>
-                    <ArrowRight size={16} className="shrink-0" />
-                 </Button>
-               </Link>
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-4 max-w-md mx-auto">
+              <Link to={PageRoute.CONTACT} className="w-full">
+                <button className="w-full rounded-lg px-8 py-3.5 bg-[#18181B] hover:bg-[#C026D3] text-white font-semibold text-xs tracking-wide shadow-sm hover:shadow-[0_4px_16px_rgba(192,38,211,0.25)] flex items-center justify-center gap-2 transition-all duration-300">
+                  <span>Request a Site Assessment</span>
+                  <ArrowRight size={14} className="shrink-0" />
+                </button>
+              </Link>
             </div>
             
-            {/* Direct NOC Contact info */}
-            <div className="mt-10 flex flex-wrap justify-center items-center gap-6 text-xs text-slate-400 font-mono">
+            {/* Direct Contact info */}
+            <div className="mt-8 flex flex-wrap justify-center items-center gap-6 text-xs text-[#18181B]/70 font-mono">
               <span className="flex items-center gap-1.5">
-                <span className="h-1.5 w-1.5 rounded-full bg-emerald-400"></span>
-                24/7 Priority NOC Support
+                <span className="h-1.5 w-1.5 rounded-full bg-[#C026D3]"></span>
+                Osiffa Telecoms (Nig.) Ltd
               </span>
               <span>•</span>
-              <a href="mailto:info@osiffatelecoms.com" className="hover:text-brand-300 transition-colors">
+              <a href="mailto:info@osiffatelecoms.com" className="hover:text-[#C026D3] transition-colors">
                 info@osiffatelecoms.com
               </a>
               <span>•</span>
-              <span>Abuja, Nigeria</span>
+              <span>Africa</span>
             </div>
           </Reveal>
         </div>

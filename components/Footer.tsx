@@ -1,66 +1,189 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Facebook, Twitter, Instagram, Linkedin, Mail, MapPin } from 'lucide-react';
+import { 
+  Mail, 
+  MapPin, 
+  ShieldCheck, 
+  ArrowRight, 
+  CheckCircle2 
+} from 'lucide-react';
 import { Logo } from './Logo';
 
 export const Footer: React.FC = () => {
+  const [email, setEmail] = useState('');
+  const [subscribed, setSubscribed] = useState(false);
+
+  const handleSubscribe = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (email.trim()) {
+      setSubscribed(true);
+      setEmail('');
+    }
+  };
+
   return (
-    <footer className="bg-gray-900 text-gray-300">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+    <footer className="bg-[#18181B] text-[#FAF7F2] border-t border-[#27272A] relative overflow-hidden">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 pb-12 relative z-10">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-12 mb-16">
           
-          {/* Brand Column */}
-          <div className="col-span-1 md:col-span-1">
-             <div className="mb-6">
-                <Logo className="h-9 w-auto" variant="light" />
-             </div>
-            <p className="text-sm leading-relaxed mb-4">
-              Let’s Build Your Network for the Future. Providing cutting-edge telecom services, fiber installation, cloud infrastructure, and robust cybersecurity key to modern enterprise.
+          {/* Brand & Accreditation Column */}
+          <div className="lg:col-span-2 space-y-6">
+            <Link to="/" className="inline-block">
+              <Logo className="h-10 w-auto" variant="light" layout="horizontal" />
+            </Link>
+            
+            <p className="text-sm text-[#FAF7F2]/70 leading-relaxed max-w-sm">
+              Reliable business internet, structured cabling, enterprise Wi-Fi solutions, and managed IT networking services for growing businesses and offices in Africa.
             </p>
+
+            {/* CAC Certification Badge */}
+            <div className="inline-flex items-center gap-3 px-3.5 py-2 rounded-lg bg-[#27272A] border border-[#3F3F46] text-xs font-mono text-[#FAF7F2]">
+              <ShieldCheck className="text-[#C026D3] flex-shrink-0" size={18} />
+              <div>
+                <span className="text-white font-semibold block">Osiffa Telecoms (Nig.) Ltd</span>
+                <span className="text-[11px] text-[#FAF7F2]/60">CAC Registered • Incorporated July 2015</span>
+              </div>
+            </div>
+
+            {/* Support Indicator */}
+            <div className="flex items-center gap-2 text-xs text-[#FAF7F2]/70">
+              <span className="h-2 w-2 rounded-full bg-[#C026D3]"></span>
+              <span>Hands-on Technical Support · Experienced Local Technicians</span>
+            </div>
           </div>
 
-          {/* Quick Links */}
+          {/* Solutions & Services */}
           <div>
-            <h3 className="text-white text-sm font-bold uppercase tracking-wider mb-4">Company</h3>
-            <ul className="space-y-3">
-              <li><Link to="/about" className="hover:text-brand-400 transition-colors">About Us</Link></li>
-              <li><Link to="/services" className="hover:text-brand-400 transition-colors">Services</Link></li>
-              <li><Link to="/contact" className="hover:text-brand-400 transition-colors">Contact</Link></li>
+            <h3 className="text-xs font-semibold uppercase tracking-wider text-white mb-5">
+              Solutions
+            </h3>
+            <ul className="space-y-3 text-sm">
+              <li>
+                <Link to="/services" className="text-[#FAF7F2]/70 hover:text-[#C026D3] transition-colors flex items-center gap-1.5">
+                  <span>Business Internet & Broadband</span>
+                </Link>
+              </li>
+              <li>
+                <Link to="/services" className="text-[#FAF7F2]/70 hover:text-[#C026D3] transition-colors">
+                  Structured Office Cabling
+                </Link>
+              </li>
+              <li>
+                <Link to="/services" className="text-[#FAF7F2]/70 hover:text-[#C026D3] transition-colors">
+                  Commercial Wi-Fi & Mesh
+                </Link>
+              </li>
+              <li>
+                <Link to="/services" className="text-[#FAF7F2]/70 hover:text-[#C026D3] transition-colors">
+                  IT Hardware & Workstations
+                </Link>
+              </li>
+              <li>
+                <Link to="/services" className="text-[#FAF7F2]/70 hover:text-[#C026D3] transition-colors">
+                  Custom Software & ERP
+                </Link>
+              </li>
+              <li>
+                <Link to="/services" className="text-[#FAF7F2]/70 hover:text-[#C026D3] transition-colors">
+                  Network Maintenance & Support
+                </Link>
+              </li>
             </ul>
           </div>
 
-          {/* Legal */}
+          {/* Company & Knowledge */}
           <div>
-            <h3 className="text-white text-sm font-bold uppercase tracking-wider mb-4">Legal</h3>
-            <ul className="space-y-3">
-              <li><a href="#" className="hover:text-brand-400 transition-colors">Privacy Policy</a></li>
-              <li><a href="#" className="hover:text-brand-400 transition-colors">Terms of Use</a></li>
-              <li><a href="#" className="hover:text-brand-400 transition-colors">Regulatory Status</a></li>
+            <h3 className="text-xs font-semibold uppercase tracking-wider text-white mb-5">
+              Company
+            </h3>
+            <ul className="space-y-3 text-sm">
+              <li>
+                <Link to="/about" className="text-[#FAF7F2]/70 hover:text-[#C026D3] transition-colors">
+                  About Osiffa
+                </Link>
+              </li>
+              <li>
+                <Link to="/blog" className="text-[#FAF7F2]/70 hover:text-[#C026D3] transition-colors">
+                  Technical Insights & Articles
+                </Link>
+              </li>
+              <li>
+                <Link to="/contact" className="text-[#FAF7F2]/70 hover:text-[#C026D3] transition-colors">
+                  Contact & Support
+                </Link>
+              </li>
+              <li>
+                <Link to="/about" className="text-[#FAF7F2]/70 hover:text-[#C026D3] transition-colors">
+                  Corporate Governance
+                </Link>
+              </li>
+              <li>
+                <Link to="/contact" className="text-[#FAF7F2]/70 hover:text-[#C026D3] transition-colors">
+                  Request Site Survey
+                </Link>
+              </li>
             </ul>
           </div>
 
-          {/* Contact */}
+          {/* Newsletter & Updates */}
           <div>
-            <h3 className="text-white text-sm font-bold uppercase tracking-wider mb-4">Stay Connected</h3>
-            <div className="flex space-x-4 mb-6">
-              <a href="#" className="text-gray-400 hover:text-white transition-colors"><Facebook size={20} /></a>
-              <a href="#" className="text-gray-400 hover:text-white transition-colors"><Twitter size={20} /></a>
-              <a href="#" className="text-gray-400 hover:text-white transition-colors"><Instagram size={20} /></a>
-              <a href="#" className="text-gray-400 hover:text-white transition-colors"><Linkedin size={20} /></a>
-            </div>
-            <div className="space-y-2 text-sm">
-               <div className="flex items-center gap-2">
-                 <Mail size={16} /> <a href="mailto:info@osiffatelecoms.com" className="hover:text-brand-400 transition-colors">info@osiffatelecoms.com</a>
-               </div>
-               <div className="flex items-center gap-2">
-                 <MapPin size={16} /> <span>Abuja, Nigeria</span>
-               </div>
+            <h3 className="text-xs font-semibold uppercase tracking-wider text-white mb-5">
+              Network Updates
+            </h3>
+            <p className="text-xs text-[#FAF7F2]/70 mb-4 leading-relaxed">
+              Stay informed on regional fiber expansions, technology briefs, and enterprise solutions.
+            </p>
+
+            {subscribed ? (
+              <div className="p-3 rounded-lg bg-[#27272A] border border-[#C026D3]/40 text-[#C026D3] text-xs flex items-center gap-2">
+                <CheckCircle2 size={16} />
+                <span>Thank you for subscribing!</span>
+              </div>
+            ) : (
+              <form onSubmit={handleSubscribe} className="space-y-2">
+                <div className="relative">
+                  <input
+                    type="email"
+                    required
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    placeholder="Enter business email"
+                    className="w-full px-3.5 py-2.5 rounded-lg bg-[#27272A] border border-[#3F3F46] text-xs text-white placeholder-[#FAF7F2]/40 focus:outline-none focus:border-[#C026D3] transition-all font-sans"
+                  />
+                  <button
+                    type="submit"
+                    className="absolute right-1.5 top-1.5 p-1.5 rounded-md bg-[#C026D3] hover:bg-[#A21CAF] text-white transition-all shadow-sm"
+                  >
+                    <ArrowRight size={14} />
+                  </button>
+                </div>
+              </form>
+            )}
+
+            <div className="mt-6 space-y-2.5 text-xs text-[#FAF7F2]/70">
+              <div className="flex items-center gap-2.5">
+                <Mail size={14} className="text-[#C026D3]" />
+                <a href="mailto:info@osiffatelecoms.com" className="hover:text-white transition-colors">
+                  info@osiffatelecoms.com
+                </a>
+              </div>
+              <div className="flex items-center gap-2.5">
+                <MapPin size={14} className="text-[#C026D3]" />
+                <span>Africa</span>
+              </div>
             </div>
           </div>
+
         </div>
 
-        <div className="border-t border-gray-800 mt-12 pt-8 text-sm text-center">
-          <p>&copy; {new Date().getFullYear()} Osiffa Telecoms. All rights reserved.</p>
+        {/* Bottom Bar */}
+        <div className="pt-8 border-t border-[#27272A] flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-[#FAF7F2]/50">
+          <p>&copy; {new Date().getFullYear()} Osiffa Telecoms (Nig.) Ltd. All rights reserved.</p>
+          <div className="flex items-center gap-4 text-xs text-[#FAF7F2]/60">
+            <span>CAC Registered • RC 1276063</span>
+            <span>•</span>
+            <span>Africa</span>
+          </div>
         </div>
       </div>
     </footer>

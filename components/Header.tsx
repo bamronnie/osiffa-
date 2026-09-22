@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X } from 'lucide-react';
+import { Menu, X, ArrowRight } from 'lucide-react';
 import { PageRoute } from '../types';
 import { Logo } from './Logo';
 
@@ -9,12 +9,9 @@ export const Header: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const location = useLocation();
 
-  const isHome = location.pathname === PageRoute.HOME;
-
-  // Handle scroll effect
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 10);
+      setIsScrolled(window.scrollY > 15);
     };
 
     window.addEventListener('scroll', handleScroll);
@@ -25,100 +22,117 @@ export const Header: React.FC = () => {
     { name: 'Home', path: PageRoute.HOME },
     { name: 'Services', path: PageRoute.SERVICES },
     { name: 'About', path: PageRoute.ABOUT },
+    { name: 'Blog', path: PageRoute.BLOG },
     { name: 'Contact', path: PageRoute.CONTACT },
   ];
 
-  const isActive = (path: string) => location.pathname === path;
+  const isActive = (path: string) => {
+    if (path === PageRoute.HOME) {
+      return location.pathname === '/';
+    }
+    return location.pathname.startsWith(path);
+  };
 
-  // Header styling: adaptive for dark Home page and light secondary pages
-  const headerBgClass = isHome
-    ? (isScrolled 
-        ? 'bg-[#0f172a]/95 backdrop-blur-xl border-b border-white/10 shadow-lg shadow-black/20' 
-        : 'bg-[#0f172a]/70 backdrop-blur-md border-b border-white/10')
-    : (isScrolled 
-        ? 'bg-white/95 backdrop-blur-md border-b border-slate-200/80 shadow-xs' 
-        : 'bg-white/90 backdrop-blur-md border-b border-slate-200/80 shadow-xs');
-
-  const textColorClass = isHome ? 'text-slate-200' : 'text-slate-700';
-  const hoverColorClass = isHome ? 'hover:text-brand-300' : 'hover:text-brand-600';
-  const activeTextClass = isHome ? 'text-brand-400 font-bold drop-shadow-[0_0_8px_rgba(217,70,239,0.5)]' : 'text-brand-600 font-bold';
-  const logoVariant = isHome ? 'light' : 'dark';
-
-  // Button styles
-  const buttonClass = 'bg-gradient-to-r from-brand-600 via-purple-600 to-brand-500 text-white hover:from-brand-500 hover:to-purple-500 active:scale-98 shadow-md shadow-brand-500/25';
+  const headerBgClass = isScrolled
+    ? 'bg-[#FAF7F2]/95 backdrop-blur-2xl border-b border-[#E8E2D5] shadow-sm shadow-black/5 py-2.5'
+    : 'bg-[#FAF7F2]/80 backdrop-blur-xl border-b border-[#E8E2D5]/70 py-3.5';
 
   return (
-    <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ease-in-out h-20 ${headerBgClass}`}>
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full">
-        <div className="flex justify-between items-center h-full">
-          {/* Logo container ensures no clipping */}
-          <Link to="/" className="flex items-center z-50 py-2 overflow-visible min-w-max">
-            <Logo className="h-12 md:h-16 w-auto" variant={logoVariant} />
+    <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ease-in-out ${headerBgClass}`}>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex justify-between items-center">
+          {/* Brand Logo */}
+          <Link to="/" className="flex items-center z-50 py-1 overflow-visible min-w-max group">
+            <Logo className="h-9 sm:h-11 w-auto transition-transform duration-200 group-hover:scale-[1.02]" variant="dark" layout="horizontal" />
           </Link>
 
-          {/* Desktop Nav */}
-          <nav className="hidden md:flex space-x-8">
-            {navLinks.map((link) => (
-              <Link
-                key={link.path}
-                to={link.path}
-                className={`text-sm font-medium transition-colors duration-300 ${hoverColorClass} ${
-                  isActive(link.path) ? activeTextClass : textColorClass
-                }`}
-              >
-                {link.name}
-              </Link>
-            ))}
+          {/* Desktop Navigation Links */}
+          <nav className="hidden md:flex items-center space-x-1 bg-white/90 border border-[#E8E2D5] rounded-full px-2 py-1 shadow-sm">
+            {navLinks.map((link) => {
+              const active = isActive(link.path);
+              return (
+                <Link
+                  key={link.path}
+                  to={link.path}
+                  className={`px-4 py-1.5 rounded-full text-xs lg:text-sm font-medium transition-all duration-200 ${
+                    active
+                      ? 'text-white bg-[#18181B] shadow-sm font-semibold'
+                      : 'text-[#18181B]/80 hover:text-[#C026D3] hover:bg-[#FAF7F2]'
+                  }`}
+                >
+                  {link.name}
+                </Link>
+              );
+            })}
           </nav>
 
-          {/* CTA Button */}
-          <div className="hidden md:flex items-center">
+          {/* Status Pill & Contact CTA */}
+          <div className="hidden lg:flex items-center space-x-3">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-[#E8E2D5] bg-white text-xs text-[#18181B] shadow-sm">
+              <span className="h-2 w-2 rounded-full bg-[#C026D3]"></span>
+              <span className="text-[11px] font-semibold tracking-tight">Africa</span>
+            </div>
+
             <Link to="/contact">
-              <button className={`px-5 py-2.5 rounded-full text-sm font-semibold transition-all duration-300 ${buttonClass}`}>
-                Get Updates
+              <button className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg text-xs font-semibold bg-[#18181B] hover:bg-[#C026D3] text-white shadow-sm hover:shadow-[0_4px_16px_rgba(192,38,211,0.25)] transition-all duration-300">
+                <span>Request a Quote</span>
+                <ArrowRight size={14} />
               </button>
             </Link>
           </div>
 
-          {/* Mobile Menu Button */}
+          {/* Mobile Hamburger Button */}
           <button
             onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className={`md:hidden p-2 focus:outline-none transition-colors ${isHome ? 'text-white hover:text-brand-300' : 'text-slate-700 hover:text-brand-600'}`}
+            aria-label="Toggle Menu"
+            className="md:hidden p-2 rounded-lg bg-white border border-[#E8E2D5] text-[#18181B] hover:text-[#C026D3] focus:outline-none transition-colors shadow-sm"
           >
-            {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
+            {isMenuOpen ? <X size={20} /> : <Menu size={20} />}
           </button>
         </div>
       </div>
 
-      {/* Mobile Nav Overlay */}
+      {/* Mobile Drawer */}
       <div 
-        className={`fixed inset-x-0 top-20 border-b shadow-xl md:hidden transition-all duration-300 ease-in-out overflow-hidden ${
-          isHome 
-            ? 'bg-[#0f172a] border-white/10 text-white' 
-            : 'bg-white border-gray-100 text-gray-800'
-        } ${
-          isMenuOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
+        className={`md:hidden fixed inset-x-0 top-[62px] bg-[#FAF7F2]/98 backdrop-blur-2xl border-b border-[#E8E2D5] shadow-xl transition-all duration-300 ease-in-out overflow-hidden ${
+          isMenuOpen ? 'max-h-[420px] opacity-100 py-5' : 'max-h-0 opacity-0 py-0'
         }`}
       >
-        <div className="px-4 py-6 space-y-2">
-          {navLinks.map((link) => (
-            <Link
-              key={link.path}
-              to={link.path}
-              onClick={() => setIsMenuOpen(false)}
-              className={`block px-4 py-3 rounded-xl text-base font-medium transition-colors ${
-                isActive(link.path)
-                  ? isHome
-                    ? 'bg-brand-500/20 text-brand-300 border border-brand-500/30'
-                    : 'bg-brand-50 text-brand-700'
-                  : isHome
-                    ? 'text-slate-300 hover:bg-white/5 hover:text-white'
-                    : 'text-gray-700 hover:bg-gray-50'
-              }`}
-            >
-              {link.name}
+        <div className="px-6 space-y-2">
+          {navLinks.map((link) => {
+            const active = isActive(link.path);
+            return (
+              <Link
+                key={link.path}
+                to={link.path}
+                onClick={() => setIsMenuOpen(false)}
+                className={`flex items-center justify-between px-4 py-2.5 rounded-lg text-sm font-medium transition-all ${
+                  active
+                    ? 'bg-white text-[#C026D3] border border-[#E8E2D5] font-semibold shadow-sm'
+                    : 'text-[#18181B] hover:bg-white'
+                }`}
+              >
+                <span>{link.name}</span>
+                {active && <span className="h-1.5 w-1.5 rounded-full bg-[#C026D3]"></span>}
+              </Link>
+            );
+          })}
+
+          <div className="pt-4 border-t border-[#E8E2D5] flex flex-col gap-3">
+            <div className="flex items-center justify-between text-xs text-[#18181B] px-2">
+              <span className="flex items-center gap-2 font-medium">
+                <span className="h-2 w-2 rounded-full bg-[#C026D3]"></span>
+                Osiffa Telecoms (Nig.) Ltd
+              </span>
+              <span className="text-[#C026D3] font-semibold">Africa</span>
+            </div>
+
+            <Link to="/contact" onClick={() => setIsMenuOpen(false)}>
+              <button className="w-full py-2.5 rounded-lg text-xs font-semibold bg-[#18181B] hover:bg-[#C026D3] text-white shadow-sm transition-colors">
+                Request a Quote
+              </button>
             </Link>
-          ))}
+          </div>
         </div>
       </div>
     </header>

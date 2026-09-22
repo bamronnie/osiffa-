@@ -1,0 +1,77 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 700" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#18181B" />
+      <stop offset="50%" stop-color="#27272A" />
+      <stop offset="100%" stop-color="#09090B" />
+    </linearGradient>
+    <linearGradient id="magentaGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#E879F9" />
+      <stop offset="100%" stop-color="#C026D3" />
+    </linearGradient>
+    <linearGradient id="glowGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#C026D3" stop-opacity="0.3" />
+      <stop offset="100%" stop-color="#C026D3" stop-opacity="0" />
+    </linearGradient>
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#3F3F46" stroke-width="0.75" opacity="0.4" />
+    </pattern>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="700" fill="url(#bgGrad)" />
+  <rect width="1200" height="700" fill="url(#grid)" />
+
+  <!-- Ambient Glow -->
+  <circle cx="600" cy="350" r="280" fill="url(#glowGrad)" />
+
+  <!-- Central Router / Gateway Illustration -->
+  <g transform="translate(600, 350)">
+    <!-- Signal Wave Pulses -->
+    <circle cx="0" cy="0" r="220" fill="none" stroke="#C026D3" stroke-width="1.5" stroke-dasharray="8 6" opacity="0.4" />
+    <circle cx="0" cy="0" r="160" fill="none" stroke="#E879F9" stroke-width="2" stroke-dasharray="6 4" opacity="0.6" />
+    <circle cx="0" cy="0" r="100" fill="none" stroke="#C026D3" stroke-width="2.5" opacity="0.8" />
+
+    <!-- Dual-WAN Connection Lines -->
+    <!-- ISP 1 Primary Line -->
+    <path d="M -400 -120 Q -200 -80 -70 -20" fill="none" stroke="#C026D3" stroke-width="4" />
+    <circle cx="-400" cy="-120" r="12" fill="#C026D3" />
+    <circle cx="-400" cy="-120" r="5" fill="#FFFFFF" />
+    <text x="-400" y="-145" font-family="'Plus Jakarta Sans', sans-serif" font-size="14" font-weight="700" fill="#E879F9" text-anchor="middle">PRIMARY ISP 1 (DEDICATED FIBER)</text>
+
+    <!-- ISP 2 Failover Backup Line -->
+    <path d="M -400 120 Q -200 80 -70 20" fill="none" stroke="#A1A1AA" stroke-width="3" stroke-dasharray="8 4" />
+    <circle cx="-400" cy="120" r="12" fill="#27272A" stroke="#C026D3" stroke-width="2" />
+    <circle cx="-400" cy="120" r="4" fill="#C026D3" />
+    <text x="-400" y="155" font-family="'Plus Jakarta Sans', sans-serif" font-size="14" font-weight="700" fill="#A1A1AA" text-anchor="middle">BACKUP ISP 2 (AUTO-FAILOVER)</text>
+
+    <!-- Outgoing Office Network Lines -->
+    <path d="M 70 -20 Q 200 -80 400 -120" fill="none" stroke="#C026D3" stroke-width="3.5" />
+    <circle cx="400" cy="-120" r="10" fill="#C026D3" />
+    <text x="400" y="-145" font-family="'Plus Jakarta Sans', sans-serif" font-size="14" font-weight="700" fill="#FFFFFF" text-anchor="middle">CORPORATE LAN &amp; SERVERS</text>
+
+    <path d="M 70 20 Q 200 80 400 120" fill="none" stroke="#E879F9" stroke-width="3" />
+    <circle cx="400" cy="120" r="10" fill="#E879F9" />
+    <text x="400" y="155" font-family="'Plus Jakarta Sans', sans-serif" font-size="14" font-weight="700" fill="#FFFFFF" text-anchor="middle">COMMERCIAL WI-FI MESH</text>
+
+    <!-- Central Dual-WAN Core Hub -->
+    <rect x="-80" y="-45" width="160" height="90" rx="16" fill="#18181B" stroke="#C026D3" stroke-width="3" />
+    <rect x="-70" y="-35" width="140" height="70" rx="10" fill="#27272A" />
+    
+    <!-- LED Indicators -->
+    <circle cx="-45" cy="0" r="6" fill="#10B981" />
+    <circle cx="-25" cy="0" r="6" fill="#10B981" />
+    <circle cx="-5" cy="0" r="6" fill="#C026D3" />
+    <circle cx="15" cy="0" r="6" fill="#E879F9" />
+    <circle cx="35" cy="0" r="6" fill="#10B981" />
+    
+    <text x="0" y="24" font-family="'JetBrains Mono', monospace" font-size="10" font-weight="700" fill="#E879F9" text-anchor="middle" letter-spacing="1">DUAL-WAN ACTIVE</text>
+  </g>
+
+  <!-- Title Badge Overlay -->
+  <g transform="translate(60, 80)">
+    <rect width="320" height="42" rx="21" fill="#18181B" stroke="#3F3F46" stroke-width="1.5" />
+    <circle cx="24" cy="21" r="5" fill="#C026D3" />
+    <text x="40" y="26" font-family="'Plus Jakarta Sans', sans-serif" font-size="13" font-weight="700" fill="#FAF7F2" letter-spacing="0.5">OSIFFA CONNECTIVITY GUIDE</text>
+  </g>
+</svg>

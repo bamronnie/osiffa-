@@ -1,0 +1,91 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 700" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#18181B" />
+      <stop offset="50%" stop-color="#27272A" />
+      <stop offset="100%" stop-color="#09090B" />
+    </linearGradient>
+    <linearGradient id="magentaGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#E879F9" />
+      <stop offset="100%" stop-color="#C026D3" />
+    </linearGradient>
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#3F3F46" stroke-width="0.75" opacity="0.4" />
+    </pattern>
+  </defs>
+
+  <rect width="1200" height="700" fill="url(#bgGrad)" />
+  <rect width="1200" height="700" fill="url(#grid)" />
+
+  <!-- ERP Dashboard & Custom Software UI Illustration -->
+  <g transform="translate(600, 350)">
+    <!-- Main Window Container -->
+    <rect x="-380" y="-190" width="760" height="380" rx="16" fill="#18181B" stroke="#3F3F46" stroke-width="2.5" />
+    
+    <!-- Window Header -->
+    <path d="M -380 -190 L 380 -190 A 16 16 0 0 1 380 -140 L -380 -140 Z" fill="#27272A" />
+    <circle cx="-350" cy="-165" r="5" fill="#EF4444" />
+    <circle cx="-334" cy="-165" r="5" fill="#F59E0B" />
+    <circle cx="-318" cy="-165" r="5" fill="#10B981" />
+    <rect x="-140" y="-176" width="280" height="22" rx="6" fill="#18181B" />
+    <text x="0" y="-161" font-family="'JetBrains Mono', monospace" font-size="11" fill="#A1A1AA" text-anchor="middle">app.osiffa-erp.internal/dashboard</text>
+
+    <!-- Sidebar Navigation -->
+    <rect x="-380" y="-140" width="160" height="330" fill="#1E1E22" />
+    <rect x="-365" y="-115" width="130" height="30" rx="6" fill="#C026D3" />
+    <text x="-300" y="-95" font-family="'Plus Jakarta Sans', sans-serif" font-size="11" font-weight="700" fill="#FFFFFF">Inventory</text>
+    <text x="-300" y="-55" font-family="'Plus Jakarta Sans', sans-serif" font-size="11" font-weight="500" fill="#A1A1AA">Point of Sale</text>
+    <text x="-300" y="-15" font-family="'Plus Jakarta Sans', sans-serif" font-size="11" font-weight="500" fill="#A1A1AA">Invoicing</text>
+    <text x="-300" y="25" font-family="'Plus Jakarta Sans', sans-serif" font-size="11" font-weight="500" fill="#A1A1AA">Customers</text>
+    <text x="-300" y="65" font-family="'Plus Jakarta Sans', sans-serif" font-size="11" font-weight="500" fill="#A1A1AA">Reports</text>
+
+    <!-- Dashboard Content Area -->
+    <!-- Metric Card 1 -->
+    <g transform="translate(-190, -115)">
+      <rect width="170" height="85" rx="10" fill="#27272A" stroke="#3F3F46" stroke-width="1" />
+      <text x="16" y="26" font-family="'Plus Jakarta Sans', sans-serif" font-size="11" fill="#A1A1AA">Total Revenue</text>
+      <text x="16" y="55" font-family="'JetBrains Mono', monospace" font-size="18" font-weight="700" fill="#FFFFFF">₦14,820,000</text>
+      <text x="16" y="73" font-family="'Plus Jakarta Sans', sans-serif" font-size="10" font-weight="600" fill="#10B981">↑ +24.8% vs last mo</text>
+    </g>
+
+    <!-- Metric Card 2 -->
+    <g transform="translate(0, -115)">
+      <rect width="170" height="85" rx="10" fill="#27272A" stroke="#3F3F46" stroke-width="1" />
+      <text x="16" y="26" font-family="'Plus Jakarta Sans', sans-serif" font-size="11" fill="#A1A1AA">Stock Accuracy</text>
+      <text x="16" y="55" font-family="'JetBrains Mono', monospace" font-size="18" font-weight="700" fill="#E879F9">99.8%</text>
+      <text x="16" y="73" font-family="'Plus Jakarta Sans', sans-serif" font-size="10" font-weight="600" fill="#10B981">Automated Sync</text>
+    </g>
+
+    <!-- Metric Card 3 -->
+    <g transform="translate(190, -115)">
+      <rect width="170" height="85" rx="10" fill="#27272A" stroke="#3F3F46" stroke-width="1" />
+      <text x="16" y="26" font-family="'Plus Jakarta Sans', sans-serif" font-size="11" fill="#A1A1AA">Active POS Terminals</text>
+      <text x="16" y="55" font-family="'JetBrains Mono', monospace" font-size="18" font-weight="700" fill="#FFFFFF">12 Units</text>
+      <text x="16" y="73" font-family="'Plus Jakarta Sans', sans-serif" font-size="10" font-weight="600" fill="#10B981">● All Connected</text>
+    </g>
+
+    <!-- Bar Chart Graphic in lower dashboard -->
+    <g transform="translate(-190, 0)">
+      <rect width="550" height="160" rx="10" fill="#27272A" stroke="#3F3F46" stroke-width="1" />
+      <text x="20" y="30" font-family="'Plus Jakarta Sans', sans-serif" font-size="12" font-weight="700" fill="#FFFFFF">Weekly Sales vs Automated Stock Reorders</text>
+      
+      <!-- Bars -->
+      <rect x="50" y="80" width="30" height="55" rx="4" fill="#C026D3" />
+      <rect x="120" y="60" width="30" height="75" rx="4" fill="#C026D3" />
+      <rect x="190" y="45" width="30" height="90" rx="4" fill="#E879F9" />
+      <rect x="260" y="70" width="30" height="65" rx="4" fill="#C026D3" />
+      <rect x="330" y="40" width="30" height="95" rx="4" fill="#E879F9" />
+      <rect x="400" y="30" width="30" height="105" rx="4" fill="#10B981" />
+      <rect x="470" y="50" width="30" height="85" rx="4" fill="#C026D3" />
+
+      <line x1="30" y1="135" x2="520" y2="135" stroke="#3F3F46" stroke-width="1" />
+    </g>
+  </g>
+
+  <!-- Title Badge Overlay -->
+  <g transform="translate(60, 80)">
+    <rect width="320" height="42" rx="21" fill="#18181B" stroke="#3F3F46" stroke-width="1.5" />
+    <circle cx="24" cy="21" r="5" fill="#C026D3" />
+    <text x="40" y="26" font-family="'Plus Jakarta Sans', sans-serif" font-size="13" font-weight="700" fill="#FAF7F2" letter-spacing="0.5">CUSTOM BUSINESS SOFTWARE</text>
+  </g>
+</svg>

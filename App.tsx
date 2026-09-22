@@ -7,6 +7,7 @@ import { Services } from './pages/Services';
 import { Blog } from './pages/Blog';
 import { Contact } from './pages/Contact';
 import { About } from './pages/About';
+import { NotFound } from './pages/NotFound';
 import { PageRoute } from './types';
 
 // ScrollToTop component to handle scroll behavior on route change
@@ -26,13 +27,8 @@ const Layout: React.FC = () => {
   const isHome = location.pathname === PageRoute.HOME;
 
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="flex flex-col min-h-screen bg-[#FAF7F2] text-[#18181B] selection:bg-[#C026D3] selection:text-white">
       <Header />
-      {/* 
-        The Header is fixed. 
-        On non-home pages, we add top padding so content isn't hidden.
-        On home page, we want the content (Hero) to go behind the header.
-      */}
       <main className={`flex-grow ${!isHome ? 'pt-20' : ''}`}>
         <Routes>
           <Route path={PageRoute.HOME} element={<Home />} />
@@ -41,6 +37,7 @@ const Layout: React.FC = () => {
           <Route path={PageRoute.CONTACT} element={<Contact />} />
           <Route path={PageRoute.ABOUT} element={<About />} />
           <Route path="/blog/:id" element={<Blog />} />
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </main>
       <Footer />

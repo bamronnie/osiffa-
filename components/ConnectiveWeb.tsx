@@ -18,13 +18,13 @@ export const ConnectiveWeb: React.FC<ConnectiveWebProps> = ({ theme = 'light' })
     let height = canvas.height = canvas.offsetHeight;
 
     // Configuration
-    const particleDensity = 0.0001; // Adjusted density
-    const mouseRadius = 150; // Radius of mouse interaction
-    const connectionDistance = 140; // Max distance to draw line
+    const particleDensity = 0.00008; // Delicate and elegant for milk/white background
+    const mouseRadius = 140;
+    const connectionDistance = 130;
     
-    const isDark = theme === 'dark';
-    const lineBaseColor = isDark ? '192, 132, 252' : '168, 85, 247';
-    const mouseBaseColor = isDark ? '232, 121, 249' : '192, 38, 211';
+    // Logo color channels: Deep Black (24, 24, 27) and Osiffa Magenta (192, 38, 211)
+    const lineBaseColor = '192, 38, 211';
+    const mouseBaseColor = '192, 38, 211';
     
     const particles: Particle[] = [];
     const mouse = { x: -1000, y: -1000 };
@@ -41,58 +41,39 @@ export const ConnectiveWeb: React.FC<ConnectiveWebProps> = ({ theme = 'light' })
       constructor() {
         this.x = Math.random() * width;
         this.y = Math.random() * height;
-        // Random base velocity
-        this.directionX = (Math.random() - 0.5) * 1.5;
-        this.directionY = (Math.random() - 0.5) * 1.5;
+        this.directionX = (Math.random() - 0.5) * 1.2;
+        this.directionY = (Math.random() - 0.5) * 1.2;
         this.size = Math.random() * 2 + 1;
         
-        if (isDark) {
-          const colors = [
-            'rgba(232, 121, 249, 0.75)', // Brand magenta
-            'rgba(192, 132, 252, 0.7)',  // Purple
-            'rgba(56, 189, 248, 0.65)',  // Cyan optic
-            'rgba(255, 255, 255, 0.75)'  // White
-          ];
-          this.color = colors[Math.floor(Math.random() * colors.length)];
-        } else {
-          this.color = 'rgba(168, 85, 247, 0.45)';
-        }
-        
-        // Density determines how strongly the mouse pushes the particle (parallax effect)
-        this.density = (Math.random() * 20) + 5; 
+        const colors = [
+          'rgba(192, 38, 211, 0.55)', // Osiffa Magenta
+          'rgba(24, 24, 27, 0.35)',   // Logo Deep Black
+          'rgba(181, 38, 209, 0.65)', // Vibrant Magenta
+          'rgba(63, 63, 70, 0.3)',    // Charcoal
+        ];
+        this.color = colors[Math.floor(Math.random() * colors.length)];
+        this.density = (Math.random() * 18) + 4; 
       }
 
       update() {
-        // 1. Basic Movement
         this.x += this.directionX;
         this.y += this.directionY;
 
-        // 2. Mouse Repulsion Physics
-        // Calculate distance between particle and mouse
         const dx = mouse.x - this.x;
         const dy = mouse.y - this.y;
         const distance = Math.sqrt(dx * dx + dy * dy);
 
         if (distance < mouseRadius) {
-            // Force vector
-            const forceDirectionX = dx / distance;
-            const forceDirectionY = dy / distance;
-            
-            // Force magnitude (stronger when closer)
-            const force = (mouseRadius - distance) / mouseRadius;
-            
-            // Movement vector (Repulsion: move away from mouse)
-            // Multiply by density to give depth/weight feel
-            const moveX = forceDirectionX * force * this.density;
-            const moveY = forceDirectionY * force * this.density;
+          const forceDirectionX = dx / distance;
+          const forceDirectionY = dy / distance;
+          const force = (mouseRadius - distance) / mouseRadius;
+          const moveX = forceDirectionX * force * this.density;
+          const moveY = forceDirectionY * force * this.density;
 
-            // Apply movement (subtracting moves away from mouse coords)
-            this.x -= moveX;
-            this.y -= moveY;
+          this.x -= moveX;
+          this.y -= moveY;
         }
 
-        // 3. Screen Wrap (Infinite Field)
-        // Instead of bouncing, wrap around edges for a smoother feel
         if (this.x > width) this.x = 0;
         else if (this.x < 0) this.x = width;
 
@@ -124,38 +105,34 @@ export const ConnectiveWeb: React.FC<ConnectiveWebProps> = ({ theme = 'light' })
         particles[i].update();
         particles[i].draw();
 
-        // Draw connections between particles
         for (let j = i; j < particles.length; j++) {
-            const dx = particles[i].x - particles[j].x;
-            const dy = particles[i].y - particles[j].y;
-            const distance = Math.sqrt(dx * dx + dy * dy);
+          const dx = particles[i].x - particles[j].x;
+          const dy = particles[i].y - particles[j].y;
+          const distance = Math.sqrt(dx * dx + dy * dy);
 
-            if (distance < connectionDistance) {
-                ctx.beginPath();
-                // Fade out based on distance
-                const opacity = 1 - (distance / connectionDistance);
-                ctx.strokeStyle = `rgba(${lineBaseColor}, ${opacity * 0.25})`; 
-                ctx.lineWidth = 1;
-                ctx.moveTo(particles[i].x, particles[i].y);
-                ctx.lineTo(particles[j].x, particles[j].y);
-                ctx.stroke();
-            }
+          if (distance < connectionDistance) {
+            ctx.beginPath();
+            const opacity = 1 - (distance / connectionDistance);
+            ctx.strokeStyle = `rgba(${lineBaseColor}, ${opacity * 0.18})`; 
+            ctx.lineWidth = 1;
+            ctx.moveTo(particles[i].x, particles[i].y);
+            ctx.lineTo(particles[j].x, particles[j].y);
+            ctx.stroke();
+          }
         }
 
-        // Draw connections to mouse (Visual Feedback)
         const dx = particles[i].x - mouse.x;
         const dy = particles[i].y - mouse.y;
         const distance = Math.sqrt(dx * dx + dy * dy);
 
         if (distance < mouseRadius) {
-            ctx.beginPath();
-            const opacity = 1 - (distance / mouseRadius);
-            // Use brand color for mouse connections
-            ctx.strokeStyle = `rgba(${mouseBaseColor}, ${opacity * 0.6})`; 
-            ctx.lineWidth = 1.5;
-            ctx.moveTo(particles[i].x, particles[i].y);
-            ctx.lineTo(mouse.x, mouse.y);
-            ctx.stroke();
+          ctx.beginPath();
+          const opacity = 1 - (distance / mouseRadius);
+          ctx.strokeStyle = `rgba(${mouseBaseColor}, ${opacity * 0.45})`; 
+          ctx.lineWidth = 1.5;
+          ctx.moveTo(particles[i].x, particles[i].y);
+          ctx.lineTo(mouse.x, mouse.y);
+          ctx.stroke();
         }
       }
 
@@ -172,15 +149,14 @@ export const ConnectiveWeb: React.FC<ConnectiveWebProps> = ({ theme = 'light' })
     };
 
     const handleMouseMove = (e: MouseEvent) => {
-        const rect = canvas.getBoundingClientRect();
-        mouse.x = e.clientX - rect.left;
-        mouse.y = e.clientY - rect.top;
+      const rect = canvas.getBoundingClientRect();
+      mouse.x = e.clientX - rect.left;
+      mouse.y = e.clientY - rect.top;
     };
     
-    // Reset mouse pos when leaving window to stop stuck interaction
     const handleMouseOut = () => {
-        mouse.x = -1000;
-        mouse.y = -1000;
+      mouse.x = -1000;
+      mouse.y = -1000;
     };
 
     window.addEventListener('resize', handleResize);
@@ -198,7 +174,7 @@ export const ConnectiveWeb: React.FC<ConnectiveWebProps> = ({ theme = 'light' })
   return (
     <canvas 
       ref={canvasRef} 
-      className="absolute inset-0 w-full h-full block z-0"
+      className="absolute inset-0 w-full h-full block z-0 opacity-40"
       style={{ touchAction: 'none' }}
     />
   );

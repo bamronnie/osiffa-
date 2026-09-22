@@ -12,13 +12,13 @@ export const Button: React.FC<ButtonProps> = ({
   className = '', 
   ...props 
 }) => {
-  const baseStyles = "relative inline-flex items-center justify-center rounded-lg font-medium transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none active:scale-95 overflow-hidden";
+  const baseStyles = "relative inline-flex items-center justify-center rounded-lg font-medium transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-[#C026D3] focus:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none active:scale-95 overflow-hidden";
   
   const variants = {
-    primary: "bg-brand-600 text-white hover:bg-brand-500 shadow-lg hover:shadow-brand-500/40 hover:-translate-y-0.5 border border-transparent",
-    secondary: "bg-gray-900 text-white hover:bg-gray-800 shadow-lg hover:shadow-gray-900/30 hover:-translate-y-0.5 border border-transparent",
-    outline: "border border-gray-300 bg-transparent text-gray-700 hover:bg-gray-50 hover:border-brand-300 hover:text-brand-700",
-    ghost: "bg-transparent text-gray-600 hover:text-brand-600 hover:bg-brand-50/50"
+    primary: "bg-[#18181B] text-white hover:bg-[#C026D3] shadow-sm hover:shadow-[0_8px_20px_-4px_rgba(192,38,211,0.35)] hover:-translate-y-0.5 border border-transparent",
+    secondary: "bg-[#C026D3] text-white hover:bg-[#A21CAF] shadow-sm hover:shadow-[0_8px_20px_-4px_rgba(192,38,211,0.35)] hover:-translate-y-0.5 border border-transparent",
+    outline: "border border-[#E8E2D5] bg-white text-[#18181B] hover:border-[#C026D3] hover:text-[#C026D3] hover:bg-[#FAF7F2]",
+    ghost: "bg-transparent text-[#18181B] hover:text-[#C026D3] hover:bg-white"
   };
 
   const sizes = {
@@ -27,7 +27,6 @@ export const Button: React.FC<ButtonProps> = ({
     lg: "h-14 px-8 text-lg tracking-wide",
   };
 
-  // Add the shine effect specifically for primary and secondary buttons
   const shineEffect = (variant === 'primary' || variant === 'secondary') 
     ? "after:content-[''] after:absolute after:top-0 after:left-[-100%] after:w-full after:h-full after:bg-gradient-to-r after:from-transparent after:via-white/20 after:to-transparent after:transition-all after:duration-500 hover:after:left-[100%]" 
     : "";

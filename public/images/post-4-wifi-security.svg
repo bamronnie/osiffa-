@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 700" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#18181B" />
+      <stop offset="50%" stop-color="#27272A" />
+      <stop offset="100%" stop-color="#09090B" />
+    </linearGradient>
+    <linearGradient id="shieldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#E879F9" />
+      <stop offset="100%" stop-color="#C026D3" />
+    </linearGradient>
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#3F3F46" stroke-width="0.75" opacity="0.4" />
+    </pattern>
+  </defs>
+
+  <rect width="1200" height="700" fill="url(#bgGrad)" />
+  <rect width="1200" height="700" fill="url(#grid)" />
+
+  <!-- Security Shield and Wi-Fi Waves -->
+  <g transform="translate(600, 340)">
+    <!-- Wi-Fi Concentric Arcs -->
+    <path d="M -160 -100 A 200 200 0 0 1 160 -100" fill="none" stroke="#C026D3" stroke-width="6" stroke-linecap="round" opacity="0.8" />
+    <path d="M -110 -60 A 140 140 0 0 1 110 -60" fill="none" stroke="#E879F9" stroke-width="5" stroke-linecap="round" opacity="0.9" />
+    <path d="M -60 -20 A 80 80 0 0 1 60 -20" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" />
+
+    <!-- Central Security Shield -->
+    <path d="M 0 30 L 60 70 C 60 150 0 190 0 190 C 0 190 -60 150 -60 70 Z" fill="url(#shieldGrad)" stroke="#FFFFFF" stroke-width="2" />
+    
+    <!-- Lock inside shield -->
+    <rect x="-14" y="100" width="28" height="24" rx="4" fill="#FFFFFF" />
+    <path d="M -8 100 L -8 88 C -8 80 8 80 8 88 L 8 100" fill="none" stroke="#FFFFFF" stroke-width="3.5" stroke-linecap="round" />
+    <circle cx="0" cy="111" r="3" fill="#C026D3" />
+
+    <!-- Network Segmentation Boxes -->
+    <!-- Staff VLAN (Secure) -->
+    <g transform="translate(-320, 60)">
+      <rect x="-110" y="-45" width="220" height="90" rx="14" fill="#18181B" stroke="#C026D3" stroke-width="2" />
+      <text x="0" y="-15" font-family="'Plus Jakarta Sans', sans-serif" font-size="13" font-weight="700" fill="#E879F9" text-anchor="middle">STAFF VLAN (SECURE)</text>
+      <text x="0" y="8" font-family="'JetBrains Mono', monospace" font-size="11" fill="#A1A1AA" text-anchor="middle">192.168.10.0/24</text>
+      <text x="0" y="26" font-family="'Plus Jakarta Sans', sans-serif" font-size="10" font-weight="600" fill="#10B981" text-anchor="middle">ENCRYPTED &amp; ISOLATED</text>
+    </g>
+
+    <!-- Guest Wi-Fi (Isolated) -->
+    <g transform="translate(320, 60)">
+      <rect x="-110" y="-45" width="220" height="90" rx="14" fill="#18181B" stroke="#3F3F46" stroke-width="2" />
+      <text x="0" y="-15" font-family="'Plus Jakarta Sans', sans-serif" font-size="13" font-weight="700" fill="#FFFFFF" text-anchor="middle">GUEST WI-FI (THROTTLED)</text>
+      <text x="0" y="8" font-family="'JetBrains Mono', monospace" font-size="11" fill="#A1A1AA" text-anchor="middle">192.168.20.0/24</text>
+      <text x="0" y="26" font-family="'Plus Jakarta Sans', sans-serif" font-size="10" font-weight="600" fill="#F59E0B" text-anchor="middle">NO INTERNAL ACCESS</text>
+    </g>
+
+    <!-- Connecting lines -->
+    <path d="M -210 60 L -65 100" stroke="#C026D3" stroke-width="2" stroke-dasharray="4 4" />
+    <path d="M 210 60 L 65 100" stroke="#71717A" stroke-width="2" stroke-dasharray="4 4" />
+  </g>
+
+  <!-- Title Badge Overlay -->
+  <g transform="translate(60, 80)">
+    <rect width="320" height="42" rx="21" fill="#18181B" stroke="#3F3F46" stroke-width="1.5" />
+    <circle cx="24" cy="21" r="5" fill="#C026D3" />
+    <text x="40" y="26" font-family="'Plus Jakarta Sans', sans-serif" font-size="13" font-weight="700" fill="#FAF7F2" letter-spacing="0.5">COMMERCIAL WI-FI SECURITY</text>
+  </g>
+</svg>
