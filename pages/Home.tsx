@@ -15,9 +15,7 @@ import {
   Building,
   Server,
   Code2,
-  Laptop,
-  Play,
-  Pause
+  Laptop
 } from 'lucide-react';
 import { PageRoute } from '../types';
 import { Reveal } from '../components/Reveal';
@@ -28,26 +26,13 @@ export const Home: React.FC = () => {
   
   // Background Video State & Ref
   const videoRef = useRef<HTMLVideoElement>(null);
-  const [isVideoPlaying, setIsVideoPlaying] = useState(true);
   const [isVideoLoaded, setIsVideoLoaded] = useState(false);
 
   useEffect(() => {
     if (videoRef.current) {
-      videoRef.current.play().catch(() => {
-        setIsVideoPlaying(false);
-      });
+      videoRef.current.play().catch(() => {});
     }
   }, []);
-
-  const toggleVideoPlayback = () => {
-    if (!videoRef.current) return;
-    if (isVideoPlaying) {
-      videoRef.current.pause();
-      setIsVideoPlaying(false);
-    } else {
-      videoRef.current.play().then(() => setIsVideoPlaying(true)).catch(() => {});
-    }
-  };
 
   const tickerItems = [
     "Business Internet & Dedicated Connectivity",
@@ -175,10 +160,7 @@ export const Home: React.FC = () => {
           playsInline
           preload="auto"
           onLoadedData={() => setIsVideoLoaded(true)}
-          onPlaying={() => {
-            setIsVideoLoaded(true);
-            setIsVideoPlaying(true);
-          }}
+          onPlaying={() => setIsVideoLoaded(true)}
           className={`absolute inset-0 w-full h-full object-cover z-0 select-none pointer-events-none transition-opacity duration-1000 ease-out ${
             isVideoLoaded ? 'opacity-80' : 'opacity-0'
           }`}
@@ -272,21 +254,6 @@ export const Home: React.FC = () => {
         <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-20 text-[#18181B]/40 flex flex-col items-center gap-1">
           <span className="text-[10px] tracking-widest uppercase font-semibold">Scroll</span>
           <ArrowRight className="rotate-90 text-[#18181B]/40" size={14} />
-        </div>
-
-        {/* Video Play/Pause Control Pill */}
-        <div className="absolute bottom-6 right-6 sm:right-10 z-20 flex items-center">
-          <button
-            type="button"
-            onClick={toggleVideoPlayback}
-            className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/80 hover:bg-white text-[#18181B] text-[11px] font-medium backdrop-blur-md border border-[#E8E2D5] shadow-sm hover:shadow transition-all duration-200 cursor-pointer"
-            title={isVideoPlaying ? "Pause background animation" : "Play background animation"}
-            aria-label={isVideoPlaying ? "Pause background video" : "Play background video"}
-          >
-            <span className={`h-2 w-2 rounded-full ${isVideoPlaying ? 'bg-emerald-500 animate-pulse' : 'bg-zinc-400'}`}></span>
-            <span className="text-[11px] font-semibold text-[#18181B]/80">{isVideoPlaying ? 'Motion On' : 'Paused'}</span>
-            {isVideoPlaying ? <Pause size={12} className="text-zinc-600" /> : <Play size={12} className="text-zinc-600" />}
-          </button>
         </div>
       </section>
 

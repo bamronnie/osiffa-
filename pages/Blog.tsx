@@ -239,8 +239,8 @@ export const Blog: React.FC = () => {
 
       {/* Hero Header */}
       <section className="relative bg-[#FAF7F2] text-[#18181B] py-24 relative overflow-hidden border-b border-[#E8E2D5]">
-        {/* Subtle Ethereal Web Background */}
-        <div className="absolute inset-0 z-0 pointer-events-none opacity-40">
+        {/* Connective Web Background */}
+        <div className="absolute inset-0 z-0 pointer-events-none">
           <ConnectiveWeb theme="light" />
         </div>
         

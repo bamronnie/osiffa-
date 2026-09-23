@@ -11,6 +11,7 @@ import {
   Building
 } from 'lucide-react';
 import { Reveal } from '../components/Reveal';
+import { ConnectiveWeb } from '../components/ConnectiveWeb';
 
 export const Contact: React.FC = () => {
   const [firstName, setFirstName] = useState('');
@@ -105,6 +106,11 @@ export const Contact: React.FC = () => {
 
       {/* Hero Header */}
       <section className="bg-[#FAF7F2] text-[#18181B] py-24 relative overflow-hidden border-b border-[#E8E2D5]">
+        {/* Connective Web Background */}
+        <div className="absolute inset-0 z-0 pointer-events-none">
+          <ConnectiveWeb theme="light" />
+        </div>
+
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
           <Reveal>
             <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white border border-[#E8E2D5] text-[#C026D3] text-xs font-semibold mb-4 shadow-sm">

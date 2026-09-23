@@ -9,7 +9,7 @@ interface ConnectiveWebProps {
 export const ConnectiveWeb: React.FC<ConnectiveWebProps> = ({ 
   theme = 'light',
   className = '',
-  particleCountMultiplier = 0.8
+  particleCountMultiplier = 1
 }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
@@ -24,33 +24,91 @@ export const ConnectiveWeb: React.FC<ConnectiveWebProps> = ({
     let height = 0;
     let dpr = 1;
 
-    // Aesthetic configuration: whisper-soft, elegant, and unobtrusive
+    // Configuration: original interactive physics from the start with enhanced visibility
     const isDark = theme === 'dark';
-    const connectionDistance = 125;
-    const mouseRadius = 140;
+    const particleDensity = 0.0001; // Original density from start
+    const mouseRadius = 150;        // Radius of mouse interaction & repulsion
+    const connectionDistance = 140; // Max distance to draw line
+    
+    // Brand Colors: Osiffa Magenta (#C026D3) & Brand Fuchsia
+    const lineBaseColor = isDark ? '217, 70, 239' : '192, 38, 211';
+    const mouseBaseColor = isDark ? '232, 121, 249' : '192, 38, 211';
 
-    // Palette: soft muted magenta & warm mineral tones
-    const magentaRgb = '192, 38, 211';
-    const softGlowRgb = '217, 70, 239';
-    const neutralRgb = isDark ? '212, 212, 216' : '113, 113, 122';
-
-    interface SubtleParticle {
+    class Particle {
       x: number;
       y: number;
-      vx: number;
-      vy: number;
+      directionX: number;
+      directionY: number;
       size: number;
-      baseSize: number;
       color: string;
-      isHub: boolean;
-      pulsePhase: number;
-      pulseSpeed: number;
+      density: number;
+
+      constructor() {
+        this.x = Math.random() * width;
+        this.y = Math.random() * height;
+        // Smooth natural velocity from the start
+        this.directionX = (Math.random() - 0.5) * 1.3;
+        this.directionY = (Math.random() - 0.5) * 1.3;
+        this.size = Math.random() * 2 + 1.2;
+
+        const colors = isDark ? [
+          'rgba(232, 121, 249, 0.90)', // Brand magenta
+          'rgba(192, 132, 252, 0.85)', // Purple
+          'rgba(56, 189, 248, 0.80)',  // Cyan optic
+          'rgba(255, 255, 255, 0.90)'  // White
+        ] : [
+          'rgba(192, 38, 211, 0.85)',  // Osiffa Magenta
+          'rgba(217, 70, 239, 0.90)',  // Vibrant Magenta Glow
+          'rgba(24, 24, 27, 0.60)',    // Deep Charcoal / Logo Dark
+          'rgba(147, 51, 234, 0.75)'   // Violet Tone
+        ];
+
+        this.color = colors[Math.floor(Math.random() * colors.length)];
+        // Density determines how strongly the mouse pushes the particle (parallax/repulsion)
+        this.density = (Math.random() * 20) + 5;
+      }
+
+      update() {
+        // 1. Basic Movement
+        this.x += this.directionX;
+        this.y += this.directionY;
+
+        // 2. Mouse Repulsion Physics (Original dynamic feel from the start)
+        const dx = mouse.x - this.x;
+        const dy = mouse.y - this.y;
+        const distance = Math.sqrt(dx * dx + dy * dy);
+
+        if (distance < mouseRadius) {
+          const forceDirectionX = dx / distance;
+          const forceDirectionY = dy / distance;
+          const force = (mouseRadius - distance) / mouseRadius;
+          const moveX = forceDirectionX * force * this.density;
+          const moveY = forceDirectionY * force * this.density;
+
+          this.x -= moveX;
+          this.y -= moveY;
+        }
+
+        // 3. Screen Wrap (Infinite Field)
+        if (this.x > width) this.x = 0;
+        else if (this.x < 0) this.x = width;
+
+        if (this.y > height) this.y = 0;
+        else if (this.y < 0) this.y = height;
+      }
+
+      draw() {
+        if (!ctx) return;
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.fillStyle = this.color;
+        ctx.fill();
+      }
     }
 
-    const particles: SubtleParticle[] = [];
-    const mouse = { x: -2000, y: -2000, isOver: false };
+    const particles: Particle[] = [];
+    const mouse = { x: -2000, y: -2000 };
 
-    // Setup high-DPI canvas
     const setupCanvas = () => {
       dpr = Math.min(window.devicePixelRatio || 1, 2);
       width = canvas.parentElement ? canvas.parentElement.offsetWidth : window.innerWidth;
@@ -65,129 +123,59 @@ export const ConnectiveWeb: React.FC<ConnectiveWebProps> = ({
       ctx.scale(dpr, dpr);
     };
 
-    const initParticles = () => {
+    const init = () => {
       particles.length = 0;
-
-      // Spaced, breathable density for a clean architectural look
-      const area = width * height;
-      const baseDensity = width < 768 ? 0.000035 : 0.000045;
-      const count = Math.max(18, Math.min(65, Math.floor(area * baseDensity * particleCountMultiplier)));
-
+      const count = Math.max(
+        18,
+        Math.min(90, Math.floor(width * height * particleDensity * particleCountMultiplier))
+      );
       for (let i = 0; i < count; i++) {
-        const isHub = i % 8 === 0;
-        const baseSize = isHub ? Math.random() * 0.8 + 2.0 : Math.random() * 0.6 + 1.2;
-
-        const nodeColors = [
-          `rgba(${magentaRgb}, 0.38)`,
-          `rgba(${softGlowRgb}, 0.42)`,
-          `rgba(${neutralRgb}, ${isDark ? '0.35' : '0.22'})`,
-          `rgba(${magentaRgb}, 0.28)`
-        ];
-
-        particles.push({
-          x: Math.random() * width,
-          y: Math.random() * height,
-          // Slow, calm, serene drift
-          vx: (Math.random() - 0.5) * 0.32,
-          vy: (Math.random() - 0.5) * 0.32,
-          size: baseSize,
-          baseSize,
-          color: nodeColors[Math.floor(Math.random() * nodeColors.length)],
-          isHub,
-          pulsePhase: Math.random() * Math.PI * 2,
-          pulseSpeed: 0.015 + Math.random() * 0.02
-        });
+        particles.push(new Particle());
       }
     };
 
     setupCanvas();
-    initParticles();
+    init();
 
     const animate = () => {
       ctx.clearRect(0, 0, width, height);
 
-      const pCount = particles.length;
+      for (let i = 0; i < particles.length; i++) {
+        particles[i].update();
+        particles[i].draw();
 
-      // Draw delicate hairline connections
-      for (let i = 0; i < pCount; i++) {
-        const p1 = particles[i];
+        // Draw connections between particles (crisp and visibly distinct)
+        for (let j = i + 1; j < particles.length; j++) {
+          const dx = particles[i].x - particles[j].x;
+          const dy = particles[i].y - particles[j].y;
+          const distance = Math.sqrt(dx * dx + dy * dy);
 
-        // Smooth position updates
-        p1.x += p1.vx;
-        p1.y += p1.vy;
-        p1.pulsePhase += p1.pulseSpeed;
-
-        // Gentle boundary wrap
-        if (p1.x < -10) p1.x = width + 10;
-        else if (p1.x > width + 10) p1.x = -10;
-
-        if (p1.y < -10) p1.y = height + 10;
-        else if (p1.y > height + 10) p1.y = -10;
-
-        // Connect with neighboring particles with hair-thin, whisper-light lines
-        for (let j = i + 1; j < pCount; j++) {
-          const p2 = particles[j];
-          const dx = p1.x - p2.x;
-          const dy = p1.y - p2.y;
-          const dist = Math.sqrt(dx * dx + dy * dy);
-
-          if (dist < connectionDistance) {
-            const alpha = 1 - dist / connectionDistance;
-            // Whisper opacity: 0.05 to 0.16 max
-            const lineOpacity = alpha * (p1.isHub || p2.isHub ? 0.16 : 0.10);
-
+          if (distance < connectionDistance) {
             ctx.beginPath();
-            ctx.strokeStyle = `rgba(${magentaRgb}, ${lineOpacity.toFixed(3)})`;
-            ctx.lineWidth = 0.65;
-            ctx.moveTo(p1.x, p1.y);
-            ctx.lineTo(p2.x, p2.y);
+            const opacity = 1 - (distance / connectionDistance);
+            // More visible than original faint 0.18, perfectly balanced at 0.32
+            ctx.strokeStyle = `rgba(${lineBaseColor}, ${(opacity * 0.32).toFixed(3)})`; 
+            ctx.lineWidth = 1;
+            ctx.moveTo(particles[i].x, particles[i].y);
+            ctx.lineTo(particles[j].x, particles[j].y);
             ctx.stroke();
           }
         }
 
-        // Soft, non-intrusive mouse tethering
-        if (mouse.isOver) {
-          const mdx = p1.x - mouse.x;
-          const mdy = p1.y - mouse.y;
-          const mdist = Math.sqrt(mdx * mdx + mdy * mdy);
+        // Draw connections to mouse (Visual Feedback)
+        const dx = particles[i].x - mouse.x;
+        const dy = particles[i].y - mouse.y;
+        const distance = Math.sqrt(dx * dx + dy * dy);
 
-          if (mdist < mouseRadius) {
-            const alpha = (1 - mdist / mouseRadius) * 0.22;
-            ctx.beginPath();
-            ctx.strokeStyle = `rgba(${magentaRgb}, ${alpha.toFixed(3)})`;
-            ctx.lineWidth = 0.8;
-            ctx.moveTo(p1.x, p1.y);
-            ctx.lineTo(mouse.x, mouse.y);
-            ctx.stroke();
-          }
-        }
-      }
-
-      // Draw subtle micro-nodes
-      for (let i = 0; i < pCount; i++) {
-        const p = particles[i];
-
-        if (p.isHub) {
-          const pulse = Math.sin(p.pulsePhase);
-          const haloRadius = p.baseSize + 2 + pulse * 1.2;
-          const haloAlpha = 0.08 + pulse * 0.05;
-
-          // Soft ambient halo
+        if (distance < mouseRadius) {
           ctx.beginPath();
-          ctx.arc(p.x, p.y, haloRadius, 0, Math.PI * 2);
-          ctx.fillStyle = `rgba(${softGlowRgb}, ${haloAlpha.toFixed(2)})`;
-          ctx.fill();
-
-          // Hub core
-          ctx.beginPath();
-          ctx.arc(p.x, p.y, p.baseSize, 0, Math.PI * 2);
-          ctx.fillStyle = `rgba(${magentaRgb}, 0.55)`;
-          ctx.fill();
-        } else {
-          ctx.beginPath();
-          ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-          ctx.fillStyle = p.color;
-          ctx.fill();
+          const opacity = 1 - (distance / mouseRadius);
+          // Crisp, responsive mouse tether line
+          ctx.strokeStyle = `rgba(${mouseBaseColor}, ${(opacity * 0.60).toFixed(3)})`; 
+          ctx.lineWidth = 1.5;
+          ctx.moveTo(particles[i].x, particles[i].y);
+          ctx.lineTo(mouse.x, mouse.y);
+          ctx.stroke();
         }
       }
 
@@ -198,7 +186,7 @@ export const ConnectiveWeb: React.FC<ConnectiveWebProps> = ({
 
     const handleResize = () => {
       setupCanvas();
-      initParticles();
+      init();
     };
 
     const handleMouseMove = (e: MouseEvent) => {
@@ -214,14 +202,15 @@ export const ConnectiveWeb: React.FC<ConnectiveWebProps> = ({
       ) {
         mouse.x = clientX - rect.left;
         mouse.y = clientY - rect.top;
-        mouse.isOver = true;
       } else {
-        mouse.isOver = false;
+        mouse.x = -2000;
+        mouse.y = -2000;
       }
     };
 
     const handleMouseLeave = () => {
-      mouse.isOver = false;
+      mouse.x = -2000;
+      mouse.y = -2000;
     };
 
     window.addEventListener('resize', handleResize);
@@ -239,7 +228,7 @@ export const ConnectiveWeb: React.FC<ConnectiveWebProps> = ({
   return (
     <canvas 
       ref={canvasRef} 
-      className={`absolute inset-0 w-full h-full block select-none pointer-events-none opacity-45 transition-opacity duration-1000 ${className}`}
+      className={`absolute inset-0 w-full h-full block z-0 select-none pointer-events-none opacity-85 transition-opacity duration-700 ${className}`}
       style={{ touchAction: 'none' }}
     />
   );
