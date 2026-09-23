@@ -30,6 +30,7 @@ export const Home: React.FC = () => {
   // Background Video State & Ref
   const videoRef = useRef<HTMLVideoElement>(null);
   const [isVideoPlaying, setIsVideoPlaying] = useState(true);
+  const [isVideoLoaded, setIsVideoLoaded] = useState(false);
 
   useEffect(() => {
     if (videoRef.current) {
@@ -174,8 +175,14 @@ export const Home: React.FC = () => {
           muted
           playsInline
           preload="auto"
-          poster="/images/server-room.jpg"
-          className="absolute inset-0 w-full h-full object-cover z-0 select-none pointer-events-none opacity-75 transition-opacity duration-700"
+          onLoadedData={() => setIsVideoLoaded(true)}
+          onPlaying={() => {
+            setIsVideoLoaded(true);
+            setIsVideoPlaying(true);
+          }}
+          className={`absolute inset-0 w-full h-full object-cover z-0 select-none pointer-events-none transition-opacity duration-1000 ease-out ${
+            isVideoLoaded ? 'opacity-80' : 'opacity-0'
+          }`}
         >
           <source src="/videos/107991-678971274_medium.mp4" type="video/mp4" />
           <source src="/videos/hero-background.mp4" type="video/mp4" />
@@ -185,14 +192,14 @@ export const Home: React.FC = () => {
         <div className="absolute top-1/4 left-1/6 w-96 h-96 bg-[#C026D3]/10 rounded-full blur-[140px] pointer-events-none z-0" />
         <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-[#FAF7F2] rounded-full blur-[140px] pointer-events-none z-0" />
         
-        {/* Interactive Optical Particle Canvas */}
-        <div className="absolute inset-0 z-0 opacity-40 pointer-events-none">
-          <ConnectiveWeb theme="light" />
+        {/* Interactive Optical Particle Canvas (Connective Web) */}
+        <div className="absolute inset-0 z-10 pointer-events-none">
+          <ConnectiveWeb theme="light" particleCountMultiplier={1.3} />
         </div>
         
-        {/* Refined Directional Overlays for Text Legibility while Maximizing Video Visibility */}
-        <div className="absolute inset-0 bg-gradient-to-r from-[#FAF7F2] via-[#FAF7F2]/70 via-40% to-transparent z-10 pointer-events-none"></div>
-        <div className="absolute inset-0 bg-gradient-to-t from-[#FAF7F2] via-transparent to-[#FAF7F2]/30 z-10 pointer-events-none"></div>
+        {/* Refined Directional Overlays for Text Legibility while Maximizing Video & Web Visibility */}
+        <div className="absolute inset-0 bg-gradient-to-r from-[#FAF7F2] via-[#FAF7F2]/65 via-35% to-transparent z-10 pointer-events-none"></div>
+        <div className="absolute inset-0 bg-gradient-to-t from-[#FAF7F2] via-transparent to-[#FAF7F2]/20 z-10 pointer-events-none"></div>
 
         <div className="relative z-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full text-left pt-8">
           <Reveal>
@@ -200,7 +207,7 @@ export const Home: React.FC = () => {
               <span className="h-2 w-2 rounded-full bg-[#C026D3]"></span>
               <span>Osiffa Telecoms (Nig.) Ltd</span>
               <span className="text-[#18181B]/30">·</span>
-              <span>Networking & IT Solutions</span>
+              <span>Networking, Web & IT Solutions</span>
               <span className="text-[#18181B]/30">·</span>
               <span className="text-[#C026D3] font-semibold text-[11px]">Africa</span>
             </div>
@@ -229,7 +236,7 @@ export const Home: React.FC = () => {
 
           <Reveal delay={400}>
             <p className="text-base md:text-lg text-[#18181B]/75 mb-10 leading-relaxed max-w-2xl font-normal text-left">
-              Providing reliable business internet, structured office cabling, commercial Wi-Fi solutions, and hands-on IT network support for growing companies across Africa.
+              Providing reliable business internet, structured office cabling, commercial Wi-Fi solutions, and custom business web applications for growing companies across Africa.
             </p>
           </Reveal>
 
@@ -363,10 +370,10 @@ export const Home: React.FC = () => {
                 desc: "Transform messy, tangled network closets into clean, organized server racks. We install patch panels, cable organizers, and labeled cords so maintenance is effortless."
               },
               {
-                icon: ShieldCheck,
-                title: "Routers, Switches & Firewalls",
-                tag: "Hardware Config",
-                desc: "Installation and configuration of managed switches, business routers, and hardware firewalls. We ensure your local network is secure and properly segmented."
+                icon: Code2,
+                title: "Custom Web Apps & ERP",
+                tag: "Web & Software",
+                desc: "Bespoke web applications, staff management portals, and automated ERP workflows that replace chaotic spreadsheets with real-time stock, invoicing, and sales."
               },
               {
                 icon: Wrench,
@@ -492,9 +499,18 @@ export const Home: React.FC = () => {
                   <h3 className="text-xl font-bold text-[#18181B] mb-3 tracking-tight">
                     Custom Software & Business ERP
                   </h3>
-                  <p className="text-[#18181B]/70 text-sm leading-relaxed mb-6">
+                  <p className="text-[#18181B]/70 text-sm leading-relaxed mb-4">
                     Tailor-made software applications and automated management tools that eliminate repetitive manual spreadsheets, streamline inventory, and track sales.
                   </p>
+
+                  {/* Tech Stack & Features Badges */}
+                  <div className="flex flex-wrap gap-1.5 mb-6">
+                    {["Custom Web Portals", "Cloud ERP", "Inventory & POS", "Automated Invoicing", "REST APIs"].map((badge, bIdx) => (
+                      <span key={bIdx} className="text-[10px] font-mono font-semibold px-2 py-0.5 rounded bg-white border border-[#E8E2D5] text-[#C026D3]">
+                        {badge}
+                      </span>
+                    ))}
+                  </div>
 
                   <div className="space-y-3 mb-8">
                     {[
@@ -513,9 +529,9 @@ export const Home: React.FC = () => {
                 </div>
 
                 <div className="pt-5 border-t border-[#E8E2D5] flex items-center justify-between">
-                  <span className="text-xs font-mono text-[#18181B]/60">Built for Your Workflow</span>
+                  <span className="text-xs font-mono text-[#18181B]/60">Built for Modern Businesses</span>
                   <Link to={PageRoute.SERVICES} className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#18181B] hover:text-[#C026D3] transition-colors">
-                    <span>View Software</span>
+                    <span>Explore Web & Software</span>
                     <ArrowRight size={13} />
                   </Link>
                 </div>
