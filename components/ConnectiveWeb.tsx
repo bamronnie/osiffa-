@@ -6,17 +6,10 @@ interface ConnectiveWebProps {
   particleCountMultiplier?: number;
 }
 
-interface DataPacket {
-  p1: number;
-  p2: number;
-  progress: number;
-  speed: number;
-}
-
 export const ConnectiveWeb: React.FC<ConnectiveWebProps> = ({ 
   theme = 'light',
   className = '',
-  particleCountMultiplier = 1
+  particleCountMultiplier = 0.8
 }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
@@ -31,17 +24,17 @@ export const ConnectiveWeb: React.FC<ConnectiveWebProps> = ({
     let height = 0;
     let dpr = 1;
 
-    // Responsive configuration
+    // Aesthetic configuration: whisper-soft, elegant, and unobtrusive
     const isDark = theme === 'dark';
-    const connectionDistance = 155;
-    const mouseRadius = 175;
+    const connectionDistance = 125;
+    const mouseRadius = 140;
 
-    // Color definitions
-    const magentaRgb = '192, 38, 211';    // Osiffa Magenta #C026D3
-    const brightMagenta = '232, 121, 249'; // Glow Magenta #E879F9
-    const darkNodeRgb = isDark ? '244, 244, 245' : '24, 24, 27';
+    // Palette: soft muted magenta & warm mineral tones
+    const magentaRgb = '192, 38, 211';
+    const softGlowRgb = '217, 70, 239';
+    const neutralRgb = isDark ? '212, 212, 216' : '113, 113, 122';
 
-    interface NodeParticle {
+    interface SubtleParticle {
       x: number;
       y: number;
       vx: number;
@@ -52,11 +45,9 @@ export const ConnectiveWeb: React.FC<ConnectiveWebProps> = ({
       isHub: boolean;
       pulsePhase: number;
       pulseSpeed: number;
-      density: number;
     }
 
-    const particles: NodeParticle[] = [];
-    const packets: DataPacket[] = [];
+    const particles: SubtleParticle[] = [];
     const mouse = { x: -2000, y: -2000, isOver: false };
 
     // Setup high-DPI canvas
@@ -76,36 +67,35 @@ export const ConnectiveWeb: React.FC<ConnectiveWebProps> = ({
 
     const initParticles = () => {
       particles.length = 0;
-      packets.length = 0;
 
-      // Base count adjusted for display size and user multiplier
+      // Spaced, breathable density for a clean architectural look
       const area = width * height;
-      const baseDensity = width < 768 ? 0.00007 : 0.000095;
-      const count = Math.max(28, Math.min(130, Math.floor(area * baseDensity * particleCountMultiplier)));
+      const baseDensity = width < 768 ? 0.000035 : 0.000045;
+      const count = Math.max(18, Math.min(65, Math.floor(area * baseDensity * particleCountMultiplier)));
 
       for (let i = 0; i < count; i++) {
-        const isHub = i % 7 === 0; // ~14% hub nodes
-        const baseSize = isHub ? Math.random() * 2 + 3.5 : Math.random() * 1.5 + 2;
+        const isHub = i % 8 === 0;
+        const baseSize = isHub ? Math.random() * 0.8 + 2.0 : Math.random() * 0.6 + 1.2;
 
         const nodeColors = [
-          `rgba(${magentaRgb}, 0.85)`,
-          `rgba(${brightMagenta}, 0.9)`,
-          `rgba(${darkNodeRgb}, ${isDark ? '0.75' : '0.55'})`,
-          `rgba(${magentaRgb}, 0.7)`
+          `rgba(${magentaRgb}, 0.38)`,
+          `rgba(${softGlowRgb}, 0.42)`,
+          `rgba(${neutralRgb}, ${isDark ? '0.35' : '0.22'})`,
+          `rgba(${magentaRgb}, 0.28)`
         ];
 
         particles.push({
           x: Math.random() * width,
           y: Math.random() * height,
-          vx: (Math.random() - 0.5) * (isHub ? 0.6 : 0.9),
-          vy: (Math.random() - 0.5) * (isHub ? 0.6 : 0.9),
+          // Slow, calm, serene drift
+          vx: (Math.random() - 0.5) * 0.32,
+          vy: (Math.random() - 0.5) * 0.32,
           size: baseSize,
           baseSize,
           color: nodeColors[Math.floor(Math.random() * nodeColors.length)],
           isHub,
           pulsePhase: Math.random() * Math.PI * 2,
-          pulseSpeed: 0.025 + Math.random() * 0.03,
-          density: Math.random() * 14 + 6
+          pulseSpeed: 0.015 + Math.random() * 0.02
         });
       }
     };
@@ -113,47 +103,28 @@ export const ConnectiveWeb: React.FC<ConnectiveWebProps> = ({
     setupCanvas();
     initParticles();
 
-    // Track active links to dispatch traveling data packets
-    const activeLinks: [number, number][] = [];
-
     const animate = () => {
       ctx.clearRect(0, 0, width, height);
-      activeLinks.length = 0;
 
       const pCount = particles.length;
 
-      // 1. Update and draw connection lines
+      // Draw delicate hairline connections
       for (let i = 0; i < pCount; i++) {
         const p1 = particles[i];
 
-        // Move particle
+        // Smooth position updates
         p1.x += p1.vx;
         p1.y += p1.vy;
         p1.pulsePhase += p1.pulseSpeed;
 
-        // Boundary bounce / wrap
-        if (p1.x < 0) { p1.x = 0; p1.vx *= -1; }
-        else if (p1.x > width) { p1.x = width; p1.vx *= -1; }
+        // Gentle boundary wrap
+        if (p1.x < -10) p1.x = width + 10;
+        else if (p1.x > width + 10) p1.x = -10;
 
-        if (p1.y < 0) { p1.y = 0; p1.vy *= -1; }
-        else if (p1.y > height) { p1.y = height; p1.vy *= -1; }
+        if (p1.y < -10) p1.y = height + 10;
+        else if (p1.y > height + 10) p1.y = -10;
 
-        // Mouse interaction
-        if (mouse.isOver) {
-          const mdx = mouse.x - p1.x;
-          const mdy = mouse.y - p1.y;
-          const mdist = Math.sqrt(mdx * mdx + mdy * mdy);
-
-          if (mdist < mouseRadius) {
-            const force = (mouseRadius - mdist) / mouseRadius;
-            const fx = (mdx / mdist) * force * p1.density * 0.5;
-            const fy = (mdy / mdist) * force * p1.density * 0.5;
-            p1.x += fx;
-            p1.y += fy;
-          }
-        }
-
-        // Connect with other particles
+        // Connect with neighboring particles with hair-thin, whisper-light lines
         for (let j = i + 1; j < pCount; j++) {
           const p2 = particles[j];
           const dx = p1.x - p2.x;
@@ -161,34 +132,30 @@ export const ConnectiveWeb: React.FC<ConnectiveWebProps> = ({
           const dist = Math.sqrt(dx * dx + dy * dy);
 
           if (dist < connectionDistance) {
-            const alpha = (1 - dist / connectionDistance);
-            const lineOpacity = alpha * (p1.isHub || p2.isHub ? 0.48 : 0.32);
+            const alpha = 1 - dist / connectionDistance;
+            // Whisper opacity: 0.05 to 0.16 max
+            const lineOpacity = alpha * (p1.isHub || p2.isHub ? 0.16 : 0.10);
 
             ctx.beginPath();
             ctx.strokeStyle = `rgba(${magentaRgb}, ${lineOpacity.toFixed(3)})`;
-            ctx.lineWidth = p1.isHub || p2.isHub ? 1.4 : 1.0;
+            ctx.lineWidth = 0.65;
             ctx.moveTo(p1.x, p1.y);
             ctx.lineTo(p2.x, p2.y);
             ctx.stroke();
-
-            // Record link for potential data packet
-            if (activeLinks.length < 90) {
-              activeLinks.push([i, j]);
-            }
           }
         }
 
-        // Connect to mouse if nearby
+        // Soft, non-intrusive mouse tethering
         if (mouse.isOver) {
           const mdx = p1.x - mouse.x;
           const mdy = p1.y - mouse.y;
           const mdist = Math.sqrt(mdx * mdx + mdy * mdy);
 
           if (mdist < mouseRadius) {
-            const alpha = 1 - mdist / mouseRadius;
+            const alpha = (1 - mdist / mouseRadius) * 0.22;
             ctx.beginPath();
-            ctx.strokeStyle = `rgba(${brightMagenta}, ${(alpha * 0.65).toFixed(3)})`;
-            ctx.lineWidth = 1.6;
+            ctx.strokeStyle = `rgba(${magentaRgb}, ${alpha.toFixed(3)})`;
+            ctx.lineWidth = 0.8;
             ctx.moveTo(p1.x, p1.y);
             ctx.lineTo(mouse.x, mouse.y);
             ctx.stroke();
@@ -196,62 +163,25 @@ export const ConnectiveWeb: React.FC<ConnectiveWebProps> = ({
         }
       }
 
-      // 2. Manage and draw traveling data packets (live telecommunications pulses)
-      if (activeLinks.length > 0 && packets.length < 16 && Math.random() < 0.12) {
-        const link = activeLinks[Math.floor(Math.random() * activeLinks.length)];
-        packets.push({
-          p1: link[0],
-          p2: link[1],
-          progress: 0,
-          speed: 0.012 + Math.random() * 0.018
-        });
-      }
-
-      for (let k = packets.length - 1; k >= 0; k--) {
-        const pkt = packets[k];
-        pkt.progress += pkt.speed;
-
-        if (pkt.progress >= 1 || !particles[pkt.p1] || !particles[pkt.p2]) {
-          packets.splice(k, 1);
-          continue;
-        }
-
-        const nodeA = particles[pkt.p1];
-        const nodeB = particles[pkt.p2];
-        const px = nodeA.x + (nodeB.x - nodeA.x) * pkt.progress;
-        const py = nodeA.y + (nodeB.y - nodeA.y) * pkt.progress;
-
-        // Draw glowing packet photon
-        ctx.beginPath();
-        ctx.arc(px, py, 2.5, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(${brightMagenta}, 0.95)`;
-        ctx.fill();
-
-        // Subtle glow halo around packet
-        ctx.beginPath();
-        ctx.arc(px, py, 5, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(${magentaRgb}, 0.35)`;
-        ctx.fill();
-      }
-
-      // 3. Draw particle nodes
+      // Draw subtle micro-nodes
       for (let i = 0; i < pCount; i++) {
         const p = particles[i];
 
         if (p.isHub) {
-          // Hub pulsing halo ring
           const pulse = Math.sin(p.pulsePhase);
-          const haloRadius = p.baseSize + 3 + pulse * 2.5;
-          const haloAlpha = 0.25 + pulse * 0.15;
+          const haloRadius = p.baseSize + 2 + pulse * 1.2;
+          const haloAlpha = 0.08 + pulse * 0.05;
 
+          // Soft ambient halo
           ctx.beginPath();
           ctx.arc(p.x, p.y, haloRadius, 0, Math.PI * 2);
-          ctx.fillStyle = `rgba(${brightMagenta}, ${haloAlpha.toFixed(2)})`;
+          ctx.fillStyle = `rgba(${softGlowRgb}, ${haloAlpha.toFixed(2)})`;
           ctx.fill();
 
+          // Hub core
           ctx.beginPath();
-          ctx.arc(p.x, p.y, p.baseSize + 0.5, 0, Math.PI * 2);
-          ctx.fillStyle = `rgba(${magentaRgb}, 0.95)`;
+          ctx.arc(p.x, p.y, p.baseSize, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(${magentaRgb}, 0.55)`;
           ctx.fill();
         } else {
           ctx.beginPath();
@@ -259,20 +189,6 @@ export const ConnectiveWeb: React.FC<ConnectiveWebProps> = ({
           ctx.fillStyle = p.color;
           ctx.fill();
         }
-      }
-
-      // 4. Draw cursor indicator if over hero
-      if (mouse.isOver) {
-        ctx.beginPath();
-        ctx.arc(mouse.x, mouse.y, 4, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(${magentaRgb}, 0.9)`;
-        ctx.fill();
-
-        ctx.beginPath();
-        ctx.arc(mouse.x, mouse.y, 8, 0, Math.PI * 2);
-        ctx.strokeStyle = `rgba(${brightMagenta}, 0.5)`;
-        ctx.lineWidth = 1;
-        ctx.stroke();
       }
 
       animationFrameId = requestAnimationFrame(animate);
@@ -304,42 +220,17 @@ export const ConnectiveWeb: React.FC<ConnectiveWebProps> = ({
       }
     };
 
-    const handleTouchMove = (e: TouchEvent) => {
-      if (e.touches.length > 0) {
-        const rect = canvas.getBoundingClientRect();
-        const touch = e.touches[0];
-        if (
-          touch.clientX >= rect.left &&
-          touch.clientX <= rect.right &&
-          touch.clientY >= rect.top &&
-          touch.clientY <= rect.bottom
-        ) {
-          mouse.x = touch.clientX - rect.left;
-          mouse.y = touch.clientY - rect.top;
-          mouse.isOver = true;
-        }
-      }
-    };
-
-    const handleTouchEnd = () => {
-      mouse.isOver = false;
-    };
-
     const handleMouseLeave = () => {
       mouse.isOver = false;
     };
 
     window.addEventListener('resize', handleResize);
     window.addEventListener('mousemove', handleMouseMove);
-    window.addEventListener('touchmove', handleTouchMove, { passive: true });
-    window.addEventListener('touchend', handleTouchEnd);
     document.addEventListener('mouseleave', handleMouseLeave);
 
     return () => {
       window.removeEventListener('resize', handleResize);
       window.removeEventListener('mousemove', handleMouseMove);
-      window.removeEventListener('touchmove', handleTouchMove);
-      window.removeEventListener('touchend', handleTouchEnd);
       document.removeEventListener('mouseleave', handleMouseLeave);
       cancelAnimationFrame(animationFrameId);
     };
@@ -348,7 +239,7 @@ export const ConnectiveWeb: React.FC<ConnectiveWebProps> = ({
   return (
     <canvas 
       ref={canvasRef} 
-      className={`absolute inset-0 w-full h-full block select-none pointer-events-none ${className}`}
+      className={`absolute inset-0 w-full h-full block select-none pointer-events-none opacity-45 transition-opacity duration-1000 ${className}`}
       style={{ touchAction: 'none' }}
     />
   );

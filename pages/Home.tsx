@@ -21,7 +21,6 @@ import {
 } from 'lucide-react';
 import { PageRoute } from '../types';
 import { Reveal } from '../components/Reveal';
-import { ConnectiveWeb } from '../components/ConnectiveWeb';
 
 export const Home: React.FC = () => {
   // Interactive Solution Selector state
@@ -191,13 +190,7 @@ export const Home: React.FC = () => {
         {/* Subtle Ambient Brand Glows */}
         <div className="absolute top-1/4 left-1/6 w-96 h-96 bg-[#C026D3]/10 rounded-full blur-[140px] pointer-events-none z-0" />
         <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-[#FAF7F2] rounded-full blur-[140px] pointer-events-none z-0" />
-        
-        {/* Interactive Optical Particle Canvas (Connective Web) */}
-        <div className="absolute inset-0 z-10 pointer-events-none">
-          <ConnectiveWeb theme="light" particleCountMultiplier={1.3} />
-        </div>
-        
-        {/* Refined Directional Overlays for Text Legibility while Maximizing Video & Web Visibility */}
+        {/* Refined Directional Overlays for Text Legibility while Maximizing Video Visibility */}
         <div className="absolute inset-0 bg-gradient-to-r from-[#FAF7F2] via-[#FAF7F2]/65 via-35% to-transparent z-10 pointer-events-none"></div>
         <div className="absolute inset-0 bg-gradient-to-t from-[#FAF7F2] via-transparent to-[#FAF7F2]/20 z-10 pointer-events-none"></div>
 
