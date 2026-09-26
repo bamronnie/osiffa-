@@ -621,7 +621,7 @@ export const Home: React.FC = () => {
 
                   <div className="p-3.5 rounded-lg bg-[#FAF7F2] border border-[#E8E2D5] text-xs text-[#18181B]/80 flex items-center gap-2.5">
                     <PhoneCall size={16} className="text-[#C026D3] shrink-0" />
-                    <span>Need immediate advice? Reach us directly at <span className="font-semibold text-[#18181B]">info@osiffatelecoms.com</span></span>
+                    <span>Need immediate advice? Reach us directly at <span className="font-semibold text-[#18181B]">info@osiffatelecom.com</span></span>
                   </div>
                 </div>
               </div>
@@ -754,8 +754,8 @@ export const Home: React.FC = () => {
                 Osiffa Telecoms (Nig.) Ltd
               </span>
               <span>•</span>
-              <a href="mailto:info@osiffatelecoms.com" className="hover:text-[#C026D3] transition-colors">
-                info@osiffatelecoms.com
+              <a href="mailto:info@osiffatelecom.com" className="hover:text-[#C026D3] transition-colors">
+                info@osiffatelecom.com
               </a>
               <span>•</span>
               <span>Africa</span>

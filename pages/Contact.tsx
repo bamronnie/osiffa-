@@ -157,8 +157,8 @@ export const Contact: React.FC = () => {
                       </div>
                       <div>
                         <p className="font-mono text-[10px] uppercase text-[#FAF7F2]/60 font-semibold tracking-wider">Email Inquiries</p>
-                        <a href="mailto:info@osiffatelecoms.com" className="text-sm font-semibold text-white hover:text-[#C026D3] transition-colors block">
-                          info@osiffatelecoms.com
+                        <a href="mailto:info@osiffatelecom.com" className="text-sm font-semibold text-white hover:text-[#C026D3] transition-colors block">
+                          info@osiffatelecom.com
                         </a>
                       </div>
                     </div>
