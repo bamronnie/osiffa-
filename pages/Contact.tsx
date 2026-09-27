@@ -135,8 +135,8 @@ export const Contact: React.FC = () => {
             <div className="bg-white rounded-3xl shadow-sm overflow-hidden flex flex-col lg:flex-row max-w-6xl mx-auto border border-[#E8E2D5]">
               
               {/* Contact Info Sidebar in Deep Black */}
-              <div className="bg-[#18181B] p-8 sm:p-10 lg:w-5/12 text-[#FAF7F2] relative overflow-hidden flex flex-col justify-between border-b lg:border-b-0 lg:border-r border-[#27272A]">
-                <div className="relative z-10 space-y-8">
+              <div className="bg-[#18181B] p-6 sm:p-8 lg:p-10 lg:w-5/12 text-[#FAF7F2] relative overflow-hidden flex flex-col justify-between border-b lg:border-b-0 lg:border-r border-[#27272A]">
+                <div className="relative z-10 space-y-6 sm:space-y-8">
                   <div>
                     <span className="text-xs font-bold uppercase tracking-wider text-[#C026D3] block mb-1 font-mono">
                       Direct Contact
@@ -149,15 +149,45 @@ export const Contact: React.FC = () => {
                     </p>
                   </div>
 
-                  <div className="space-y-6">
+                  <div className="space-y-5 sm:space-y-6">
+                    {/* Direct Phone & WhatsApp */}
+                    <div className="flex items-start gap-4">
+                      <div className="h-10 w-10 sm:h-11 sm:w-11 rounded-2xl bg-white/10 border border-white/10 text-[#C026D3] flex items-center justify-center flex-shrink-0">
+                        <Phone size={18} />
+                      </div>
+                      <div>
+                        <p className="font-mono text-[10px] uppercase text-[#FAF7F2]/60 font-semibold tracking-wider">Direct Phone & WhatsApp</p>
+                        <a href="tel:08089646456" className="text-sm sm:text-base font-bold text-white hover:text-[#C026D3] transition-colors block font-mono">
+                          08089646456
+                        </a>
+                        <div className="flex items-center gap-3 mt-1 text-xs">
+                          <a 
+                            href="tel:08089646456" 
+                            className="text-[#C026D3] hover:underline font-semibold"
+                          >
+                            Call Now
+                          </a>
+                          <span className="text-[#FAF7F2]/30">•</span>
+                          <a 
+                            href="https://wa.me/2348089646456?text=Hello%20Osiffa%20Telecoms,%20I'd%20like%20to%20inquire%20about%20your%20networking%20services." 
+                            target="_blank" 
+                            rel="noopener noreferrer" 
+                            className="text-[#C026D3] hover:underline font-semibold"
+                          >
+                            WhatsApp
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+
                     {/* Email */}
                     <div className="flex items-start gap-4">
-                      <div className="h-11 w-11 rounded-2xl bg-white/10 border border-white/10 text-[#C026D3] flex items-center justify-center flex-shrink-0">
+                      <div className="h-10 w-10 sm:h-11 sm:w-11 rounded-2xl bg-white/10 border border-white/10 text-[#C026D3] flex items-center justify-center flex-shrink-0">
                         <Mail size={18} />
                       </div>
                       <div>
                         <p className="font-mono text-[10px] uppercase text-[#FAF7F2]/60 font-semibold tracking-wider">Email Inquiries</p>
-                        <a href="mailto:info@osiffatelecom.com" className="text-sm font-semibold text-white hover:text-[#C026D3] transition-colors block">
+                        <a href="mailto:info@osiffatelecom.com" className="text-xs sm:text-sm font-semibold text-white hover:text-[#C026D3] transition-colors block">
                           info@osiffatelecom.com
                         </a>
                       </div>
@@ -165,24 +195,24 @@ export const Contact: React.FC = () => {
 
                     {/* Locations */}
                     <div className="flex items-start gap-4">
-                      <div className="h-11 w-11 rounded-2xl bg-white/10 border border-white/10 text-[#C026D3] flex items-center justify-center flex-shrink-0">
+                      <div className="h-10 w-10 sm:h-11 sm:w-11 rounded-2xl bg-white/10 border border-white/10 text-[#C026D3] flex items-center justify-center flex-shrink-0">
                         <MapPin size={18} />
                       </div>
                       <div>
                         <p className="font-mono text-[10px] uppercase text-[#FAF7F2]/60 font-semibold tracking-wider">Service Coverage</p>
-                        <p className="text-sm font-medium text-white">Africa</p>
+                        <p className="text-xs sm:text-sm font-medium text-white">Africa</p>
                       </div>
                     </div>
 
                     {/* Working Hours */}
                     <div className="flex items-start gap-4">
-                      <div className="h-11 w-11 rounded-2xl bg-white/10 border border-white/10 text-[#C026D3] flex items-center justify-center flex-shrink-0">
+                      <div className="h-10 w-10 sm:h-11 sm:w-11 rounded-2xl bg-white/10 border border-white/10 text-[#C026D3] flex items-center justify-center flex-shrink-0">
                         <Clock size={18} />
                       </div>
                       <div>
                         <p className="font-mono text-[10px] uppercase text-[#FAF7F2]/60 font-semibold tracking-wider">Working Hours</p>
-                        <p className="text-sm font-medium text-white">Monday – Friday: 8am – 6pm</p>
-                        <p className="text-xs text-[#FAF7F2]/60">Saturday: 9am – 2pm</p>
+                        <p className="text-xs sm:text-sm font-medium text-white">Monday – Friday: 8am – 6pm</p>
+                        <p className="text-[11px] sm:text-xs text-[#FAF7F2]/60">Saturday: 9am – 2pm</p>
                       </div>
                     </div>
                   </div>
@@ -201,7 +231,7 @@ export const Contact: React.FC = () => {
               </div>
 
               {/* Inquiry Form */}
-              <div className="p-8 sm:p-12 lg:w-7/12 bg-white">
+              <div className="p-5 sm:p-8 lg:p-12 lg:w-7/12 bg-white">
                 {status === 'success' ? (
                   <div className="text-center py-12 space-y-4">
                     <div className="w-14 h-14 bg-[#FAF7F2] border border-[#E8E2D5] text-[#C026D3] rounded-2xl flex items-center justify-center mx-auto shadow-sm">
@@ -219,9 +249,9 @@ export const Contact: React.FC = () => {
                     </button>
                   </div>
                 ) : (
-                  <form onSubmit={handleSubmit} className="space-y-6">
+                  <form onSubmit={handleSubmit} className="space-y-5 sm:space-y-6">
                     <div>
-                      <h3 className="text-xl font-bold text-[#18181B] tracking-tight mb-1">
+                      <h3 className="text-lg sm:text-xl font-bold text-[#18181B] tracking-tight mb-1">
                         Tell Us About Your Project
                       </h3>
                       <p className="text-xs text-[#18181B]/60">
@@ -247,7 +277,7 @@ export const Contact: React.FC = () => {
                           value={firstName}
                           onChange={(e) => setFirstName(e.target.value)}
                           placeholder="e.g. Samuel"
-                          className="w-full px-3.5 py-2.5 rounded-xl bg-[#FAF7F2] border border-[#E8E2D5] text-xs text-[#18181B] placeholder-[#18181B]/40 focus:outline-none focus:border-[#C026D3] transition-colors"
+                          className="w-full px-3.5 py-3 sm:py-2.5 rounded-xl bg-[#FAF7F2] border border-[#E8E2D5] text-base sm:text-sm text-[#18181B] placeholder-[#18181B]/40 focus:outline-none focus:border-[#C026D3] focus:bg-white transition-all font-sans"
                         />
                       </div>
                       <div>
@@ -260,7 +290,7 @@ export const Contact: React.FC = () => {
                           value={lastName}
                           onChange={(e) => setLastName(e.target.value)}
                           placeholder="e.g. Adeleke"
-                          className="w-full px-3.5 py-2.5 rounded-xl bg-[#FAF7F2] border border-[#E8E2D5] text-xs text-[#18181B] placeholder-[#18181B]/40 focus:outline-none focus:border-[#C026D3] transition-colors"
+                          className="w-full px-3.5 py-3 sm:py-2.5 rounded-xl bg-[#FAF7F2] border border-[#E8E2D5] text-base sm:text-sm text-[#18181B] placeholder-[#18181B]/40 focus:outline-none focus:border-[#C026D3] focus:bg-white transition-all font-sans"
                         />
                       </div>
                     </div>
@@ -276,7 +306,7 @@ export const Contact: React.FC = () => {
                           value={email}
                           onChange={(e) => setEmail(e.target.value)}
                           placeholder="samuel@company.com"
-                          className="w-full px-3.5 py-2.5 rounded-xl bg-[#FAF7F2] border border-[#E8E2D5] text-xs text-[#18181B] placeholder-[#18181B]/40 focus:outline-none focus:border-[#C026D3] transition-colors"
+                          className="w-full px-3.5 py-3 sm:py-2.5 rounded-xl bg-[#FAF7F2] border border-[#E8E2D5] text-base sm:text-sm text-[#18181B] placeholder-[#18181B]/40 focus:outline-none focus:border-[#C026D3] focus:bg-white transition-all font-sans"
                         />
                       </div>
                       <div>
@@ -289,7 +319,7 @@ export const Contact: React.FC = () => {
                           value={phone}
                           onChange={(e) => setPhone(e.target.value)}
                           placeholder="0801 234 5678"
-                          className="w-full px-3.5 py-2.5 rounded-xl bg-[#FAF7F2] border border-[#E8E2D5] text-xs text-[#18181B] placeholder-[#18181B]/40 focus:outline-none focus:border-[#C026D3] transition-colors"
+                          className="w-full px-3.5 py-3 sm:py-2.5 rounded-xl bg-[#FAF7F2] border border-[#E8E2D5] text-base sm:text-sm text-[#18181B] placeholder-[#18181B]/40 focus:outline-none focus:border-[#C026D3] focus:bg-white transition-all font-sans"
                         />
                       </div>
                     </div>
@@ -304,7 +334,7 @@ export const Contact: React.FC = () => {
                           value={organization}
                           onChange={(e) => setOrganization(e.target.value)}
                           placeholder="e.g. Apex Chambers"
-                          className="w-full px-3.5 py-2.5 rounded-xl bg-[#FAF7F2] border border-[#E8E2D5] text-xs text-[#18181B] placeholder-[#18181B]/40 focus:outline-none focus:border-[#C026D3] transition-colors"
+                          className="w-full px-3.5 py-3 sm:py-2.5 rounded-xl bg-[#FAF7F2] border border-[#E8E2D5] text-base sm:text-sm text-[#18181B] placeholder-[#18181B]/40 focus:outline-none focus:border-[#C026D3] focus:bg-white transition-all font-sans"
                         />
                       </div>
                       <div>
@@ -316,7 +346,7 @@ export const Contact: React.FC = () => {
                           value={locationCity}
                           onChange={(e) => setLocationCity(e.target.value)}
                           placeholder="e.g. Your City / State"
-                          className="w-full px-3.5 py-2.5 rounded-xl bg-[#FAF7F2] border border-[#E8E2D5] text-xs text-[#18181B] placeholder-[#18181B]/40 focus:outline-none focus:border-[#C026D3] transition-colors"
+                          className="w-full px-3.5 py-3 sm:py-2.5 rounded-xl bg-[#FAF7F2] border border-[#E8E2D5] text-base sm:text-sm text-[#18181B] placeholder-[#18181B]/40 focus:outline-none focus:border-[#C026D3] focus:bg-white transition-all font-sans"
                         />
                       </div>
                     </div>
@@ -329,7 +359,7 @@ export const Contact: React.FC = () => {
                         <select
                           value={inquiryType}
                           onChange={(e) => setInquiryType(e.target.value)}
-                          className="w-full px-3.5 py-2.5 rounded-xl bg-[#FAF7F2] border border-[#E8E2D5] text-xs text-[#18181B] focus:outline-none focus:border-[#C026D3] transition-colors"
+                          className="w-full px-3.5 py-3 sm:py-2.5 rounded-xl bg-[#FAF7F2] border border-[#E8E2D5] text-base sm:text-sm text-[#18181B] focus:outline-none focus:border-[#C026D3] focus:bg-white transition-all font-sans"
                         >
                           {inquiryOptions.map((opt, i) => (
                             <option key={i} value={opt}>{opt}</option>
@@ -344,7 +374,7 @@ export const Contact: React.FC = () => {
                         <select
                           value={teamSize}
                           onChange={(e) => setTeamSize(e.target.value)}
-                          className="w-full px-3.5 py-2.5 rounded-xl bg-[#FAF7F2] border border-[#E8E2D5] text-xs text-[#18181B] focus:outline-none focus:border-[#C026D3] transition-colors"
+                          className="w-full px-3.5 py-3 sm:py-2.5 rounded-xl bg-[#FAF7F2] border border-[#E8E2D5] text-base sm:text-sm text-[#18181B] focus:outline-none focus:border-[#C026D3] focus:bg-white transition-all font-sans"
                         >
                           {teamSizes.map((ts, i) => (
                             <option key={i} value={ts}>{ts}</option>
@@ -362,14 +392,14 @@ export const Contact: React.FC = () => {
                         value={message}
                         onChange={(e) => setMessage(e.target.value)}
                         placeholder="Tell us about your space (e.g. number of rooms, current internet issues, or when you are planning to move in)..."
-                        className="w-full px-3.5 py-2.5 rounded-xl bg-[#FAF7F2] border border-[#E8E2D5] text-xs text-[#18181B] placeholder-[#18181B]/40 focus:outline-none focus:border-[#C026D3] transition-colors resize-none"
+                        className="w-full px-3.5 py-3 sm:py-2.5 rounded-xl bg-[#FAF7F2] border border-[#E8E2D5] text-base sm:text-sm text-[#18181B] placeholder-[#18181B]/40 focus:outline-none focus:border-[#C026D3] focus:bg-white transition-all resize-none font-sans"
                       ></textarea>
                     </div>
 
                     <button
                       type="submit"
                       disabled={status === 'submitting'}
-                      className="w-full py-3.5 rounded-xl bg-[#18181B] hover:bg-[#C026D3] text-white text-xs font-semibold tracking-wide shadow-sm hover:shadow-[0_4px_16px_rgba(192,38,211,0.25)] transition-all flex items-center justify-center gap-2"
+                      className="w-full py-4 sm:py-3.5 rounded-xl bg-[#18181B] hover:bg-[#C026D3] text-white text-xs sm:text-sm font-semibold tracking-wide shadow-sm hover:shadow-[0_4px_16px_rgba(192,38,211,0.25)] transition-all flex items-center justify-center gap-2 active:scale-95 disabled:opacity-50"
                     >
                       {status === 'submitting' ? (
                         <span>Submitting Your Inquiry...</span>

@@ -224,6 +224,23 @@ export const Blog: React.FC = () => {
     setTimeout(() => setCopied(false), 2000);
   };
 
+  // Lock background scroll when reading article on mobile or desktop
+  useEffect(() => {
+    if (activeArticle) {
+      document.body.style.overflow = 'hidden';
+      const handleKeyDown = (e: KeyboardEvent) => {
+        if (e.key === 'Escape') handleCloseArticle();
+      };
+      window.addEventListener('keydown', handleKeyDown);
+      return () => {
+        document.body.style.overflow = '';
+        window.removeEventListener('keydown', handleKeyDown);
+      };
+    } else {
+      document.body.style.overflow = '';
+    }
+  }, [activeArticle]);
+
   const handleSubscribe = (e: React.FormEvent) => {
     e.preventDefault();
     if (newsletterEmail.trim()) {
@@ -266,7 +283,7 @@ export const Blog: React.FC = () => {
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Search by topic, keyword, or technology..."
-                className="w-full pl-11 pr-10 py-3.5 rounded-xl bg-white border border-[#E8E2D5] text-sm text-[#18181B] placeholder-[#18181B]/40 shadow-sm focus:outline-none focus:border-[#C026D3] transition-all"
+                className="w-full pl-11 pr-10 py-3 sm:py-3.5 rounded-xl bg-white border border-[#E8E2D5] text-base sm:text-sm text-[#18181B] placeholder-[#18181B]/40 shadow-sm focus:outline-none focus:border-[#C026D3] transition-all font-sans"
               />
               {searchQuery && (
                 <button
@@ -357,8 +374,8 @@ export const Blog: React.FC = () => {
 
       {/* Category Pills & Filter Bar */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 relative z-10">
-        <div className="flex flex-wrap items-center justify-between gap-4 pb-6 border-b border-[#E8E2D5]">
-          <div className="flex flex-wrap items-center gap-2">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pb-6 border-b border-[#E8E2D5]">
+          <div className="flex overflow-x-auto no-scrollbar sm:flex-wrap items-center gap-2 touch-scroll w-full sm:w-auto pb-1 sm:pb-0">
             {categories.map((cat) => {
               const count = cat === 'All' 
                 ? POSTS_DATA.length 
@@ -367,7 +384,7 @@ export const Blog: React.FC = () => {
                 <button
                   key={cat}
                   onClick={() => setSelectedCategory(cat)}
-                  className={`px-4 py-2 rounded-xl text-xs font-semibold transition-all flex items-center gap-2 border ${
+                  className={`px-3.5 sm:px-4 py-2 rounded-xl text-xs font-semibold transition-all flex items-center gap-2 border whitespace-nowrap flex-shrink-0 sm:flex-shrink active:scale-95 ${
                     selectedCategory === cat
                       ? 'bg-[#18181B] text-white border-[#18181B] shadow-sm'
                       : 'bg-white text-[#18181B]/70 hover:text-[#C026D3] border-[#E8E2D5] hover:border-[#C026D3]'
@@ -510,11 +527,11 @@ export const Blog: React.FC = () => {
                     value={newsletterEmail}
                     onChange={(e) => setNewsletterEmail(e.target.value)}
                     placeholder="Enter your corporate email..."
-                    className="flex-1 px-4 py-3 rounded-xl bg-white border border-[#E8E2D5] text-xs text-[#18181B] placeholder-[#18181B]/40 focus:outline-none focus:border-[#C026D3] shadow-sm"
+                    className="flex-1 px-4 py-3 rounded-xl bg-white border border-[#E8E2D5] text-base sm:text-xs text-[#18181B] placeholder-[#18181B]/40 focus:outline-none focus:border-[#C026D3] shadow-sm"
                   />
                   <button
                     type="submit"
-                    className="px-6 py-3 rounded-xl bg-[#18181B] hover:bg-[#C026D3] text-white text-xs font-semibold transition-all shadow-sm flex items-center justify-center gap-2"
+                    className="w-full sm:w-auto px-6 py-3 rounded-xl bg-[#18181B] hover:bg-[#C026D3] text-white text-xs font-semibold transition-all shadow-sm flex items-center justify-center gap-2"
                   >
                     <span>Subscribe</span>
                     <Send size={13} />
@@ -528,11 +545,11 @@ export const Blog: React.FC = () => {
 
       {/* Article Detail Modal */}
       {activeArticle && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-black/60 backdrop-blur-sm overflow-y-auto">
-          <div className="relative max-w-3xl w-full bg-white rounded-3xl shadow-2xl border border-[#E8E2D5] overflow-hidden my-8 max-h-[92vh] flex flex-col animate-in fade-in zoom-in-95 duration-200">
+        <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-6 bg-black/60 backdrop-blur-sm overflow-y-auto">
+          <div className="relative max-w-3xl w-full bg-white rounded-t-3xl sm:rounded-3xl shadow-2xl border-t sm:border border-[#E8E2D5] overflow-hidden max-h-[94vh] sm:max-h-[90vh] flex flex-col animate-in fade-in slide-in-from-bottom-8 sm:slide-in-from-bottom-0 sm:zoom-in-95 duration-200">
             
             {/* Modal Header Bar */}
-            <div className="sticky top-0 z-20 bg-white/95 backdrop-blur-md px-6 py-4 border-b border-[#E8E2D5] flex items-center justify-between">
+            <div className="sticky top-0 z-20 bg-white/95 backdrop-blur-md px-5 sm:px-6 py-4 border-b border-[#E8E2D5] flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <span className="px-2.5 py-0.5 rounded text-[10px] font-mono font-bold uppercase tracking-wider bg-[#FAF7F2] text-[#C026D3] border border-[#E8E2D5]">
                   {activeArticle.category}
@@ -551,9 +568,9 @@ export const Blog: React.FC = () => {
             </div>
 
             {/* Modal Body */}
-            <div className="p-6 sm:p-10 overflow-y-auto space-y-8">
+            <div className="p-4 sm:p-8 md:p-10 overflow-y-auto space-y-6 sm:space-y-8">
               {/* Cover Image in Modal */}
-              <div className="h-64 sm:h-80 rounded-2xl overflow-hidden relative shadow-sm">
+              <div className="h-48 sm:h-72 md:h-80 rounded-2xl overflow-hidden relative shadow-sm">
                 <img 
                   src={activeArticle.image} 
                   alt={activeArticle.title} 
@@ -565,19 +582,19 @@ export const Blog: React.FC = () => {
                   className="w-full h-full object-cover"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
-                <div className="absolute bottom-4 left-4 right-4 text-white">
-                  <span className="text-xs font-mono font-bold uppercase tracking-wider px-2.5 py-1 rounded bg-black/40 backdrop-blur-sm border border-white/20">
+                <div className="absolute bottom-3 left-3 sm:bottom-4 sm:left-4 right-4 text-white">
+                  <span className="text-[11px] sm:text-xs font-mono font-bold uppercase tracking-wider px-2.5 py-1 rounded bg-black/40 backdrop-blur-sm border border-white/20">
                     {activeArticle.category}
                   </span>
                 </div>
               </div>
 
               <div>
-                <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-[#18181B] leading-tight mb-4 tracking-tight">
+                <h2 className="text-xl sm:text-2xl md:text-4xl font-bold text-[#18181B] leading-tight mb-3 sm:mb-4 tracking-tight">
                   {activeArticle.title}
                 </h2>
 
-                <div className="flex flex-wrap items-center gap-4 text-xs text-[#18181B]/60 font-mono pb-6 border-b border-[#E8E2D5]">
+                <div className="flex flex-wrap items-center gap-3 sm:gap-4 text-xs text-[#18181B]/60 font-mono pb-5 sm:pb-6 border-b border-[#E8E2D5]">
                   <span className="flex items-center gap-1.5">
                     <User size={13} className="text-[#C026D3]" />
                     {activeArticle.author}
@@ -596,7 +613,7 @@ export const Blog: React.FC = () => {
               </div>
 
               {/* Key Takeaways */}
-              <div className="p-6 rounded-2xl bg-[#FAF7F2] border border-[#E8E2D5] space-y-4">
+              <div className="p-5 sm:p-6 rounded-2xl bg-[#FAF7F2] border border-[#E8E2D5] space-y-3 sm:space-y-4">
                 <div className="text-xs font-mono font-bold uppercase text-[#C026D3] tracking-wider flex items-center gap-2">
                   <ShieldCheck size={16} />
                   <span>Key Takeaways</span>
@@ -612,7 +629,7 @@ export const Blog: React.FC = () => {
               </div>
 
               {/* Full Content */}
-              <div className="space-y-5 text-sm sm:text-base text-[#18181B]/85 leading-relaxed font-normal">
+              <div className="space-y-4 sm:space-y-5 text-sm sm:text-base text-[#18181B]/85 leading-relaxed font-normal">
                 {activeArticle.contentParagraphs.map((para, idx) => (
                   <p key={idx}>{para}</p>
                 ))}
@@ -620,7 +637,7 @@ export const Blog: React.FC = () => {
 
               {/* Field Pro-Tip */}
               {activeArticle.proTip && (
-                <div className="p-5 rounded-xl bg-white border-l-4 border-[#C026D3] border-y border-r border-[#E8E2D5] shadow-sm">
+                <div className="p-4 sm:p-5 rounded-xl bg-white border-l-4 border-[#C026D3] border-y border-r border-[#E8E2D5] shadow-sm">
                   <div className="text-[11px] font-mono font-bold uppercase text-[#C026D3] tracking-wider mb-1 flex items-center gap-1.5">
                     <Sparkles size={13} />
                     <span>Field Engineer Tip</span>
@@ -642,7 +659,7 @@ export const Blog: React.FC = () => {
               </div>
 
               {/* CTA Box inside Article */}
-              <div className="p-6 rounded-2xl bg-[#FAF7F2] border border-[#E8E2D5] flex flex-col sm:flex-row items-center justify-between gap-4">
+              <div className="p-5 sm:p-6 rounded-2xl bg-[#FAF7F2] border border-[#E8E2D5] flex flex-col sm:flex-row items-center justify-between gap-4">
                 <div className="space-y-1 text-left w-full sm:w-auto">
                   <h4 className="text-sm font-bold text-[#18181B]">Need help with this in your workplace?</h4>
                   <p className="text-xs text-[#18181B]/70">Our technicians conduct on-site inspections across Africa.</p>
@@ -656,10 +673,10 @@ export const Blog: React.FC = () => {
               </div>
 
               {/* Share and Close Actions */}
-              <div className="pt-6 border-t border-[#E8E2D5] flex items-center justify-between">
+              <div className="pt-6 border-t border-[#E8E2D5] flex flex-col-reverse sm:flex-row items-stretch sm:items-center justify-between gap-3">
                 <button
                   onClick={handleCopyLink}
-                  className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-[#FAF7F2] hover:bg-[#E8E2D5] text-xs font-semibold text-[#18181B] border border-[#E8E2D5] transition-all"
+                  className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg bg-[#FAF7F2] hover:bg-[#E8E2D5] text-xs font-semibold text-[#18181B] border border-[#E8E2D5] transition-all"
                 >
                   <Share2 size={14} />
                   <span>{copied ? 'Link Copied to Clipboard!' : 'Share Article'}</span>
@@ -667,7 +684,7 @@ export const Blog: React.FC = () => {
 
                 <button
                   onClick={handleCloseArticle}
-                  className="px-6 py-2 rounded-lg bg-[#18181B] hover:bg-[#C026D3] text-white text-xs font-semibold transition-colors shadow-sm"
+                  className="w-full sm:w-auto px-6 py-2.5 rounded-lg bg-[#18181B] hover:bg-[#C026D3] text-white text-xs font-semibold transition-colors shadow-sm text-center"
                 >
                   Close
                 </button>

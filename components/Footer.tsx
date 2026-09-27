@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { 
+  Phone,
   Mail, 
   MapPin, 
   ShieldCheck, 
@@ -23,8 +24,8 @@ export const Footer: React.FC = () => {
 
   return (
     <footer className="bg-[#18181B] text-[#FAF7F2] border-t border-[#27272A] relative overflow-hidden">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 pb-12 relative z-10">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-12 mb-16">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 pb-20 md:pb-12 relative z-10">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 md:gap-12 mb-16">
           
           {/* Brand & Accreditation Column */}
           <div className="lg:col-span-2 space-y-6">
@@ -148,11 +149,12 @@ export const Footer: React.FC = () => {
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="Enter business email"
-                    className="w-full px-3.5 py-2.5 rounded-lg bg-[#27272A] border border-[#3F3F46] text-xs text-white placeholder-[#FAF7F2]/40 focus:outline-none focus:border-[#C026D3] transition-all font-sans"
+                    className="w-full px-3.5 py-2.5 rounded-lg bg-[#27272A] border border-[#3F3F46] text-base sm:text-xs text-white placeholder-[#FAF7F2]/40 focus:outline-none focus:border-[#C026D3] transition-all font-sans"
                   />
                   <button
                     type="submit"
-                    className="absolute right-1.5 top-1.5 p-1.5 rounded-md bg-[#C026D3] hover:bg-[#A21CAF] text-white transition-all shadow-sm"
+                    aria-label="Submit newsletter subscription"
+                    className="absolute right-1.5 top-1.5 p-2 rounded-md bg-[#C026D3] hover:bg-[#A21CAF] text-white transition-all shadow-sm"
                   >
                     <ArrowRight size={14} />
                   </button>
@@ -161,6 +163,12 @@ export const Footer: React.FC = () => {
             )}
 
             <div className="mt-6 space-y-2.5 text-xs text-[#FAF7F2]/70">
+              <div className="flex items-center gap-2.5">
+                <Phone size={14} className="text-[#C026D3]" />
+                <a href="tel:08089646456" className="hover:text-white transition-colors font-mono font-medium">
+                  08089646456
+                </a>
+              </div>
               <div className="flex items-center gap-2.5">
                 <Mail size={14} className="text-[#C026D3]" />
                 <a href="mailto:info@osiffatelecom.com" className="hover:text-white transition-colors">
@@ -177,9 +185,9 @@ export const Footer: React.FC = () => {
         </div>
 
         {/* Bottom Bar */}
-        <div className="pt-8 border-t border-[#27272A] flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-[#FAF7F2]/50">
+        <div className="pt-8 border-t border-[#27272A] flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-[#FAF7F2]/50 text-center sm:text-left">
           <p>&copy; {new Date().getFullYear()} Osiffa Telecoms (Nig.) Ltd. All rights reserved.</p>
-          <div className="flex items-center gap-4 text-xs text-[#FAF7F2]/60">
+          <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-4 text-xs text-[#FAF7F2]/60">
             <span>CAC Registered • RC 1276063</span>
             <span>•</span>
             <span>Africa</span>

@@ -34,12 +34,12 @@ export const Logo: React.FC<LogoProps> = ({
     : (variant === 'light' ? logoVerticalDark : logoVerticalLight);
 
   return (
-    <div className="relative flex items-center overflow-visible min-w-max select-none">
+    <div className="relative flex items-center overflow-visible select-none max-w-full">
       <img 
         src={logoSrc} 
         alt="Osiffa Telecoms" 
-        className={`${className} w-auto object-contain transition-opacity duration-200`}
-        style={{ maxWidth: 'none', display: loadStatus === 'error' ? 'none' : 'block' }}
+        className={`${className} max-w-[210px] sm:max-w-none w-auto object-contain transition-opacity duration-200`}
+        style={{ display: loadStatus === 'error' ? 'none' : 'block' }}
         onLoad={handleImageLoad}
         onError={handleImageError}
       />

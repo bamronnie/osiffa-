@@ -69,16 +69,27 @@ export const BandwidthCalculator: React.FC = () => {
       <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
         
         {/* Controls Column */}
-        <div className="lg:col-span-7 space-y-6">
+        <div className="lg:col-span-7 space-y-5 sm:space-y-6">
           
+          {/* Mobile Live Speed Badge */}
+          <div className="lg:hidden p-3.5 rounded-xl bg-[#FAF7F2] border border-[#C026D3]/40 flex items-center justify-between shadow-sm">
+            <div className="text-xs font-semibold text-[#18181B]">
+              <span>Real-Time Estimate:</span>
+            </div>
+            <div className="flex items-baseline gap-1.5">
+              <span className="text-lg font-black text-[#C026D3]">{speedFormatted}</span>
+              <span className="text-[10px] text-[#18181B]/60 font-mono">1:1 Dedicated</span>
+            </div>
+          </div>
+
           {/* Workstations / Users Slider */}
-          <div className="p-5 rounded-xl bg-[#FAF7F2] border border-[#E8E2D5] space-y-3">
+          <div className="p-4 sm:p-5 rounded-xl bg-[#FAF7F2] border border-[#E8E2D5] space-y-3">
             <div className="flex items-center justify-between">
               <label className="text-xs font-semibold uppercase tracking-wider text-[#18181B] flex items-center gap-2">
                 <Users size={16} className="text-[#C026D3]" />
-                <span>Concurrent Staff & Endpoints</span>
+                <span>Staff & Endpoints</span>
               </label>
-              <span className="font-mono text-sm font-bold text-[#C026D3] px-3 py-0.5 rounded bg-white border border-[#E8E2D5] shadow-sm">
+              <span className="font-mono text-xs sm:text-sm font-bold text-[#C026D3] px-2.5 py-0.5 rounded bg-white border border-[#E8E2D5] shadow-sm">
                 {users} Users
               </span>
             </div>
@@ -89,34 +100,35 @@ export const BandwidthCalculator: React.FC = () => {
               max="500"
               step="10"
               value={users}
+              aria-label="Number of concurrent users"
               onChange={(e) => setUsers(Number(e.target.value))}
-              className="w-full h-2 bg-[#E8E2D5] rounded-lg appearance-none cursor-pointer accent-[#C026D3]"
+              className="w-full h-3 bg-[#E8E2D5] rounded-lg appearance-none cursor-pointer accent-[#C026D3] py-2"
             />
             <div className="flex justify-between text-[10px] text-[#18181B]/50 font-mono">
-              <span>10 (Regional Branch)</span>
-              <span>150 (Mid-Market Enterprise)</span>
-              <span>500+ (Corporate Campus)</span>
+              <span>10 (Branch)</span>
+              <span>150 (Mid-Enterprise)</span>
+              <span>500+ (Campus)</span>
             </div>
           </div>
 
           {/* Cloud Workload Intensity */}
-          <div className="p-5 rounded-xl bg-[#FAF7F2] border border-[#E8E2D5] space-y-3">
+          <div className="p-4 sm:p-5 rounded-xl bg-[#FAF7F2] border border-[#E8E2D5] space-y-3">
             <label className="text-xs font-semibold uppercase tracking-wider text-[#18181B] flex items-center gap-2">
               <Cloud size={16} className="text-[#C026D3]" />
-              <span>Cloud Infrastructure & Data Intensity</span>
+              <span>Cloud & Data Intensity</span>
             </label>
 
-            <div className="grid grid-cols-3 gap-2">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
               {[
                 { key: 'moderate', title: 'Standard SaaS', desc: 'Email, Docs, ERP' },
-                { key: 'heavy', title: 'Heavy Sync', desc: 'Video, DB, Cloud Backups' },
+                { key: 'heavy', title: 'Heavy Sync', desc: 'Video, DB, Backups' },
                 { key: 'extreme', title: 'Mission Critical', desc: 'Real-time Feeds, High I/O' }
               ].map((item) => (
                 <button
                   key={item.key}
                   type="button"
                   onClick={() => setCloudWorkload(item.key as any)}
-                  className={`p-3 rounded-lg text-left border transition-all ${
+                  className={`p-3 rounded-xl text-left border transition-all active:scale-95 ${
                     cloudWorkload === item.key
                       ? 'bg-white border-[#C026D3] text-[#18181B] shadow-sm font-semibold'
                       : 'bg-white/60 border-[#E8E2D5] text-[#18181B]/70 hover:text-[#18181B] hover:bg-white'
@@ -130,13 +142,13 @@ export const BandwidthCalculator: React.FC = () => {
           </div>
 
           {/* VoIP Lines & Telephony */}
-          <div className="p-5 rounded-xl bg-[#FAF7F2] border border-[#E8E2D5] space-y-3">
+          <div className="p-4 sm:p-5 rounded-xl bg-[#FAF7F2] border border-[#E8E2D5] space-y-3">
             <div className="flex items-center justify-between">
               <label className="text-xs font-semibold uppercase tracking-wider text-[#18181B] flex items-center gap-2">
                 <PhoneCall size={16} className="text-[#C026D3]" />
-                <span>Simultaneous SIP Trunk Channels</span>
+                <span>Simultaneous SIP Voice Channels</span>
               </label>
-              <span className="font-mono text-sm font-bold text-[#C026D3] px-3 py-0.5 rounded bg-white border border-[#E8E2D5] shadow-sm">
+              <span className="font-mono text-xs sm:text-sm font-bold text-[#C026D3] px-2.5 py-0.5 rounded bg-white border border-[#E8E2D5] shadow-sm">
                 {voipLines} Channels
               </span>
             </div>
@@ -147,25 +159,27 @@ export const BandwidthCalculator: React.FC = () => {
               max="150"
               step="5"
               value={voipLines}
+              aria-label="Simultaneous SIP Voice Channels"
               onChange={(e) => setVoipLines(Number(e.target.value))}
-              className="w-full h-2 bg-[#E8E2D5] rounded-lg appearance-none cursor-pointer accent-[#C026D3]"
+              className="w-full h-3 bg-[#E8E2D5] rounded-lg appearance-none cursor-pointer accent-[#C026D3] py-2"
             />
           </div>
 
           {/* Mission Critical Toggle */}
-          <div className="p-4 rounded-xl bg-[#FAF7F2] border border-[#E8E2D5] flex items-center justify-between">
+          <div 
+            onClick={() => setMissionCritical(!missionCritical)}
+            className="p-4 rounded-xl bg-[#FAF7F2] border border-[#E8E2D5] hover:border-[#C026D3]/40 cursor-pointer flex items-center justify-between transition-colors active:scale-[0.99]"
+          >
             <div className="flex items-center gap-3">
               <ShieldCheck size={20} className={missionCritical ? 'text-[#C026D3]' : 'text-[#18181B]/40'} />
               <div>
-                <div className="text-xs font-bold text-[#18181B]">Require Carrier 99.999% Dual-Homed SLA</div>
-                <div className="text-[11px] text-[#18181B]/60">Includes automatic multi-carrier BGP failover & SLA penalty credits</div>
+                <div className="text-xs font-bold text-[#18181B]">Carrier 99.999% Dual-Homed SLA</div>
+                <div className="text-[11px] text-[#18181B]/60">Includes automatic multi-carrier BGP failover & SLA credits</div>
               </div>
             </div>
 
-            <button
-              type="button"
-              onClick={() => setMissionCritical(!missionCritical)}
-              className={`w-12 h-6 flex items-center rounded-full p-1 cursor-pointer transition-colors ${
+            <div
+              className={`w-12 h-6 flex items-center rounded-full p-1 transition-colors shrink-0 ml-3 ${
                 missionCritical ? 'bg-[#C026D3]' : 'bg-[#D4CEBF]'
               }`}
             >
@@ -174,7 +188,7 @@ export const BandwidthCalculator: React.FC = () => {
                   missionCritical ? 'translate-x-6' : 'translate-x-0'
                 }`}
               />
-            </button>
+            </div>
           </div>
         </div>
 

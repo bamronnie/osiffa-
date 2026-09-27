@@ -79,7 +79,7 @@ export const About: React.FC = () => {
       <div className="fixed inset-0 cyber-grid opacity-30 pointer-events-none z-0"></div>
 
       {/* Hero Section */}
-      <section className="relative bg-[#FAF7F2] text-[#18181B] py-28 relative overflow-hidden border-b border-[#E8E2D5]">
+      <section className="relative bg-[#FAF7F2] text-[#18181B] py-16 sm:py-24 md:py-28 overflow-hidden border-b border-[#E8E2D5]">
         {/* Connective Web Background */}
         <div className="absolute inset-0 z-0 pointer-events-none">
           <ConnectiveWeb theme="light" />
@@ -87,11 +87,11 @@ export const About: React.FC = () => {
         
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
           <Reveal>
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white border border-[#E8E2D5] text-[#C026D3] text-xs font-semibold mb-6 shadow-sm">
-              <Award size={14} className="text-[#C026D3]" />
-              <span>Incorporated July 2015 · CAC Registered RC 1276063</span>
+            <div className="inline-flex items-center gap-2 px-3 py-1 sm:px-3.5 sm:py-1.5 rounded-full bg-white border border-[#E8E2D5] text-[#C026D3] text-[11px] sm:text-xs font-semibold mb-5 sm:mb-6 shadow-sm">
+              <Award size={14} className="text-[#C026D3] shrink-0" />
+              <span>Incorporated July 2015 · CAC RC 1276063</span>
             </div>
-            <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-6 tracking-tight text-[#18181B] leading-tight">
+            <h1 className="text-3xl xs:text-4xl sm:text-5xl md:text-6xl font-bold mb-4 sm:mb-6 tracking-tight text-[#18181B] leading-tight">
               About Osiffa <br className="hidden sm:inline" />
               <span className="text-[#C026D3]">
                 Telecoms
@@ -99,7 +99,7 @@ export const About: React.FC = () => {
             </h1>
           </Reveal>
           <Reveal delay={200}>
-            <p className="text-base sm:text-lg text-[#18181B]/70 max-w-3xl mx-auto leading-relaxed font-normal">
+            <p className="text-sm sm:text-base md:text-lg text-[#18181B]/70 max-w-3xl mx-auto leading-relaxed font-normal">
               An indigenous African telecommunications and IT engineering company committed to delivering dependable business internet, structured cabling, and hands-on networking support.
             </p>
           </Reveal>
@@ -107,17 +107,17 @@ export const About: React.FC = () => {
       </section>
 
       {/* Corporate Profile & Story */}
-      <section id="corporate-profile" className="py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center mb-24">
+      <section id="corporate-profile" className="py-14 sm:py-20 md:py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 md:gap-12 items-center mb-16 sm:mb-24">
           
           {/* Left Narrative */}
-          <div className="lg:col-span-7 space-y-6">
+          <div className="lg:col-span-7 space-y-5 sm:space-y-6">
             <Reveal>
-              <div className="space-y-3">
+              <div className="space-y-2.5 sm:space-y-3">
                 <span className="text-xs font-bold tracking-wider text-[#C026D3] uppercase block font-mono">
                   Who We Are
                 </span>
-                <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-[#18181B]">
+                <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight text-[#18181B]">
                   Osiffa Telecoms (Nig.) Ltd
                 </h2>
               </div>
@@ -136,7 +136,7 @@ export const About: React.FC = () => {
             </Reveal>
 
             <Reveal delay={300}>
-              <div className="p-5 rounded-xl bg-white border border-[#E8E2D5] text-xs text-[#18181B] font-mono leading-relaxed shadow-sm">
+              <div className="p-4 sm:p-5 rounded-xl bg-white border border-[#E8E2D5] text-xs text-[#18181B] font-mono leading-relaxed shadow-sm">
                 "Our mission is simple: keep your office connected cleanly and reliably, with responsive local support you can always count on."
               </div>
             </Reveal>
@@ -199,22 +199,22 @@ export const About: React.FC = () => {
         </div>
 
         {/* Timeline of Expansion */}
-        <div className="mb-24">
+        <div className="mb-16 sm:mb-24">
           <Reveal>
-            <div className="text-center max-w-2xl mx-auto mb-16">
+            <div className="text-center max-w-2xl mx-auto mb-10 sm:mb-16">
               <span className="text-xs font-bold tracking-[0.25em] text-[#C026D3] uppercase block mb-2 font-mono">
                 Our Journey
               </span>
-              <h3 className="text-2xl sm:text-4xl font-bold text-[#18181B] tracking-tight">
+              <h3 className="text-2xl sm:text-3xl md:text-4xl font-bold text-[#18181B] tracking-tight">
                 Steady Growth Built on Quality
               </h3>
             </div>
           </Reveal>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
             {milestones.map((m, idx) => (
               <Reveal key={idx} delay={idx * 100}>
-                <div className="p-6 rounded-xl bg-white border border-[#E8E2D5] relative h-full flex flex-col justify-between hover:border-[#C026D3]/50 transition-all shadow-sm">
+                <div className="p-5 sm:p-6 rounded-xl bg-white border border-[#E8E2D5] relative h-full flex flex-col justify-between hover:border-[#C026D3]/50 transition-all shadow-sm">
                   <div>
                     <span className="text-2xl font-bold font-mono text-[#C026D3] block mb-2">
                       {m.year}
@@ -237,22 +237,22 @@ export const About: React.FC = () => {
         </div>
 
         {/* Core Pillars Grid */}
-        <div className="mb-24">
+        <div className="mb-16 sm:mb-24">
           <Reveal>
-            <div className="text-center max-w-2xl mx-auto mb-16">
+            <div className="text-center max-w-2xl mx-auto mb-10 sm:mb-16">
               <span className="text-xs font-bold tracking-[0.25em] text-[#C026D3] uppercase block mb-2 font-mono">
                 Core Principles
               </span>
-              <h3 className="text-2xl sm:text-4xl font-bold text-[#18181B] tracking-tight">
+              <h3 className="text-2xl sm:text-3xl md:text-4xl font-bold text-[#18181B] tracking-tight">
                 Why Clients Choose to Work With Us
               </h3>
             </div>
           </Reveal>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
             {pillars.map((pillar, idx) => (
               <Reveal key={idx} delay={idx * 80}>
-                <div className="p-6 rounded-xl bg-white border border-[#E8E2D5] hover:border-[#C026D3]/50 transition-all h-full shadow-sm">
+                <div className="p-5 sm:p-6 rounded-xl bg-white border border-[#E8E2D5] hover:border-[#C026D3]/50 transition-all h-full shadow-sm">
                   <div className="h-10 w-10 rounded-lg bg-[#FAF7F2] border border-[#E8E2D5] text-[#C026D3] flex items-center justify-center mb-4">
                     <pillar.icon size={20} />
                   </div>
@@ -269,33 +269,42 @@ export const About: React.FC = () => {
         </div>
 
         {/* Local Support Banner */}
-        <div className="p-8 sm:p-10 rounded-2xl bg-white border border-[#E8E2D5] shadow-sm flex flex-col md:flex-row items-center justify-between gap-6">
+        <div className="p-6 sm:p-8 md:p-10 rounded-2xl bg-white border border-[#E8E2D5] shadow-sm flex flex-col md:flex-row items-stretch sm:items-center justify-between gap-6">
           <div className="space-y-2">
-            <h4 className="text-xl font-bold text-[#18181B]">Have a Question About Your Office Networking?</h4>
-            <p className="text-sm text-[#18181B]/70 max-w-xl">
+            <h4 className="text-lg sm:text-xl font-bold text-[#18181B]">Have a Question About Your Office Networking?</h4>
+            <p className="text-xs sm:text-sm text-[#18181B]/70 max-w-xl leading-relaxed">
               Whether you are moving into a new office, adding new workstations, or need your server rack organized, we are here to help.
             </p>
           </div>
-          <Link to={PageRoute.CONTACT} className="shrink-0">
-            <button className="px-6 py-3 rounded-lg bg-[#18181B] hover:bg-[#C026D3] text-white text-xs font-semibold tracking-wide transition-all shadow-sm">
-              Speak With Our Team
-            </button>
-          </Link>
+          <div className="shrink-0 w-full sm:w-auto flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5">
+            <a 
+              href="tel:08089646456" 
+              className="px-5 py-3 rounded-lg bg-white border border-[#E8E2D5] text-[#18181B] hover:text-[#C026D3] text-xs font-mono font-semibold transition-all shadow-sm flex items-center justify-center gap-2 active:scale-95"
+            >
+              <PhoneCall size={14} className="text-[#C026D3]" />
+              <span>08089646456</span>
+            </a>
+            <Link to={PageRoute.CONTACT} className="w-full sm:w-auto">
+              <button className="w-full sm:w-auto px-6 py-3 rounded-lg bg-[#18181B] hover:bg-[#C026D3] text-white text-xs font-semibold tracking-wide transition-all shadow-sm flex items-center justify-center gap-2">
+                <span>Speak With Our Team</span>
+              </button>
+            </Link>
+          </div>
         </div>
       </section>
 
       {/* CTA */}
-      <section className="py-20 bg-white border-t border-[#E8E2D5] relative overflow-hidden text-center">
+      <section className="py-14 sm:py-20 bg-white border-t border-[#E8E2D5] relative overflow-hidden text-center">
         <div className="max-w-2xl mx-auto px-4 relative z-10">
           <Reveal>
-            <h2 className="text-3xl font-bold text-[#18181B] mb-3 tracking-tight">
+            <h2 className="text-2xl sm:text-3xl font-bold text-[#18181B] mb-3 tracking-tight">
               Ready to Work Together?
             </h2>
-            <p className="text-[#18181B]/70 text-sm sm:text-base mb-8 leading-relaxed">
+            <p className="text-[#18181B]/70 text-sm sm:text-base mb-6 sm:mb-8 leading-relaxed">
               Contact us today to schedule a site inspection or request a personalized quote.
             </p>
-            <Link to={PageRoute.CONTACT}>
-              <button className="px-8 py-3.5 rounded-lg bg-[#18181B] hover:bg-[#C026D3] text-white font-semibold text-xs tracking-wide shadow-sm hover:shadow-[0_4px_16px_rgba(192,38,211,0.25)] transition-all duration-300">
+            <Link to={PageRoute.CONTACT} className="inline-block w-full sm:w-auto">
+              <button className="w-full sm:w-auto px-8 py-3.5 rounded-lg bg-[#18181B] hover:bg-[#C026D3] text-white font-semibold text-xs tracking-wide shadow-sm hover:shadow-[0_4px_16px_rgba(192,38,211,0.25)] transition-all duration-300">
                 Contact Our Team
               </button>
             </Link>

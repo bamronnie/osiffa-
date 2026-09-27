@@ -176,28 +176,28 @@ export const Home: React.FC = () => {
         <div className="absolute inset-0 bg-gradient-to-r from-[#FAF7F2] via-[#FAF7F2]/65 via-35% to-transparent z-10 pointer-events-none"></div>
         <div className="absolute inset-0 bg-gradient-to-t from-[#FAF7F2] via-transparent to-[#FAF7F2]/20 z-10 pointer-events-none"></div>
 
-        <div className="relative z-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full text-left pt-8">
+        <div className="relative z-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full text-left pt-6 sm:pt-8">
           <Reveal>
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-[#E8E2D5] bg-white text-[#18181B] text-xs font-semibold mb-8 shadow-sm cursor-default">
-              <span className="h-2 w-2 rounded-full bg-[#C026D3]"></span>
+            <div className="inline-flex flex-wrap items-center gap-1.5 sm:gap-2 px-3 sm:px-3.5 py-1.5 rounded-full border border-[#E8E2D5] bg-white text-[#18181B] text-[11px] sm:text-xs font-semibold mb-6 sm:mb-8 shadow-sm cursor-default">
+              <span className="h-2 w-2 rounded-full bg-[#C026D3] animate-pulse"></span>
               <span>Osiffa Telecoms (Nig.) Ltd</span>
+              <span className="hidden xs:inline text-[#18181B]/30">·</span>
+              <span className="hidden xs:inline">Networking & IT</span>
               <span className="text-[#18181B]/30">·</span>
-              <span>Networking, Web & IT Solutions</span>
-              <span className="text-[#18181B]/30">·</span>
-              <span className="text-[#C026D3] font-semibold text-[11px]">Africa</span>
+              <span className="text-[#C026D3] font-semibold text-[10px] sm:text-[11px]">Africa</span>
             </div>
           </Reveal>
           
           <Reveal delay={100}>
-            <div className="text-xs sm:text-sm font-bold tracking-wider text-[#C026D3] mb-3 uppercase text-left flex items-center gap-2 font-mono">
-              <span className="h-0.5 w-6 bg-[#C026D3]"></span>
+            <div className="text-[11px] sm:text-sm font-bold tracking-wider text-[#C026D3] mb-2.5 sm:mb-3 uppercase text-left flex items-center gap-2 font-mono">
+              <span className="h-0.5 w-5 sm:w-6 bg-[#C026D3]"></span>
               <span>Practical, Dependable Networking</span>
             </div>
           </Reveal>
 
           {/* Headline strictly following the two-words-per-line user mandate */}
           <Reveal delay={200}>
-            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight mb-8 leading-[1.12] text-[#18181B] text-left">
+            <h1 className="text-3xl xs:text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight mb-6 sm:mb-8 leading-[1.12] text-[#18181B] text-left">
               Let’s Build <br />
               Your Network <br />
               <span className="font-extrabold">
@@ -210,21 +210,21 @@ export const Home: React.FC = () => {
           </Reveal>
 
           <Reveal delay={400}>
-            <p className="text-base md:text-lg text-[#18181B]/75 mb-10 leading-relaxed max-w-2xl font-normal text-left">
+            <p className="text-sm sm:text-base md:text-lg text-[#18181B]/75 mb-8 sm:mb-10 leading-relaxed max-w-2xl font-normal text-left">
               Providing reliable business internet, structured office cabling, commercial Wi-Fi solutions, and custom business web applications for growing companies across Africa.
             </p>
           </Reveal>
 
           <Reveal delay={600}>
-            <div className="flex flex-col sm:flex-row gap-4 justify-start mb-14">
-              <Link to={PageRoute.CONTACT}>
-                <button className="group relative w-full sm:w-auto px-8 py-3.5 text-xs font-semibold rounded-lg bg-[#18181B] hover:bg-[#C026D3] text-white shadow-sm hover:shadow-[0_4px_20px_rgba(192,38,211,0.3)] transition-all duration-300 flex items-center justify-center gap-2 overflow-hidden">
+            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-start mb-10 sm:mb-14 w-full sm:w-auto">
+              <Link to={PageRoute.CONTACT} className="w-full sm:w-auto">
+                <button className="group relative w-full sm:w-auto px-7 sm:px-8 py-3.5 text-xs font-semibold rounded-xl bg-[#18181B] hover:bg-[#C026D3] text-white shadow-sm hover:shadow-[0_4px_20px_rgba(192,38,211,0.3)] transition-all duration-300 flex items-center justify-center gap-2 overflow-hidden active:scale-95">
                   <span>Request a Free Quote</span>
                   <ArrowRight size={14} className="transition-transform group-hover:translate-x-1" />
                 </button>
               </Link>
-              <Link to={PageRoute.SERVICES}>
-                <button className="w-full sm:w-auto px-8 py-3.5 text-xs font-semibold rounded-lg border border-[#E8E2D5] hover:border-[#C026D3] text-[#18181B] hover:text-[#C026D3] bg-white shadow-sm transition-colors flex items-center justify-center">
+              <Link to={PageRoute.SERVICES} className="w-full sm:w-auto">
+                <button className="w-full sm:w-auto px-7 sm:px-8 py-3.5 text-xs font-semibold rounded-xl border border-[#E8E2D5] hover:border-[#C026D3] text-[#18181B] hover:text-[#C026D3] bg-white shadow-sm transition-colors flex items-center justify-center active:scale-95">
                   <span>Explore Our Services</span>
                 </button>
               </Link>
@@ -233,17 +233,17 @@ export const Home: React.FC = () => {
 
           {/* Authentic Value Strip in Hero */}
           <Reveal delay={700}>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 max-w-4xl pt-6 border-t border-[#E8E2D5]">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-2.5 sm:gap-4 max-w-4xl pt-6 border-t border-[#E8E2D5]">
               {[
                 { label: "Response Time", val: "Prompt & Local", sub: "On-Site Support" },
                 { label: "Cabling Standards", val: "Cat6 & Cat6A", sub: "Neat, Labeled Trunking" },
                 { label: "Business Internet", val: "Stable & Sized", sub: "For Your Team's Scale" },
                 { label: "Support Model", val: "Hands-On", sub: "Experienced Technicians" },
               ].map((m, i) => (
-                <div key={i} className="p-4 rounded-xl bg-white border border-[#E8E2D5] shadow-sm">
-                  <div className="text-xs text-[#18181B]/60 mb-1">{m.label}</div>
-                  <div className="text-base sm:text-lg font-bold text-[#18181B] tracking-tight">{m.val}</div>
-                  <div className="text-xs text-[#C026D3] font-semibold">{m.sub}</div>
+                <div key={i} className="p-3 sm:p-4 rounded-xl bg-white border border-[#E8E2D5] shadow-sm">
+                  <div className="text-[10px] sm:text-xs text-[#18181B]/60 mb-0.5 sm:mb-1">{m.label}</div>
+                  <div className="text-xs sm:text-base md:text-lg font-bold text-[#18181B] tracking-tight truncate">{m.val}</div>
+                  <div className="text-[10px] sm:text-xs text-[#C026D3] font-semibold truncate">{m.sub}</div>
                 </div>
               ))}
             </div>
@@ -520,7 +520,7 @@ export const Home: React.FC = () => {
 
           <div className="max-w-5xl mx-auto">
             {/* Tab buttons */}
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2 mb-8 p-1.5 rounded-xl bg-white border border-[#E8E2D5] shadow-sm">
+            <div className="flex overflow-x-auto no-scrollbar sm:grid sm:grid-cols-3 lg:grid-cols-6 gap-2 mb-8 p-1.5 rounded-2xl bg-white border border-[#E8E2D5] shadow-sm touch-scroll">
               {[
                 { id: 'office', label: 'Office Setup', icon: Building },
                 { id: 'internet', label: 'Internet', icon: Wifi },
@@ -532,13 +532,13 @@ export const Home: React.FC = () => {
                 <button
                   key={tab.id}
                   onClick={() => setSelectedService(tab.id as any)}
-                  className={`px-3 py-2.5 rounded-lg text-xs font-semibold transition-all flex items-center justify-center gap-1.5 ${
+                  className={`px-4 sm:px-3 py-2.5 rounded-xl text-xs font-semibold transition-all flex items-center justify-center gap-1.5 whitespace-nowrap flex-shrink-0 sm:flex-shrink sm:whitespace-normal active:scale-95 ${
                     selectedService === tab.id
                       ? 'bg-[#18181B] text-white shadow-sm'
                       : 'text-[#18181B]/70 hover:text-[#C026D3] hover:bg-[#FAF7F2]'
                   }`}
                 >
-                  <tab.icon size={14} />
+                  <tab.icon size={14} className={selectedService === tab.id ? 'text-[#C026D3]' : ''} />
                   <span>{tab.label}</span>
                 </button>
               ))}
@@ -619,9 +619,9 @@ export const Home: React.FC = () => {
                     </div>
                   </div>
 
-                  <div className="p-3.5 rounded-lg bg-[#FAF7F2] border border-[#E8E2D5] text-xs text-[#18181B]/80 flex items-center gap-2.5">
+                  <div className="p-3.5 rounded-lg bg-[#FAF7F2] border border-[#E8E2D5] text-xs text-[#18181B]/80 flex flex-wrap items-center gap-2.5">
                     <PhoneCall size={16} className="text-[#C026D3] shrink-0" />
-                    <span>Need immediate advice? Reach us directly at <span className="font-semibold text-[#18181B]">info@osiffatelecom.com</span></span>
+                    <span>Need immediate advice? Call or WhatsApp us directly at <a href="tel:08089646456" className="font-semibold text-[#18181B] hover:text-[#C026D3] underline">08089646456</a> or email <span className="font-semibold text-[#18181B]">info@osiffatelecom.com</span></span>
                   </div>
                 </div>
               </div>

@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import { Header } from './components/Header';
 import { Footer } from './components/Footer';
+import { MobileActionBar } from './components/MobileActionBar';
 import { Home } from './pages/Home';
 import { Services } from './pages/Services';
 import { Blog } from './pages/Blog';
@@ -27,9 +28,9 @@ const Layout: React.FC = () => {
   const isHome = location.pathname === PageRoute.HOME;
 
   return (
-    <div className="flex flex-col min-h-screen bg-[#FAF7F2] text-[#18181B] selection:bg-[#C026D3] selection:text-white">
+    <div className="flex flex-col min-h-screen bg-[#FAF7F2] text-[#18181B] selection:bg-[#C026D3] selection:text-white relative">
       <Header />
-      <main className={`flex-grow ${!isHome ? 'pt-20' : ''}`}>
+      <main className={`flex-grow ${!isHome ? 'pt-20' : ''} pb-16 md:pb-0`}>
         <Routes>
           <Route path={PageRoute.HOME} element={<Home />} />
           <Route path={PageRoute.SERVICES} element={<Services />} />
@@ -41,6 +42,7 @@ const Layout: React.FC = () => {
         </Routes>
       </main>
       <Footer />
+      <MobileActionBar />
     </div>
   );
 };

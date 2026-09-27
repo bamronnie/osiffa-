@@ -2,7 +2,10 @@
 <html lang="en" class="scroll-smooth">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
     <title>Osiffa Telecoms | Networking, Hardware & Software Solutions</title>
     <meta name="description" content="Osiffa Telecoms (Nig.) Ltd — Dependable business internet, structured cabling, commercial Wi-Fi, IT hardware procurement, and custom business software across Africa." />
     <meta name="keywords" content="Osiffa Telecoms, Business Internet, Structured Cabling, IT Hardware, Custom Software, Office Wi-Fi, Africa" />
@@ -107,8 +110,24 @@
           }
         }
       }
-    </script>
     <link rel="stylesheet" href="/index.css">
+    <!-- Structured Data (JSON-LD) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "Osiffa Telecoms (Nig.) Ltd",
+      "url": "https://www.osiffatelecom.com/",
+      "logo": "https://www.osiffatelecom.com/osiffa-logo-horizontal-dark.png",
+      "telephone": "+2348089646456",
+      "email": "info@osiffatelecom.com",
+      "description": "Dependable business internet, structured cabling, enterprise Wi-Fi solutions, and managed IT networking services for growing businesses and offices in Africa.",
+      "address": {
+        "@type": "PostalAddress",
+        "addressCountry": "NG"
+      }
+    }
+    </script>
   </head>
   <body class="bg-[#FAF7F2] text-[#18181B] antialiased overflow-x-hidden selection:bg-osiffa-500 selection:text-white">
     <div id="root"></div>

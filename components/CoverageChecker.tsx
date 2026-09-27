@@ -174,8 +174,8 @@ export const CoverageChecker: React.FC = () => {
             type="text"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            placeholder="Search district, estate, or commercial landmark (e.g. Maitama, VI, Garki)..."
-            className="w-full pl-11 pr-4 py-2.5 rounded-xl bg-[#FAF7F2] border border-[#E8E2D5] text-[#18181B] placeholder-[#18181B]/40 text-sm focus:outline-none focus:border-[#C026D3] transition-all font-sans"
+            placeholder="Search district, estate, or landmark (e.g. Maitama, VI, Garki)..."
+            className="w-full pl-11 pr-4 py-3 sm:py-2.5 rounded-xl bg-[#FAF7F2] border border-[#E8E2D5] text-[#18181B] placeholder-[#18181B]/40 text-base sm:text-sm focus:outline-none focus:border-[#C026D3] transition-all font-sans"
           />
         </div>
 
@@ -185,7 +185,7 @@ export const CoverageChecker: React.FC = () => {
             <button
               key={st}
               onClick={() => setSelectedState(st)}
-              className={`flex-1 py-2 px-2.5 rounded-lg text-xs font-medium transition-all ${
+              className={`flex-1 py-2 px-2.5 rounded-lg text-xs font-medium transition-all active:scale-95 ${
                 selectedState === st
                   ? 'bg-[#18181B] text-white shadow-sm font-semibold'
                   : 'text-[#18181B]/70 hover:text-[#C026D3] hover:bg-white'
@@ -201,7 +201,7 @@ export const CoverageChecker: React.FC = () => {
       <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-6">
         
         {/* District selector list */}
-        <div className="lg:col-span-6 space-y-2 max-h-[380px] overflow-y-auto pr-2">
+        <div className="lg:col-span-6 space-y-2 max-h-[380px] overflow-y-auto pr-1 sm:pr-2 touch-scroll">
           {filteredDistricts.length === 0 ? (
             <div className="p-8 text-center text-[#18181B]/70 bg-[#FAF7F2] rounded-xl border border-[#E8E2D5]">
               <AlertCircle className="mx-auto mb-2 text-[#C026D3]" size={24} />
@@ -220,30 +220,30 @@ export const CoverageChecker: React.FC = () => {
                 <div
                   key={district.id}
                   onClick={() => setSelectedDistrict(district)}
-                  className={`p-3.5 rounded-xl cursor-pointer border transition-all flex items-center justify-between ${
+                  className={`p-3 sm:p-3.5 rounded-xl cursor-pointer border transition-all flex items-center justify-between active:scale-[0.99] ${
                     isSelected
                       ? 'bg-[#FAF7F2] border-[#C026D3] shadow-sm text-[#18181B]'
                       : 'bg-white border-[#E8E2D5] hover:bg-[#FAF7F2] hover:border-[#C026D3]/40'
                   }`}
                 >
-                  <div className="flex items-center gap-3 min-w-0">
+                  <div className="flex items-center gap-2.5 sm:gap-3 min-w-0">
                     <div className={`p-2 rounded-lg flex-shrink-0 ${
                       isSelected ? 'bg-[#18181B] text-white' : 'bg-[#FAF7F2] text-[#18181B]/70'
                     }`}>
-                      <MapPin size={16} />
+                      <MapPin size={15} />
                     </div>
                     <div className="truncate">
-                      <h4 className="text-sm font-semibold truncate text-[#18181B]">
+                      <h4 className="text-xs sm:text-sm font-semibold truncate text-[#18181B]">
                         {district.name}
                       </h4>
-                      <span className="text-[11px] text-[#18181B]/60 font-mono">
+                      <span className="text-[10px] sm:text-[11px] text-[#18181B]/60 font-mono">
                         {district.state} • {district.trunkSpeed}
                       </span>
                     </div>
                   </div>
 
-                  <div className="flex-shrink-0 text-right">
-                    <span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-[#FDF4FF] border border-[#C026D3]/30 text-[#C026D3]">
+                  <div className="flex-shrink-0 text-right ml-2">
+                    <span className="inline-flex items-center px-2 py-0.5 rounded text-[10px] sm:text-xs font-medium bg-[#FDF4FF] border border-[#C026D3]/30 text-[#C026D3]">
                       Fiber Active
                     </span>
                   </div>
@@ -254,42 +254,42 @@ export const CoverageChecker: React.FC = () => {
         </div>
 
         {/* Live Feasibility Telemetry Card */}
-        <div className="lg:col-span-6 bg-[#FAF7F2] border border-[#E8E2D5] rounded-xl p-6 flex flex-col justify-between relative">
+        <div className="lg:col-span-6 bg-[#FAF7F2] border border-[#E8E2D5] rounded-xl p-5 sm:p-6 flex flex-col justify-between relative">
           <div>
-            <div className="flex items-center justify-between border-b border-[#E8E2D5] pb-4 mb-4">
-              <div>
-                <span className="text-xs font-bold text-[#C026D3] uppercase tracking-wider block">
+            <div className="flex items-center justify-between border-b border-[#E8E2D5] pb-4 mb-4 gap-2">
+              <div className="min-w-0">
+                <span className="text-[11px] font-bold text-[#C026D3] uppercase tracking-wider block">
                   Coverage Details
                 </span>
-                <h4 className="text-xl font-bold text-[#18181B] mt-0.5">
+                <h4 className="text-lg sm:text-xl font-bold text-[#18181B] mt-0.5 truncate">
                   {selectedDistrict.name}
                 </h4>
               </div>
 
-              <div className="px-3 py-1 rounded-full bg-[#FDF4FF] border border-[#C026D3]/30 text-[#C026D3] text-xs font-semibold flex items-center gap-1.5">
-                <span className="h-2 w-2 rounded-full bg-[#C026D3] animate-pulse"></span>
+              <div className="px-2.5 sm:px-3 py-1 rounded-full bg-[#FDF4FF] border border-[#C026D3]/30 text-[#C026D3] text-[11px] sm:text-xs font-semibold flex items-center gap-1.5 shrink-0">
+                <span className="h-1.5 sm:h-2 w-1.5 sm:w-2 rounded-full bg-[#C026D3] animate-pulse"></span>
                 <span>Fiber Ready</span>
               </div>
             </div>
 
             {/* Metrics Breakdown */}
-            <div className="grid grid-cols-3 gap-3 mb-5">
-              <div className="p-3 rounded-lg bg-white border border-[#E8E2D5] shadow-sm">
-                <div className="text-[10px] text-[#18181B]/60 font-mono uppercase">Max Capacity</div>
-                <div className="text-base font-bold text-[#18181B] mt-0.5">{selectedDistrict.trunkSpeed}</div>
-                <div className="text-[10px] text-[#C026D3] font-mono font-medium">Symmetrical</div>
+            <div className="grid grid-cols-3 gap-2 sm:gap-3 mb-5">
+              <div className="p-2.5 sm:p-3 rounded-lg bg-white border border-[#E8E2D5] shadow-sm">
+                <div className="text-[9px] sm:text-[10px] text-[#18181B]/60 font-mono uppercase truncate">Max Capacity</div>
+                <div className="text-xs sm:text-base font-bold text-[#18181B] mt-0.5 truncate">{selectedDistrict.trunkSpeed}</div>
+                <div className="text-[9px] sm:text-[10px] text-[#C026D3] font-mono font-medium">Symmetrical</div>
               </div>
 
-              <div className="p-3 rounded-lg bg-white border border-[#E8E2D5] shadow-sm">
-                <div className="text-[10px] text-[#18181B]/60 font-mono uppercase">Metro Latency</div>
-                <div className="text-base font-bold text-[#C026D3] mt-0.5 font-mono">{selectedDistrict.latency}</div>
-                <div className="text-[10px] text-[#18181B]/60 font-mono">Round-trip</div>
+              <div className="p-2.5 sm:p-3 rounded-lg bg-white border border-[#E8E2D5] shadow-sm">
+                <div className="text-[9px] sm:text-[10px] text-[#18181B]/60 font-mono uppercase truncate">Metro Latency</div>
+                <div className="text-xs sm:text-base font-bold text-[#C026D3] mt-0.5 font-mono truncate">{selectedDistrict.latency}</div>
+                <div className="text-[9px] sm:text-[10px] text-[#18181B]/60 font-mono">Round-trip</div>
               </div>
 
-              <div className="p-3 rounded-lg bg-white border border-[#E8E2D5] shadow-sm">
-                <div className="text-[10px] text-[#18181B]/60 font-mono uppercase">Deployment</div>
-                <div className="text-base font-bold text-[#18181B] mt-0.5">{selectedDistrict.provisionTime}</div>
-                <div className="text-[10px] text-[#C026D3] font-mono font-medium">Turnkey SLA</div>
+              <div className="p-2.5 sm:p-3 rounded-lg bg-white border border-[#E8E2D5] shadow-sm">
+                <div className="text-[9px] sm:text-[10px] text-[#18181B]/60 font-mono uppercase truncate">Deployment</div>
+                <div className="text-xs sm:text-base font-bold text-[#18181B] mt-0.5 truncate">{selectedDistrict.provisionTime}</div>
+                <div className="text-[9px] sm:text-[10px] text-[#C026D3] font-mono font-medium">Turnkey SLA</div>
               </div>
             </div>
 

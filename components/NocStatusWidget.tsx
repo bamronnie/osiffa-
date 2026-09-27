@@ -164,27 +164,27 @@ export const NocStatusWidget: React.FC = () => {
             </div>
 
             {/* Metrics */}
-            <div className="flex items-center gap-6 sm:gap-8 self-end md:self-auto">
-              <div className="text-right">
-                <div className="text-[11px] text-[#18181B]/60">Latency</div>
-                <div className="text-sm font-bold text-[#C026D3] flex items-center justify-end gap-1 font-mono">
+            <div className="flex items-center justify-between sm:justify-end gap-3 sm:gap-6 w-full md:w-auto pt-2.5 sm:pt-0 border-t sm:border-t-0 border-[#E8E2D5]/70">
+              <div className="text-left sm:text-right">
+                <div className="text-[10px] sm:text-[11px] text-[#18181B]/60 font-mono">Latency</div>
+                <div className="text-xs sm:text-sm font-bold text-[#C026D3] flex items-center sm:justify-end gap-1 font-mono">
                   <span>{node.baseLatency} ms</span>
                 </div>
               </div>
 
-              <div className="text-right hidden sm:block">
-                <div className="text-[11px] text-[#18181B]/60">Jitter</div>
+              <div className="text-center sm:text-right hidden xs:block">
+                <div className="text-[10px] sm:text-[11px] text-[#18181B]/60 font-mono">Jitter</div>
                 <div className="text-xs text-[#18181B] font-mono">±{node.jitter} ms</div>
               </div>
 
-              <div className="text-right">
-                <div className="text-[11px] text-[#18181B]/60">Packet Loss</div>
+              <div className="text-center sm:text-right">
+                <div className="text-[10px] sm:text-[11px] text-[#18181B]/60 font-mono">Packet Loss</div>
                 <div className="text-xs text-[#18181B] font-mono">{node.packetLoss}</div>
               </div>
 
               <div className="flex-shrink-0">
-                <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-[#FDF4FF] border border-[#C026D3]/30 text-[#C026D3]">
-                  <span className="h-1.5 w-1.5 rounded-full bg-[#C026D3]"></span>
+                <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] sm:text-xs font-semibold bg-[#FDF4FF] border border-[#C026D3]/30 text-[#C026D3]">
+                  <span className="h-1.5 w-1.5 rounded-full bg-[#C026D3] animate-pulse"></span>
                   Operational
                 </span>
               </div>

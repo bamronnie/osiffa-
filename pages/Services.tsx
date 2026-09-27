@@ -277,7 +277,7 @@ export const Services: React.FC = () => {
         </Reveal>
 
         {/* Category Filter Tabs */}
-        <div className="flex flex-wrap items-center justify-center gap-2 mb-16">
+        <div className="flex overflow-x-auto no-scrollbar sm:flex-wrap items-center justify-start sm:justify-center gap-2 mb-12 sm:mb-16 touch-scroll pb-2 sm:pb-0">
           {[
             { id: 'all', label: `All Solutions (${allServices.length})` },
             { id: 'network', label: 'Network Infrastructure (6)' },
@@ -287,7 +287,7 @@ export const Services: React.FC = () => {
             <button
               key={tab.id}
               onClick={() => setActiveCategory(tab.id as any)}
-              className={`px-4 py-2.5 rounded-lg text-xs font-semibold transition-all border ${
+              className={`px-4 py-2.5 rounded-xl text-xs font-semibold transition-all border whitespace-nowrap flex-shrink-0 sm:flex-shrink active:scale-95 ${
                 activeCategory === tab.id
                   ? 'bg-[#18181B] text-white border-[#18181B] shadow-sm'
                   : 'bg-white text-[#18181B]/75 border-[#E8E2D5] hover:border-[#C026D3] hover:text-[#C026D3]'
@@ -301,7 +301,7 @@ export const Services: React.FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-24">
           {filteredServices.map((service, idx) => (
             <Reveal key={idx} delay={(idx % 3) * 100}>
-              <div className="group h-full p-8 rounded-2xl bg-white border border-[#E8E2D5] hover:border-[#C026D3]/60 transition-all flex flex-col justify-between shadow-sm hover:shadow-xl relative overflow-hidden">
+              <div className="group h-full p-6 sm:p-8 rounded-2xl bg-white border border-[#E8E2D5] hover:border-[#C026D3]/60 transition-all flex flex-col justify-between shadow-sm hover:shadow-xl relative overflow-hidden">
                 <div>
                   <div className="flex items-center justify-between mb-6">
                     <div className="h-12 w-12 rounded-xl bg-[#FAF7F2] border border-[#E8E2D5] flex items-center justify-center text-[#C026D3] group-hover:bg-[#18181B] group-hover:text-white transition-colors shadow-sm">
@@ -377,6 +377,10 @@ export const Services: React.FC = () => {
                   <ArrowRight size={14} />
                 </button>
               </Link>
+              <div className="pt-1 text-center text-xs text-[#18181B]/70 font-mono">
+                <span>Direct Call / WhatsApp: </span>
+                <a href="tel:08089646456" className="font-bold text-[#18181B] hover:text-[#C026D3] underline">08089646456</a>
+              </div>
             </div>
           </div>
         </div>

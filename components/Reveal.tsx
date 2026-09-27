@@ -26,8 +26,8 @@ export const Reveal: React.FC<RevealProps> = ({
         }
       },
       {
-        threshold: 0.1, // Trigger when 10% of the element is visible
-        rootMargin: "0px 0px -50px 0px" // Offset slightly so it triggers before bottom
+        threshold: 0.05,
+        rootMargin: "0px 0px -20px 0px"
       }
     );
 
@@ -47,10 +47,10 @@ export const Reveal: React.FC<RevealProps> = ({
     <div 
       ref={ref} 
       style={{ width, transitionDelay }} 
-      className={`transform transition-all duration-1000 ease-out ${
+      className={`transform transition-all duration-700 sm:duration-1000 ease-out ${
         isVisible 
           ? 'opacity-100 translate-y-0 translate-x-0 blur-none' 
-          : 'opacity-0 translate-y-12 blur-sm'
+          : 'opacity-0 translate-y-6 sm:translate-y-10 blur-[2px]'
       } ${className}`}
     >
       {children}
