@@ -10,6 +10,7 @@ import { Contact } from './pages/Contact';
 import { About } from './pages/About';
 import { NotFound } from './pages/NotFound';
 import { PageRoute } from './types';
+import { SEO } from './components/SEO';
 
 // ScrollToTop component to handle scroll behavior on route change
 const ScrollToTop = () => {
@@ -29,6 +30,7 @@ const Layout: React.FC = () => {
 
   return (
     <div className="flex flex-col min-h-screen bg-[#FAF7F2] text-[#18181B] selection:bg-[#C026D3] selection:text-white relative">
+      <SEO />
       <Header />
       <main className={`flex-grow ${!isHome ? 'pt-20' : ''} pb-16 md:pb-0`}>
         <Routes>
